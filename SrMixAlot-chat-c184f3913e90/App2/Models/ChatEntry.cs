@@ -1,23 +1,20 @@
-﻿using GalaSoft.MvvmLight;
-
-namespace Chat.Models
+﻿namespace Chat.Models
 {
-    public class ChatEntry : ObservableObject
-    {
-        /// <summary>
-        ///     The user that sent the chat entry.
-        /// </summary>
-        public User User { get; set; }
+    public class ChatEntry
+	{
+		/// <summary>
+		///     The chat entry's id.
+		/// </summary>
+		public int Id { get; set; }
 
-        private string _message;
+		/// <summary>
+		///     The user that sent the chat entry.
+		/// </summary>
+		public User User { get; set; }
 
-        /// <summary>
-        ///     The text of the chat entry
-        /// </summary>
-        public string Message
-        {
-            get => _message;
-            set => Set(ref _message, value, nameof(Message));
-        }
-    }
+		/// <summary>
+		///     The text of the chat entry
+		/// </summary>
+		public string Message { get; set; }
+	}
 }

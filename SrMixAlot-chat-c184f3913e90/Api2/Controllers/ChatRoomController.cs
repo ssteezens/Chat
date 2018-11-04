@@ -56,22 +56,19 @@ namespace Api.Controllers
                 {
                     DisplayName = "Chat room 1",
                     Users = users,
-                    ChatEntrys = chatEntrys,
-                    ActiveUser = users[2]
+                    ChatEntries = chatEntrys,
                 },
                 new ChatRoom()
                 {
                     DisplayName = "Chat room 2",
                     Users = users,
-                    ChatEntrys = chatEntrys,
-                    ActiveUser = users[2]
+                    ChatEntries = chatEntrys,
                 },
                 new ChatRoom()
                 {
                     DisplayName = "Chat room 3",
                     Users = users,
-                    ChatEntrys = chatEntrys,
-                    ActiveUser = users[2]
+                    ChatEntries = chatEntrys,
                 }
             };
 
