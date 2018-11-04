@@ -1,7 +1,9 @@
-﻿using Chat.Models;
+﻿using System.Collections.Generic;
+using Chat.Models;
 using Chat.Services;
 using GalaSoft.MvvmLight;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Chat.ViewModels
 {
@@ -10,86 +12,39 @@ namespace Chat.ViewModels
         public MainViewModel()
         {
 			var dataService = new DataServiceBase();
-
-			var thing = dataService.GetChatEntries();
+			
 			var chatRooms = dataService.GetChatRooms();
+			var chatRoomViewModels = new List<ChatRoomViewModel>();
 
-            var testUser1 = new User()
-            {
-                NickName = "Test User 1",
-                ImageFilePath = "ms-appx:///Assets/avatar64x64.png"
-            };
-            var testUser2 = new User()
-            {
-                NickName = "Test User 2",
-                ImageFilePath = "ms-appx:///Assets/avatar64x64.png"
-            };
-            var testUser3 = new User()
-            {
-                NickName = "Test User 3",
-                ImageFilePath = "ms-appx:///Assets/avatar64x64.png"
-            };
+			// todo: configure auto mapper profiles for this
+			foreach (var room in chatRooms)
+			{
+				var chatEntryViewModels = new ObservableCollection<ChatEntryViewModel>();
 
-            var activeUser = new User()
-            {
-                NickName = "This User",
-                ImageFilePath = "ms-appx:///Assets/avatar64x64.png"
-            };
+				foreach (var entry in room.ChatEntries)
+				{
+					var chatEntryViewModel = new ChatEntryViewModel()
+					{
+						Message = entry.Message,
+						User = entry.User
+					};
 
-            // test user data
-            var users = new ObservableCollection<User>()
-            {
-                testUser1,
-                testUser2,
-                testUser3
-            };
+					chatEntryViewModels.Add(chatEntryViewModel);
+				}
 
-            // test chat entry data
-            var chatEntrys = new ObservableCollection<ChatEntryViewModel>()
-            {
-                new ChatEntryViewModel()
-                {
-                    User = testUser1,
-                    Message = "Test message 1"
-                },
-                new ChatEntryViewModel()
-                {
-                    User = testUser2,
-                    Message = "Test message 2"
-                },
-                new ChatEntryViewModel()
-                {
-                    User = testUser3,
-                    Message = "Test message 3"
-                },
-            };
+				var chatRoomViewModel = new ChatRoomViewModel()
+				{
+					ChatEntrys = chatEntryViewModels,
+					DisplayName = room.DisplayName,
+					Users = new ObservableCollection<User>(room.Users.ToList()),
+				};
 
+				chatRoomViewModels.Add(chatRoomViewModel);
+			}
+			
             // Test available chat rooms
-            AvailableChatRooms = new ObservableCollection<ChatRoomViewModel>()
-            {
-                new ChatRoomViewModel()
-                {
-                    DisplayName = "Chat room 1",
-                    Users = users,
-                    ChatEntrys = chatEntrys,
-                    ActiveUser = activeUser
-                },
-                new ChatRoomViewModel()
-                {
-                    DisplayName = "Chat room 2",
-                    Users = users,
-                    ChatEntrys = chatEntrys,
-                    ActiveUser = activeUser
-                },
-                new ChatRoomViewModel()
-                {
-                    DisplayName = "Chat room 3",
-                    Users = users,
-                    ChatEntrys = chatEntrys,
-                    ActiveUser = activeUser
-                }
-            };
-        }
+			AvailableChatRooms = new ObservableCollection<ChatRoomViewModel>(chatRoomViewModels);
+		}
 
         #region Properties
 
