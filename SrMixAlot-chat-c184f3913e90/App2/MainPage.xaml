@@ -1,0 +1,36 @@
+﻿<Page
+    x:Class="Chat.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Chat"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:c="using:Chat.Controls"
+    xmlns:models="using:Chat.Models"
+    xmlns:viewmodels="using:Chat.ViewModels"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:DataType="viewmodels:ChatRoomViewModel" x:Key="ChatChooserListItem">
+                <TextBlock Text="{x:Bind DisplayName}"/>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Chat selector -->
+        <ListView Margin="4"
+                  SelectedItem="{x:Bind Vm.SelectedChatRoom, Mode=TwoWay}"
+                  ItemsSource="{x:Bind Vm.AvailableChatRooms}" 
+                  ItemTemplate="{StaticResource ChatChooserListItem}"/>
+
+        <!-- Active chat window -->
+        <c:ChatRoomControl Margin="4" Grid.Column="1" ViewModel="{x:Bind Vm.SelectedChatRoom, Mode=OneWay}" />
+        
+    </Grid>
+</Page>
