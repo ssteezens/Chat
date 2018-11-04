@@ -9,6 +9,10 @@ namespace Chat.ViewModels
     {
         public MainViewModel()
         {
+			var dataService = new DataServiceBase();
+
+			var thing = dataService.GetChatEntries();
+			var chatRooms = dataService.GetChatRooms();
 
             var testUser1 = new User()
             {
@@ -85,11 +89,6 @@ namespace Chat.ViewModels
                     ActiveUser = activeUser
                 }
             };
-
-            var dataService = new DataServiceBase();
-
-            //var thing = dataService.GetChatEntries();
-            //var chatRooms = dataService.GetChatRooms();
         }
 
         #region Properties

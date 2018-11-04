@@ -30,7 +30,7 @@ namespace Chat.Services
         /// <summary>
         ///     Get an enumerable of chat rooms.
         /// </summary>
-        /// <returns></returns>
+        /// <returns> Enumerable of chat rooms. </returns>
         public IEnumerable<ChatRoom> GetChatRooms()
         {
             return Client.Get<IEnumerable<ChatRoom>>("/ChatRoom/GetAll");

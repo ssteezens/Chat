@@ -15,6 +15,12 @@ namespace Chat.Services
         /// <returns> List of chat entries. </returns>
         IEnumerable<ChatEntry> GetChatEntries();
 
+		/// <summary>
+		///     Get an enumerable of chat rooms.
+		/// </summary>
+		/// <returns> Enumerable of chat rooms. </returns>
+        IEnumerable<ChatRoom> GetChatRooms();
+
         /// <summary>
         ///     The client used for api requests.
         /// </summary>
