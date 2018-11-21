@@ -11,6 +11,17 @@ namespace Api.Models
             : base (options)
         { }
 
+		/// <summary>
+        ///		Configuring entities.
+        /// </summary>
+        /// <param name="modelBuilder"> The model builder. </param>
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			// TODO: configure one to many relationships here
+
+			// TODO: create user to chat room linking table
+		}
+
         /// <summary>
         ///     Set of users.
         /// </summary>

@@ -15,6 +15,7 @@ namespace Chat.Services
             Client = new JsonServiceClient("https://localhost:44382");
 
             // TODO: refine this, maybe filter on sender
+			// TODO: wire this up using middleware
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }
 

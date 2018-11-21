@@ -1,76 +1,31 @@
 ﻿using Api.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace Api.Controllers
 {
     public class ChatRoomController : ControllerBase
     {
+        private readonly ChatContext _chatContext;
+
+        public ChatRoomController(ChatContext chatContext)
+		{
+            _chatContext = chatContext;
+        }
+
         [Route("/ChatRoom/GetAll")]
         public IActionResult GetAll()
         {
-            // test user data
-            var users = new List<User>()
-            {
-                new User()
-                {
-                    NickName = "Test User 1",
-                    ImageFilePath = "ms-appx:///Assets/avatar64x64.png"
-                },
-                new User()
-                {
-                    NickName = "Test User 2",
-                    ImageFilePath = "ms-appx:///Assets/avatar64x64.png"
-                },
-                new User()
-                {
-                    NickName = "Test User 3",
-                    ImageFilePath = "ms-appx:///Assets/avatar64x64.png"
-                }
-            };
+			var users = _chatContext.Users.ToList();
+			var entries = _chatContext.ChatEntrys.ToList();
+			var chatRooms = _chatContext.ChatRooms.ToList();
 
-            // test chat entry data
-            var chatEntrys = new List<ChatEntry>()
-            {
-                new ChatEntry()
-                {
-                    User = users[1],
-                    Message = "Test message 1"
-                },
-                new ChatEntry()
-                {
-                    User = users[1],
-                    Message = "Test message 2"
-                },
-                new ChatEntry()
-                {
-                    User = users[1],
-                    Message = "Test message 3"
-                },
-            };
-
-            // Test available chat rooms
-            var chatRooms = new List<ChatRoom>()
-            {
-                new ChatRoom()
-                {
-                    DisplayName = "Chat room 1",
-                    Users = users,
-                    ChatEntries = chatEntrys,
-                },
-                new ChatRoom()
-                {
-                    DisplayName = "Chat room 2",
-                    Users = users,
-                    ChatEntries = chatEntrys,
-                },
-                new ChatRoom()
-                {
-                    DisplayName = "Chat room 3",
-                    Users = users,
-                    ChatEntries = chatEntrys,
-                }
-            };
+			// TODO: configure entities 
+			foreach (var room in chatRooms)
+			{
+				room.Users = users;
+				room.ChatEntries = entries;
+			}
 
             return Ok(chatRooms);
         }
