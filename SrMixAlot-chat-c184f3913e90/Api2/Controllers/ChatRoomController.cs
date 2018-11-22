@@ -16,17 +16,6 @@ namespace Api.Controllers
         [Route("/ChatRoom/GetAll")]
         public IActionResult GetAll()
         {
-			var message = new ChatMessage()
-			{
-				ChatRoomId = 1,
-				Message = "Test message",
-				User = new User()
-				{
-					Id = 1,
-
-				}
-			};
-
 			var users = _chatContext.Users.ToList();
 			var messages = _chatContext.ChatMessages.ToList();
 			var chatRooms = _chatContext.ChatRooms.ToList();

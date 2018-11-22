@@ -7,6 +7,9 @@ using System.Linq;
 
 namespace Chat.ViewModels
 {
+	/// <summary>
+    ///		View model for main entry of the application.
+    /// </summary>
     public class MainViewModel : ViewModelBase
     {
         public MainViewModel()
@@ -33,9 +36,10 @@ namespace Chat.ViewModels
 
 				var chatRoomViewModel = new ChatRoomViewModel(dataService)
 				{
+					Id = room.Id,
 					ChatMessages = chatMessageViewModels,
 					DisplayName = room.DisplayName,
-					Users = new ObservableCollection<User>(room.Users.ToList()),
+					Users = new ObservableCollection<User>(room.Users.ToList())
 				};
 
 				chatRoomViewModels.Add(chatRoomViewModel);
@@ -43,6 +47,7 @@ namespace Chat.ViewModels
 			
             // Test available chat rooms
 			AvailableChatRooms = new ObservableCollection<ChatRoomViewModel>(chatRoomViewModels);
+			SelectedChatRoom = AvailableChatRooms.FirstOrDefault();
 		}
 
         #region Properties
@@ -65,7 +70,7 @@ namespace Chat.ViewModels
         public ObservableCollection<ChatRoomViewModel> AvailableChatRooms
         {
             get => _availableChatRooms;
-            set => Set(ref _availableChatRooms, value, nameof(AvailableChatRooms));
+            private set => Set(ref _availableChatRooms, value, nameof(AvailableChatRooms));
         }
 
         #endregion

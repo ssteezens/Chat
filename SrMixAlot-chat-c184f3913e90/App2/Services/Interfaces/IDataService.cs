@@ -13,7 +13,7 @@ namespace Chat.Services.Interfaces
 		///		Add a chat entry to a chat room.
 		/// </summary>
 		/// <returns> True if successful. </returns>
-		bool AddChatMessage(ChatMessage message);
+		ChatMessage AddChatMessage(ChatMessage message);
 
         /// <summary>
         ///     Return a list of chat entries.

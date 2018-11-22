@@ -1,9 +1,8 @@
 ﻿using Chat.Models;
+using Chat.Services.Interfaces;
 using GalaSoft.MvvmLight;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
-using Chat.Services;
-using Chat.Services.Interfaces;
 
 namespace Chat.ViewModels
 {
@@ -13,8 +12,7 @@ namespace Chat.ViewModels
     public class ChatRoomViewModel : ViewModelBase
     {
         private string _displayName;
-        private string _userText;
-
+        private string _userText = string.Empty;
 		private readonly IDataService _dataService;
 
 		public ChatRoomViewModel(IDataService dataService)
@@ -35,7 +33,7 @@ namespace Chat.ViewModels
 
         /// <summary>
         ///     Event handler for when the submit button is clicked for the
-        ///     ActiveUser's textbox.
+        ///     ActiveUser's TextBox.
         /// </summary>
         /// <param name="sender"> Submit button. </param>
         /// <param name="e"> Not used. </param>
@@ -45,11 +43,24 @@ namespace Chat.ViewModels
             var message = new ChatMessage()
             {
                 User = ActiveUser,
-                Message = UserText
+                Message = UserText,
+				ChatRoomId = Id
             };
 
             // submit chat to server
-			_dataService.AddChatMessage(message);
+			var addedMessage = _dataService.AddChatMessage(message);
+			
+			var vm = new ChatMessageViewModel()
+			{
+				Message = addedMessage.Message,
+				User = addedMessage.User
+			};
+
+			// add message to list of messages
+			ChatMessages.Add(vm);
+
+			// clear user text
+			UserText = string.Empty;
 		}
 
         #endregion
@@ -79,6 +90,11 @@ namespace Chat.ViewModels
         ///     All user's in this chat.
         /// </summary>
         public ObservableCollection<User> Users { get; set; }
+
+		/// <summary>
+        ///		Id of the chat room.
+        /// </summary>
+		public int Id { get; set; }
 
         #endregion
     }

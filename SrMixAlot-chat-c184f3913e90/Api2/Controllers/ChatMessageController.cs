@@ -15,10 +15,14 @@ namespace Api.Controllers
 
         [HttpPost]
         [Route("/ChatMessage/Add")]
-        public void Add([FromBody] ChatMessage message)
+        public ChatMessage Add([FromBody] ChatMessage message)
 		{
-            _chatContext.Add(message);
-        }        
+			var addedMessage = _chatContext.Add(message).Entity;
+
+			_chatContext.SaveChanges();
+
+			return addedMessage;
+		}        
 
         [HttpGet]
         [Route("/ChatMessage/GetAll")]

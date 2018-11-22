@@ -24,9 +24,9 @@ namespace Chat.Services
         ///		Add a chat entry to a chat room.
         /// </summary>
         /// <returns> True if successful. </returns>
-		public bool AddChatMessage(ChatMessage message)
+		public ChatMessage AddChatMessage(ChatMessage message)
 		{
-			return Client.Post<bool>("/ChatMessage/Add", message);
+			return Client.Post<ChatMessage>("/ChatMessage/Add", message);
 		}
 
         /// <summary>

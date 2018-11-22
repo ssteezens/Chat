@@ -65,7 +65,8 @@
         </ListView>
 
         <!-- Create chat entry -->
-        <TextBox Grid.Row="1" Text="{x:Bind ViewModel.UserText, Mode=TwoWay}" />
+        <TextBox Grid.Row="1" 
+                 Text="{x:Bind ViewModel.UserText, Mode=TwoWay}" />
         
         <!-- Send button -->
         <Button Grid.Row="1"
@@ -73,6 +74,7 @@
                 Padding="20"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
+                IsEnabled="{x:Bind ViewModel.UserText, Mode=OneWay,Converter={StaticResource StringLengthToEnabledConverter}}"
                 Click="{x:Bind ViewModel.SubmitClicked}">
             Send
         </Button>
