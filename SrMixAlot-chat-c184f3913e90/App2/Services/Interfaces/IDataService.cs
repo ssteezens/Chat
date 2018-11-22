@@ -1,19 +1,25 @@
-﻿using Chat.Models;
+﻿using System.Collections.Generic;
+using Chat.Models;
 using ServiceStack;
-using System.Collections.Generic;
 
-namespace Chat.Services
+namespace Chat.Services.Interfaces
 {
     /// <summary>
     ///     Data service used for making api requests.
     /// </summary>
     public interface IDataService
-    {
+	{
+		/// <summary>
+		///		Add a chat entry to a chat room.
+		/// </summary>
+		/// <returns> True if successful. </returns>
+		bool AddChatMessage(ChatMessage message);
+
         /// <summary>
         ///     Return a list of chat entries.
         /// </summary>
         /// <returns> List of chat entries. </returns>
-        IEnumerable<ChatEntry> GetChatEntries();
+        IEnumerable<ChatMessage> GetChatEntries();
 
 		/// <summary>
 		///     Get an enumerable of chat rooms.

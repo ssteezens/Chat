@@ -2,6 +2,8 @@
 using GalaSoft.MvvmLight;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
+using Chat.Services;
+using Chat.Services.Interfaces;
 
 namespace Chat.ViewModels
 {
@@ -12,6 +14,13 @@ namespace Chat.ViewModels
     {
         private string _displayName;
         private string _userText;
+
+		private readonly IDataService _dataService;
+
+		public ChatRoomViewModel(IDataService dataService)
+		{
+			_dataService = dataService;
+		}
 
         /// <summary>
         ///     Chat's display name.
@@ -33,14 +42,15 @@ namespace Chat.ViewModels
         public void SubmitClicked(object sender, RoutedEventArgs e)
         {
             // create chat entry
-            var entryToSubmit = new ChatEntryViewModel()
+            var message = new ChatMessage()
             {
                 User = ActiveUser,
                 Message = UserText
             };
 
             // submit chat to server
-        }
+			_dataService.AddChatMessage(message);
+		}
 
         #endregion
 
@@ -63,7 +73,7 @@ namespace Chat.ViewModels
         /// <summary>
         ///     All the chat entry's for this chat pane.
         /// </summary>
-        public ObservableCollection<ChatEntryViewModel> ChatEntrys { get; set; }
+        public ObservableCollection<ChatMessageViewModel> ChatMessages { get; set; }
 
         /// <summary>
         ///     All user's in this chat.

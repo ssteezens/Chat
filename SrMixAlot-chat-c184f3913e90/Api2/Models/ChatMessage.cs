@@ -1,11 +1,19 @@
-﻿namespace Api.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Api.Models
 {
-    public class ChatEntry
+	[Table("ChatMessages")]
+    public class ChatMessage
     {
         /// <summary>
         ///     The chat entry's id.
         /// </summary>
         public int Id { get; set; }
+
+		/// <summary>
+        ///		The id of the chat room.
+        /// </summary>
+		public int ChatRoomId { get; set; }
 
         /// <summary>
         ///     The user that sent the chat entry.

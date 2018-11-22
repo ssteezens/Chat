@@ -104,13 +104,13 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\ChatEntry.cs" />
+    <Compile Include="Models\ChatMessage.cs" />
     <Compile Include="Models\ChatRoom.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\Interfaces\IDataService.cs" />
-    <Compile Include="ViewModels\ChatEntryViewModel.cs" />
+    <Compile Include="ViewModels\ChatMessageViewModel.cs" />
     <Compile Include="ViewModels\ChatRoomViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
   </ItemGroup>

@@ -13,7 +13,7 @@
     
     <UserControl.Resources>
         <ResourceDictionary>
-            <DataTemplate x:DataType="vm:ChatEntryViewModel" x:Key="ChatEntryListItemTemplate">
+            <DataTemplate x:DataType="vm:ChatMessageViewModel" x:Key="ChatMessageListItemTemplate">
                 <Grid BorderBrush="Black"
                       BorderThickness="2"
                       HorizontalAlignment="Stretch">
@@ -54,8 +54,8 @@
         <ListView Grid.Row="0" 
                   BorderBrush="Black"
                   BorderThickness="1"
-                  ItemTemplate="{StaticResource ChatEntryListItemTemplate}"
-                  ItemsSource="{x:Bind ViewModel.ChatEntrys, Mode=OneWay}">
+                  ItemTemplate="{StaticResource ChatMessageListItemTemplate}"
+                  ItemsSource="{x:Bind ViewModel.ChatMessages, Mode=OneWay}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -72,7 +72,8 @@
                 Margin="20"
                 Padding="20"
                 HorizontalAlignment="Right"
-                VerticalAlignment="Bottom">
+                VerticalAlignment="Bottom"
+                Click="{x:Bind ViewModel.SubmitClicked}">
             Send
         </Button>
 

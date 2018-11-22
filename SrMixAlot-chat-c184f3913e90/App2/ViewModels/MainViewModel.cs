@@ -12,29 +12,28 @@ namespace Chat.ViewModels
         public MainViewModel()
         {
 			var dataService = new DataServiceBase();
-			
 			var chatRooms = dataService.GetChatRooms();
 			var chatRoomViewModels = new List<ChatRoomViewModel>();
 
 			// todo: configure auto mapper profiles for this
 			foreach (var room in chatRooms)
 			{
-				var chatEntryViewModels = new ObservableCollection<ChatEntryViewModel>();
+				var chatMessageViewModels = new ObservableCollection<ChatMessageViewModel>();
 
 				foreach (var entry in room.ChatEntries)
 				{
-					var chatEntryViewModel = new ChatEntryViewModel()
+					var chatMessageViewModel = new ChatMessageViewModel()
 					{
 						Message = entry.Message,
 						User = entry.User
 					};
 
-					chatEntryViewModels.Add(chatEntryViewModel);
+					chatMessageViewModels.Add(chatMessageViewModel);
 				}
 
-				var chatRoomViewModel = new ChatRoomViewModel()
+				var chatRoomViewModel = new ChatRoomViewModel(dataService)
 				{
-					ChatEntrys = chatEntryViewModels,
+					ChatMessages = chatMessageViewModels,
 					DisplayName = room.DisplayName,
 					Users = new ObservableCollection<User>(room.Users.ToList()),
 				};

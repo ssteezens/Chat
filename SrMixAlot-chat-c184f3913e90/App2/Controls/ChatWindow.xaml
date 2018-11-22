@@ -11,7 +11,7 @@
     d:DesignWidth="400">
     <UserControl.Resources>
         <ResourceDictionary>
-            <DataTemplate x:DataType="vm:ChatEntryViewModel" x:Key="ChatEntryListItemTemplate">
+            <DataTemplate x:DataType="vm:ChatMessageViewModel" x:Key="ChatMessageListItemTemplate">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -27,6 +27,6 @@
         <ListView BorderBrush="Black"
                   BorderThickness="1"
                   ItemsSource="{x:Bind ChatEntries}" 
-                  ItemTemplate="{StaticResource ChatEntryListItemTemplate}"/>
+                  ItemTemplate="{StaticResource ChatMessageListItemTemplate}"/>
     </Grid>
 </UserControl>

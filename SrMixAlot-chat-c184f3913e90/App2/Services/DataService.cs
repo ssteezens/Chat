@@ -2,6 +2,7 @@
 using ServiceStack;
 using System.Collections.Generic;
 using System.Net;
+using Chat.Services.Interfaces;
 
 namespace Chat.Services
 {
@@ -19,13 +20,22 @@ namespace Chat.Services
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }
 
+		/// <summary>
+        ///		Add a chat entry to a chat room.
+        /// </summary>
+        /// <returns> True if successful. </returns>
+		public bool AddChatMessage(ChatMessage message)
+		{
+			return Client.Post<bool>("/ChatMessage/Add", message);
+		}
+
         /// <summary>
         ///     Get an enumerable of chat entries.
         /// </summary>
         /// <returns> List of chat entries. </returns>
-        public IEnumerable<ChatEntry> GetChatEntries()
+        public IEnumerable<ChatMessage> GetChatEntries()
         {
-            return Client.Get<IEnumerable<ChatEntry>>("/ChatEntry/GetAll");
+            return Client.Get<IEnumerable<ChatMessage>>("/ChatMessage/GetAll");
         }
 
         /// <summary>

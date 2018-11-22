@@ -30,7 +30,7 @@ namespace Api.Models
         /// <summary>
         ///     Set of chat entries.
         /// </summary>
-        public DbSet<ChatEntry> ChatEntrys { get; set; }
+        public DbSet<ChatMessage> ChatMessages { get; set; }
 
 		/// <summary>
         ///		Set of chat rooms.

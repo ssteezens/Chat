@@ -22,7 +22,7 @@ namespace Chat.Controls
             DependencyProperty.Register(
                 "ChatEntries", 
                 typeof(ChatWindow), 
-                typeof(List<ChatEntryViewModel>), 
+                typeof(List<ChatMessageViewModel>), 
                 new PropertyMetadata(null)
             );
         
@@ -31,9 +31,9 @@ namespace Chat.Controls
             this.InitializeComponent();
         }
 
-        public List<ChatEntryViewModel> ChatEntries
+        public List<ChatMessageViewModel> ChatEntries
         {
-            get => (List<ChatEntryViewModel>)GetValue(ChatEntriesProperty);
+            get => (List<ChatMessageViewModel>)GetValue(ChatEntriesProperty);
             set => SetValue(ChatEntriesProperty, value);
         }
     }

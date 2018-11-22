@@ -3,7 +3,7 @@ using GalaSoft.MvvmLight;
 
 namespace Chat.ViewModels
 {
-    public class ChatEntryViewModel : ViewModelBase
+    public class ChatMessageViewModel : ViewModelBase
     {
 
         /// <summary>
