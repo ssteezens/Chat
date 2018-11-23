@@ -25,7 +25,7 @@ namespace Api.Controllers
 			foreach (var room in chatRooms)
 			{
 				room.Users = users;
-				room.ChatEntries = messages;
+				room.ChatEntries = messages.Where(i => i.ChatRoomId == room.Id);
 			}
 
             return Ok(chatRooms);
