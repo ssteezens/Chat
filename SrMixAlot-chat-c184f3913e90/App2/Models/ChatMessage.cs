@@ -1,7 +1,11 @@
-﻿namespace Chat.Models
+﻿using GalaSoft.MvvmLight;
+
+namespace Chat.Models
 {
-    public class ChatMessage
+    public class ChatMessage : ObservableObject
 	{
+		private string _message = string.Empty;
+
 		/// <summary>
 		///     The chat entry's id.
 		/// </summary>
@@ -20,6 +24,10 @@
 		/// <summary>
 		///     The text of the chat entry
 		/// </summary>
-		public string Message { get; set; }
+		public string Message
+		{
+			get => _message;
+			set => Set(ref _message, value, nameof(Message));
+		}
 	}
 }

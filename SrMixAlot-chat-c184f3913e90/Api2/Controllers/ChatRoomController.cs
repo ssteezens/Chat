@@ -21,6 +21,7 @@ namespace Api.Controllers
 			var chatRooms = _chatContext.ChatRooms.ToList();
 
 			// TODO: configure entities 
+			// TODO: get messages by ChatRoom id
 			foreach (var room in chatRooms)
 			{
 				room.Users = users;

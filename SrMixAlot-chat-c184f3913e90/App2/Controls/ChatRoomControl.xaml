@@ -1,19 +1,12 @@
 ﻿<UserControl
     x:Class="Chat.Controls.ChatRoomControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Chat.Controls"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:Chat.Models"
-    xmlns:vm="using:Chat.ViewModels"
-    mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:models="using:Chat.Models">
     
     <UserControl.Resources>
         <ResourceDictionary>
-            <DataTemplate x:DataType="vm:ChatMessageViewModel" x:Key="ChatMessageListItemTemplate">
+            <DataTemplate x:DataType="models:ChatMessage" x:Key="ChatMessageListItemTemplate">
                 <Grid BorderBrush="Black"
                       BorderThickness="2"
                       HorizontalAlignment="Stretch">

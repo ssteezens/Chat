@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System.IO;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using System.IO;
 
-namespace Api2
+namespace Api
 {
     public class Program
     {

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Chat.Models;
+﻿using AutoMapper;
 using Chat.Services;
 using GalaSoft.MvvmLight;
 using System.Collections.ObjectModel;
@@ -7,7 +6,7 @@ using System.Linq;
 
 namespace Chat.ViewModels
 {
-	/// <summary>
+    /// <summary>
     ///		View model for main entry of the application.
     /// </summary>
     public class MainViewModel : ViewModelBase
@@ -16,36 +15,9 @@ namespace Chat.ViewModels
         {
 			var dataService = new DataServiceBase();
 			var chatRooms = dataService.GetChatRooms();
-			var chatRoomViewModels = new List<ChatRoomViewModel>();
+			var chatRoomViewModels = chatRooms.Select(Mapper.Map<ChatRoomViewModel>).ToList();
 
-			// todo: configure auto mapper profiles for this
-			foreach (var room in chatRooms)
-			{
-				var chatMessageViewModels = new ObservableCollection<ChatMessageViewModel>();
-
-				foreach (var entry in room.ChatEntries)
-				{
-					var chatMessageViewModel = new ChatMessageViewModel()
-					{
-						Message = entry.Message,
-						User = entry.User
-					};
-
-					chatMessageViewModels.Add(chatMessageViewModel);
-				}
-
-				var chatRoomViewModel = new ChatRoomViewModel(dataService)
-				{
-					Id = room.Id,
-					ChatMessages = chatMessageViewModels,
-					DisplayName = room.DisplayName,
-					Users = new ObservableCollection<User>(room.Users.ToList())
-				};
-
-				chatRoomViewModels.Add(chatRoomViewModel);
-			}
-			
-            // Test available chat rooms
+			// Test available chat rooms
 			AvailableChatRooms = new ObservableCollection<ChatRoomViewModel>(chatRoomViewModels);
 			SelectedChatRoom = AvailableChatRooms.FirstOrDefault();
 		}

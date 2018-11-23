@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -14,6 +15,13 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using AutoMapper;
+using AutoMapper.Configuration;
+using Chat.Models;
+using Chat.Services;
+using Chat.Services.Interfaces;
+using Chat.ViewModels;
+using StructureMap;
 
 namespace Chat
 {
@@ -28,6 +36,8 @@ namespace Chat
         /// </summary>
         public App()
         {
+			ConfigureAutoMapper();
+
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
@@ -72,6 +82,21 @@ namespace Chat
                 Window.Current.Activate();
             }
         }
+
+		/// <summary>
+        ///		Configure AutoMapper mappings.
+        /// </summary>
+		void ConfigureAutoMapper()
+		{
+			Mapper.Initialize(cfg =>
+			{
+				cfg.CreateMap<ChatRoom, ChatRoomViewModel>()
+					.ForMember(dest => dest.ChatMessages, opt => opt.MapFrom(src => new ObservableCollection<ChatMessage>(src.ChatEntries)))
+					.ForMember(dest => dest.Users, opt => opt.MapFrom(src => new ObservableCollection<User>(src.Users)));
+
+				cfg.CreateMap<ChatMessage, ChatMessage>().ReverseMap();
+			});
+		}
 
         /// <summary>
         /// Invoked when Navigation to a certain page fails

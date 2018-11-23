@@ -1,6 +1,8 @@
 ﻿using Chat.Models;
+using Chat.Services;
 using Chat.Services.Interfaces;
 using GalaSoft.MvvmLight;
+using StructureMap;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 
@@ -15,9 +17,15 @@ namespace Chat.ViewModels
         private string _userText = string.Empty;
 		private readonly IDataService _dataService;
 
-		public ChatRoomViewModel(IDataService dataService)
+		public ChatRoomViewModel()
 		{
-			_dataService = dataService;
+			var container = new Container(config =>
+			{
+				config.For<IDataService>().Singleton().Use<DataServiceBase>()
+					.Named("DataService");
+			});
+
+			_dataService = container.GetInstance<IDataService>();
 		}
 
         /// <summary>
@@ -50,14 +58,8 @@ namespace Chat.ViewModels
             // submit chat to server
 			var addedMessage = _dataService.AddChatMessage(message);
 			
-			var vm = new ChatMessageViewModel()
-			{
-				Message = addedMessage.Message,
-				User = addedMessage.User
-			};
-
 			// add message to list of messages
-			ChatMessages.Add(vm);
+			ChatMessages.Add(addedMessage);
 
 			// clear user text
 			UserText = string.Empty;
@@ -68,7 +70,7 @@ namespace Chat.ViewModels
         #region Properties
 
         /// <summary>
-        ///     Text entered into the user's textbox.
+        ///     Text entered into the user's TextBox.
         /// </summary>
         public string UserText
         {
@@ -84,7 +86,7 @@ namespace Chat.ViewModels
         /// <summary>
         ///     All the chat entry's for this chat pane.
         /// </summary>
-        public ObservableCollection<ChatMessageViewModel> ChatMessages { get; set; }
+        public ObservableCollection<ChatMessage> ChatMessages { get; set; }
 
         /// <summary>
         ///     All user's in this chat.

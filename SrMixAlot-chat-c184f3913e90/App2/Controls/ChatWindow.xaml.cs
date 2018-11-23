@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Chat.Models;
 
 namespace Chat.Controls
 {
@@ -22,7 +23,7 @@ namespace Chat.Controls
             DependencyProperty.Register(
                 "ChatEntries", 
                 typeof(ChatWindow), 
-                typeof(List<ChatMessageViewModel>), 
+                typeof(List<ChatMessage>), 
                 new PropertyMetadata(null)
             );
         
@@ -31,9 +32,9 @@ namespace Chat.Controls
             this.InitializeComponent();
         }
 
-        public List<ChatMessageViewModel> ChatEntries
+        public List<ChatMessage> ChatEntries
         {
-            get => (List<ChatMessageViewModel>)GetValue(ChatEntriesProperty);
+            get => (List<ChatMessage>)GetValue(ChatEntriesProperty);
             set => SetValue(ChatEntriesProperty, value);
         }
     }
