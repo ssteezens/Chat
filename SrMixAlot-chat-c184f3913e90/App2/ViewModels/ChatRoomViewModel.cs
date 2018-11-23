@@ -4,8 +4,11 @@ using Chat.Services.Interfaces;
 using GalaSoft.MvvmLight;
 using StructureMap;
 using System.Collections.ObjectModel;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
+using User = Chat.Models.User;
 
 namespace Chat.ViewModels
 {
@@ -48,24 +51,32 @@ namespace Chat.ViewModels
         /// <param name="e"> Not used. </param>
         public void SubmitClicked(object sender, RoutedEventArgs e)
         {
-            // create chat entry
-            var message = new ChatMessage()
-            {
-                User = ActiveUser,
-                Message = UserText,
-				ChatRoomId = Id
-            };
+			SendMessage();
+        }
 
-            // submit chat to server
+		/// <summary>
+        ///		Sends the user's message to the server.
+        /// </summary>
+		private void SendMessage()
+		{
+			// create chat entry
+			var message = new ChatMessage()
+			{
+				User = ActiveUser,
+				Message = UserText,
+				ChatRoomId = Id
+			};
+
+			// submit chat to server
 			var addedMessage = _dataService.AddChatMessage(message);
-			
+
 			// add message to list of messages
 			ChatMessages.Add(addedMessage);
 
 			// clear user text
 			UserText = string.Empty;
-		}
-
+        }
+		
 		/// <summary>
         ///		Event called when user text changed.
         /// </summary>
@@ -74,6 +85,19 @@ namespace Chat.ViewModels
 		public void OnUserTextChanged(object sender, TextChangedEventArgs e)
 		{
 			UserText = ((TextBox) sender).Text;
+		}
+
+		/// <summary>
+        ///		Event handler for keyboard presses.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		public void OnKeyDown(object sender, KeyRoutedEventArgs e)
+		{
+			if (e.Key == VirtualKey.Enter)
+			{
+				SendMessage();
+			}
 		}
 
         #endregion

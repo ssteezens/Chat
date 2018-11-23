@@ -34,7 +34,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid KeyDown="{x:Bind ViewModel.OnKeyDown}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -43,7 +43,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
-        <!-- List of chat entry's -->
+        <!-- List of chat messages -->
         <ListView Grid.Row="0" 
                   BorderBrush="Black"
                   BorderThickness="1"
@@ -57,10 +57,10 @@
             </ListView.ItemContainerStyle>
         </ListView>
 
-        <!-- Create chat entry -->
+        <!-- Create chat message -->
         <TextBox Grid.Row="1" 
                  TextChanged="{x:Bind ViewModel.OnUserTextChanged}"
-                 Text="{x:Bind ViewModel.UserText, Mode=TwoWay}" />
+                 Text="{x:Bind ViewModel.UserText, Mode=TwoWay}"/>
         
         <!-- Send button -->
         <Button Grid.Row="1"
