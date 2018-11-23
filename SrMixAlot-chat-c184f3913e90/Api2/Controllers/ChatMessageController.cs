@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Api.Models;
+using Api.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -9,11 +10,11 @@ namespace Api.Controllers
     /// </summary>
     public class ChatMessageController : ControllerBase
     {
-        private readonly ChatContext _chatContext;
+        private readonly IChatMessageDataService _chatMessageDataService;
 
-        public ChatMessageController(ChatContext chatContext)
+        public ChatMessageController(IChatMessageDataService chatMessageDataService)
         {
-            _chatContext = chatContext;
+			_chatMessageDataService = chatMessageDataService;
         }
 
 		/// <summary>
@@ -23,13 +24,9 @@ namespace Api.Controllers
         /// <returns> The message added to the database. </returns>
         [HttpPost]
         [Route("/ChatMessage/Add")]
-        public ChatMessage Add([FromBody] ChatMessage message)
+        public IActionResult Add([FromBody] ChatMessage message)
 		{
-			var addedMessage = _chatContext.Add(message).Entity;
-
-			_chatContext.SaveChanges();
-
-			return addedMessage;
+			return Ok(_chatMessageDataService.Add(message));
 		}        
 
 		/// <summary>
@@ -39,8 +36,8 @@ namespace Api.Controllers
         [HttpGet]
         [Route("/ChatMessage/GetAll")]
         public IActionResult GetAll()
-        {
-            return Ok(_chatContext.ChatMessages.ToList());
-        }
+		{
+			return Ok(_chatMessageDataService.GetAll());
+		}
     }
 }

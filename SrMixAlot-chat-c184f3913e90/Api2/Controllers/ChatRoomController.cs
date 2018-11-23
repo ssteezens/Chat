@@ -1,6 +1,7 @@
 ﻿using Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using Api.Services.Data.Interfaces;
 
 namespace Api.Controllers
 {
@@ -9,15 +10,15 @@ namespace Api.Controllers
     /// </summary>
     public class ChatRoomController : ControllerBase
     {
-        private readonly ChatContext _chatContext;
+        private readonly IChatRoomDataService _chatRoomDataService;
 
 		/// <summary>
         ///		Chat room controller constructor.
         /// </summary>
-        /// <param name="chatContext"> Injected ChatContext. </param>
-        public ChatRoomController(ChatContext chatContext)
+        /// <param name="chatRoomDataService"> Injected data service for chat rooms. </param>
+        public ChatRoomController(IChatRoomDataService chatRoomDataService)
 		{
-            _chatContext = chatContext;
+            _chatRoomDataService = chatRoomDataService;
         }
 
 		/// <summary>
@@ -27,19 +28,7 @@ namespace Api.Controllers
         [Route("/ChatRoom/GetAll")]
         public IActionResult GetAll()
         {
-			var users = _chatContext.Users.ToList();
-			var messages = _chatContext.ChatMessages.ToList();
-			var chatRooms = _chatContext.ChatRooms.ToList();
-
-			// TODO: configure entities 
-			// TODO: get messages by ChatRoom id
-			foreach (var room in chatRooms)
-			{
-				room.Users = users;
-				room.ChatEntries = messages.Where(i => i.ChatRoomId == room.Id);
-			}
-
-            return Ok(chatRooms);
+            return Ok(_chatRoomDataService.GetAll());
         }
     }
 }

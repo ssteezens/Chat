@@ -7,24 +7,30 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <DataTemplate x:DataType="models:ChatMessage" x:Key="ChatMessageListItemTemplate">
-                <Grid BorderBrush="Black"
-                      BorderThickness="2"
-                      HorizontalAlignment="Stretch">
+                <Grid HorizontalAlignment="Stretch"
+                      Padding="4">
                     
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     
                     <Ellipse Grid.Column="0" 
+                             Margin="4,0,0,0"
                              Width="32" 
                              Height="32">
                         <Ellipse.Fill>
                             <ImageBrush ImageSource="{x:Bind User.ImageFilePath, FallbackValue='ms-appx:///Assets/avatar64x64.png'}" />
                         </Ellipse.Fill>
                     </Ellipse>
+
+                    <Rectangle Grid.Column="1"
+                               Margin="4,0,8,0"
+                               Fill="Black"
+                               Width="1"/>
                     
-                    <TextBlock Grid.Column="1" 
+                    <TextBlock Grid.Column="2" 
                                Margin="4"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Stretch"
@@ -59,6 +65,7 @@
 
         <!-- Create chat message -->
         <TextBox Grid.Row="1" 
+                 TextWrapping="Wrap"
                  TextChanged="{x:Bind ViewModel.OnUserTextChanged}"
                  Text="{x:Bind ViewModel.UserText, Mode=TwoWay}"/>
         

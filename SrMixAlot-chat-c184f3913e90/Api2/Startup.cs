@@ -1,4 +1,6 @@
 ﻿using Api.Models;
+using Api.Services.Data;
+using Api.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -35,7 +37,10 @@ namespace Api
             var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<ChatContext>
                 (options => options.UseSqlServer(connection));
-        }
+
+			services.AddScoped<IChatRoomDataService, ChatRoomDataService>();
+			services.AddScoped<IChatMessageDataService, ChatMessageDataService>();
+		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
