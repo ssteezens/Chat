@@ -1,11 +1,10 @@
-﻿using System.Linq;
-using Api.Models;
+﻿using Api.Models;
 using Api.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
-	/// <summary>
+    /// <summary>
     ///		Api controller for chat message related actions.
     /// </summary>
     public class ChatMessageController : ControllerBase

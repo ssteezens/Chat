@@ -1,11 +1,9 @@
-﻿using Api.Models;
+﻿using Api.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Api.Services.Data.Interfaces;
 
 namespace Api.Controllers
 {
-	/// <summary>
+    /// <summary>
     ///		Api controller for chat room related actions.
     /// </summary>
     public class ChatRoomController : ControllerBase
