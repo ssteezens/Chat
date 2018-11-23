@@ -20,7 +20,7 @@
                              Width="32" 
                              Height="32">
                         <Ellipse.Fill>
-                            <ImageBrush ImageSource="{x:Bind User.ImageFilePath}" />
+                            <ImageBrush ImageSource="{x:Bind User.ImageFilePath, FallbackValue='ms-appx:///Assets/avatar64x64.png'}" />
                         </Ellipse.Fill>
                     </Ellipse>
                     
