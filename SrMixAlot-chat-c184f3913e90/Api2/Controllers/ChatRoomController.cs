@@ -4,15 +4,26 @@ using System.Linq;
 
 namespace Api.Controllers
 {
+	/// <summary>
+    ///		Api controller for chat room related actions.
+    /// </summary>
     public class ChatRoomController : ControllerBase
     {
         private readonly ChatContext _chatContext;
 
+		/// <summary>
+        ///		Chat room controller constructor.
+        /// </summary>
+        /// <param name="chatContext"> Injected ChatContext. </param>
         public ChatRoomController(ChatContext chatContext)
 		{
             _chatContext = chatContext;
         }
 
+		/// <summary>
+        ///		Gets all chat rooms from the database.
+        /// </summary>
+        /// <returns> All chat rooms from ChatContext. </returns>
         [Route("/ChatRoom/GetAll")]
         public IActionResult GetAll()
         {

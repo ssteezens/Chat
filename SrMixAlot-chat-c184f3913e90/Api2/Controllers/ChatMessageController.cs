@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
+	/// <summary>
+    ///		Api controller for chat message related actions.
+    /// </summary>
     public class ChatMessageController : ControllerBase
     {
         private readonly ChatContext _chatContext;
@@ -13,6 +16,11 @@ namespace Api.Controllers
             _chatContext = chatContext;
         }
 
+		/// <summary>
+        ///		Adds a chat message to the database.
+        /// </summary>
+        /// <param name="message"> Message to add to the database. </param>
+        /// <returns> The message added to the database. </returns>
         [HttpPost]
         [Route("/ChatMessage/Add")]
         public ChatMessage Add([FromBody] ChatMessage message)
@@ -24,6 +32,10 @@ namespace Api.Controllers
 			return addedMessage;
 		}        
 
+		/// <summary>
+        ///		Gets all chat messages from chat context.
+        /// </summary>
+        /// <returns> All messages from chat context. </returns>
         [HttpGet]
         [Route("/ChatMessage/GetAll")]
         public IActionResult GetAll()
