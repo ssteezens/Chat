@@ -19,17 +19,17 @@ namespace Chat.ViewModels
     {
         private string _displayName;
         private string _userText = string.Empty;
-		private readonly IDataService _dataService;
+		private readonly IChatMessageDataService _chatMessageDataService;
 
 		public ChatRoomViewModel()
 		{
 			var container = new Container(config =>
 			{
-				config.For<IDataService>().Singleton().Use<DataServiceBase>()
-					.Named("DataService");
-			});
-
-			_dataService = container.GetInstance<IDataService>();
+				config.For<IChatMessageDataService>().Singleton().Use<ChatMessageDataService>()
+					.Named("ChatMessageDataService");
+            });
+			
+			_chatMessageDataService = container.GetInstance<IChatMessageDataService>();
 		}
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Chat.ViewModels
 			};
 
 			// submit chat to server
-			var addedMessage = _dataService.AddChatMessage(message);
+			var addedMessage = _chatMessageDataService.AddChatMessage(message);
 
 			// add message to list of messages
 			ChatMessages.Add(addedMessage);

@@ -3,6 +3,8 @@ using Chat.Services;
 using GalaSoft.MvvmLight;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Chat.Services.Interfaces;
+using StructureMap;
 
 namespace Chat.ViewModels
 {
@@ -11,10 +13,19 @@ namespace Chat.ViewModels
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+		private readonly IChatRoomDataService _chatRoomDataService;
+
         public MainViewModel()
         {
-			var dataService = new DataServiceBase();
-			var chatRooms = dataService.GetChatRooms();
+			var container = new Container(config =>
+			{
+				config.For<IChatRoomDataService>().Singleton().Use<ChatRoomDataService>()
+					.Named("ChatRoomDataService");
+			});
+			
+			_chatRoomDataService = container.GetInstance<IChatRoomDataService>();
+
+            var chatRooms = _chatRoomDataService.GetChatRooms();
 			var chatRoomViewModels = chatRooms.Select(Mapper.Map<ChatRoomViewModel>).ToList();
 
 			// Test available chat rooms
