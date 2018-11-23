@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight;
 using StructureMap;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace Chat.ViewModels
 {
@@ -63,6 +64,16 @@ namespace Chat.ViewModels
 
 			// clear user text
 			UserText = string.Empty;
+		}
+
+		/// <summary>
+        ///		Event called when user text changed.
+        /// </summary>
+        /// <param name="sender"> User text box. </param>
+        /// <param name="e"> Not used. </param>
+		public void OnUserTextChanged(object sender, TextChangedEventArgs e)
+		{
+			UserText = ((TextBox) sender).Text;
 		}
 
         #endregion

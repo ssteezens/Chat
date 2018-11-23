@@ -59,6 +59,7 @@
 
         <!-- Create chat entry -->
         <TextBox Grid.Row="1" 
+                 TextChanged="{x:Bind ViewModel.OnUserTextChanged}"
                  Text="{x:Bind ViewModel.UserText, Mode=TwoWay}" />
         
         <!-- Send button -->
