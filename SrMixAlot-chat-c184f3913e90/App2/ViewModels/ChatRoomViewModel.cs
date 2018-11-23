@@ -90,14 +90,10 @@ namespace Chat.ViewModels
 		/// <summary>
         ///		Event handler for keyboard presses.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
 		public void OnKeyDown(object sender, KeyRoutedEventArgs e)
 		{
 			if (e.Key == VirtualKey.Enter)
-			{
 				SendMessage();
-			}
 		}
 
         #endregion
