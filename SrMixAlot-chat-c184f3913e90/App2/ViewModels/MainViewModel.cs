@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Chat.Services;
+using Chat.Services.Data;
+using Chat.Services.Data.Interfaces;
 using GalaSoft.MvvmLight;
+using StructureMap;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Chat.Services.Interfaces;
-using StructureMap;
 
 namespace Chat.ViewModels
 {

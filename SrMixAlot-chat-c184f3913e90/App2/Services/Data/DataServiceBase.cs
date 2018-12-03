@@ -1,8 +1,8 @@
-﻿using Chat.Services.Interfaces;
+﻿using System.Net;
+using Chat.Services.Data.Interfaces;
 using ServiceStack;
-using System.Net;
 
-namespace Chat.Services
+namespace Chat.Services.Data
 {
     /// <summary>
     ///     Data service used for making api requests.

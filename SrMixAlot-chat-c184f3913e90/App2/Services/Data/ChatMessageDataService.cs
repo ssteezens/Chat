@@ -1,8 +1,8 @@
-﻿using Chat.Models;
-using Chat.Services.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Chat.Models;
+using Chat.Services.Data.Interfaces;
 
-namespace Chat.Services
+namespace Chat.Services.Data
 {
     /// <summary>
     ///		Service for chat message related data.

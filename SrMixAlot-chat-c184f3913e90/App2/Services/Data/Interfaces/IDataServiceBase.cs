@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using Chat.Models;
-using ServiceStack;
+﻿using ServiceStack;
 
-namespace Chat.Services.Interfaces
+namespace Chat.Services.Data.Interfaces
 {
     /// <summary>
     ///     Data service used for making api requests.

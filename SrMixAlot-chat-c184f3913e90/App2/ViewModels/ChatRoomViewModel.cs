@@ -1,6 +1,6 @@
 ﻿using Chat.Models;
-using Chat.Services;
-using Chat.Services.Interfaces;
+using Chat.Services.Data;
+using Chat.Services.Data.Interfaces;
 using GalaSoft.MvvmLight;
 using StructureMap;
 using System.Collections.ObjectModel;

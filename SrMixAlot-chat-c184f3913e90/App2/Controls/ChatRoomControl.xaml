@@ -34,6 +34,7 @@
                                Margin="4"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Stretch"
+                               TextWrapping="Wrap"
                                Text="{x:Bind Message, Mode=OneWay}"/>
                 </Grid>
             </DataTemplate>
@@ -65,6 +66,7 @@
 
         <!-- Create chat message -->
         <TextBox Grid.Row="1" 
+                 Margin="0,8"
                  TextWrapping="Wrap"
                  TextChanged="{x:Bind ViewModel.OnUserTextChanged}"
                  Text="{x:Bind ViewModel.UserText, Mode=TwoWay}"/>

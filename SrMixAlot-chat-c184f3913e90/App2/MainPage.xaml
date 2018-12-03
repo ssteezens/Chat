@@ -25,6 +25,8 @@
 
         <!-- Chat selector -->
         <ListView Margin="4"
+                  BorderBrush="Black"
+                  BorderThickness="0,0,1,0"
                   SelectedItem="{x:Bind Vm.SelectedChatRoom, Mode=TwoWay}"
                   ItemsSource="{x:Bind Vm.AvailableChatRooms}" 
                   ItemTemplate="{StaticResource ChatChooserListItem}"/>
