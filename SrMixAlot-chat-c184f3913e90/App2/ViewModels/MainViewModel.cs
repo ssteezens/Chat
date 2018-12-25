@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight;
 using StructureMap;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Chat.Models;
 
 namespace Chat.ViewModels
 {
@@ -57,5 +58,14 @@ namespace Chat.ViewModels
         }
 
         #endregion
+
+		/// <summary>
+        ///		Handles navigation from login, sets the current user.
+        /// </summary>
+        /// <param name="user"></param>
+		public void HandleNavigationFromLogin(User user)
+		{
+
+		}
     }
 }

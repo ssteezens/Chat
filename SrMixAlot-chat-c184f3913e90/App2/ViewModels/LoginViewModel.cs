@@ -60,6 +60,7 @@ namespace Chat.ViewModels
         /// <param name="e"> Args for event. </param>
 		public void PasswordChanged(object sender, RoutedEventArgs e)
 		{
+			// todo: hash and salt password
 			Password = ((PasswordBox) sender).Password;
 		}
 

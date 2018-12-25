@@ -1,7 +1,7 @@
 ﻿using Chat.ViewModels;
 using Windows.UI.Xaml.Controls;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+using Windows.UI.Xaml.Navigation;
+using Chat.Models;
 
 namespace Chat
 {
@@ -20,5 +20,17 @@ namespace Chat
         }
 
         public MainViewModel Vm { get; set; }
+
+		/// <summary>
+		///		Override behavior for when this view has been navigated to.
+		/// </summary>
+		/// <param name="e"> Navigation arguments. </param>
+		protected override void OnNavigatedTo(NavigationEventArgs e)
+		{
+			if (e.Parameter is User user)
+			{
+				Vm.HandleNavigationFromLogin(user);
+			}
+		}
     }
 }

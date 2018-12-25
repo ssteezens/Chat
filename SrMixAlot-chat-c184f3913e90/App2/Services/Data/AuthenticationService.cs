@@ -17,7 +17,12 @@ namespace Chat.Services.Data
 		/// <returns> The authenticated user. </returns>
 		public User AuthenticateUser(string username, string password)
 		{
-			throw new NotImplementedException();
+			// todo: implement this
+			return new User()
+			{
+				NickName = username,
+				ImageFilePath = "ms-appx:///Assets/avatar64x64.png"
+            };
 		}
 	}
 }

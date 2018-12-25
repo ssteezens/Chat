@@ -1,0 +1,15 @@
+﻿<UserControl
+    x:Class="Chat.Controls.Common.CircleIconControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Chat.Controls.Common">
+    <Ellipse Margin="4,0,0,0"
+             Stroke="Black"
+             StrokeThickness="2"
+             Width="32" 
+             Height="32">
+        <Ellipse.Fill>
+            <ImageBrush ImageSource="{x:Bind IconImage, FallbackValue='ms-appx:///Assets/avatar64x64.png'}" />
+        </Ellipse.Fill>
+    </Ellipse>
+</UserControl>

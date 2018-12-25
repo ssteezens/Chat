@@ -98,6 +98,9 @@
     <Compile Include="Controls\ChatRoomControl.xaml.cs">
       <DependentUpon>ChatRoomControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Common\CircleIconControl.xaml.cs">
+      <DependentUpon>CircleIconControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\StringLengthToEnabledConverter.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -146,6 +149,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Controls\ChatRoomControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Common\CircleIconControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -14,6 +14,9 @@ namespace Chat.Views
 			this.DataContext = ViewModel;
 		}
 
-		public LoginViewModel ViewModel { get; set; }
+		/// <summary>
+        ///		View model for login view.
+        /// </summary>
+		public LoginViewModel ViewModel { get; private set; }
     }
 }

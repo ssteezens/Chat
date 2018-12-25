@@ -30,6 +30,12 @@
                          Margin="10"
                          PasswordChanged="{x:Bind ViewModel.PasswordChanged}"/>
 
+            <!-- Create an account link -->
+            <TextBlock Margin="10,0"
+                       Foreground="Blue"
+                       HorizontalAlignment="Left"
+                       Text="Create an account"/> 
+
             <!-- Login button -->
             <Button Content="Login"
                     Margin="10"
