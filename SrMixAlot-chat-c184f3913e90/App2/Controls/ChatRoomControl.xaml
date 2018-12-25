@@ -71,6 +71,8 @@
         <TextBox Grid.Row="1" 
                  Margin="0,8"
                  TextWrapping="Wrap"
+                 BorderBrush="Black"
+                 BorderThickness="1"
                  TextChanged="{x:Bind ViewModel.OnUserTextChanged}"
                  Text="{x:Bind ViewModel.UserText, Mode=TwoWay}"/>
         
