@@ -1,15 +1,12 @@
-﻿namespace Api.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace Api.Models
 {
     /// <summary>
     ///     It's a user.
     /// </summary>
-    public class User
+    public class User : IdentityUser
     {
-        /// <summary>
-        ///     The user's id.
-        /// </summary>
-        public int Id { get; set; }
-
         /// <summary>
         ///     Nickname for the user
         /// </summary>

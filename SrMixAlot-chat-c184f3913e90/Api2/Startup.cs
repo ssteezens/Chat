@@ -33,6 +33,7 @@ namespace Api
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+			services.AddTransient<ChatSeeder>();
 
             var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<ChatContext>
