@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Api.Models;
+﻿using Api.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Api.Controllers
 {
@@ -19,9 +17,12 @@ namespace Api.Controllers
 		[HttpGet("/api/test")]
 		public IActionResult Test()
 		{
-			_chatContext.ChatMessages.ToList();
+			var thing = _chatContext.ChatRooms
+				.Include(room => room.ChatMessages)
+				.Include(room => room.Users)
+				.ToList();
 
-			return Ok();
+			return Ok(thing);
 		}
     }
 }

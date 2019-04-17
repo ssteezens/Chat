@@ -29,16 +29,17 @@ namespace Api.Models
 			};
 			var chatMessage = new ChatMessage()
 			{
-				ChatRoomId = 1,
 				Message = "Seeded chat message",
-				User = user
+				User = user,
 			};
 			var chatRoom = new ChatRoom()
 			{
-				ChatEntries = new List<ChatMessage>() { chatMessage },
+				ChatMessages = new List<ChatMessage>() { chatMessage },
 				DisplayName = "Seeded Chat Room",
 				Users = new List<User>() { user }
 			};
+
+			chatMessage.ChatRoom = chatRoom;
 
             // create sample user data if none exist
             if (!_context.ChatUsers.Any())

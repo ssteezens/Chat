@@ -17,9 +17,9 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Api2": {
+    "Api": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "api/values",
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {

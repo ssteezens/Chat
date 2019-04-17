@@ -15,9 +15,9 @@ namespace Api.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        ///     All the chat entry's for this chat pane.
+        ///     All the chat messages for this chat pane.
         /// </summary>
-        public IEnumerable<ChatMessage> ChatEntries { get; set; }
+        public IEnumerable<ChatMessage> ChatMessages { get; set; }
 
         /// <summary>
         ///     All user's in this chat.

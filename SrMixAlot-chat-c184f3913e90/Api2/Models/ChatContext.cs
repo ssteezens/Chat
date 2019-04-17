@@ -34,11 +34,21 @@ namespace Api.Models
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
-
-			// TODO: configure one to many relationships here
-
-			// TODO: create user to chat room linking table
 			
+			ConfigureChatMessage(modelBuilder);
+			ConfigureChatRoom(modelBuilder);
+		}
+
+		/// <summary>
+        ///		Configure the chat user entity.
+        /// </summary>
+        /// <param name="modelBuilder"> The model builder. </param>
+		protected virtual void ConfigureChatUser(ModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<User>(builder =>
+			{
+				
+			});
 		}
 
 		/// <summary>
@@ -49,7 +59,8 @@ namespace Api.Models
 		{
 			modelBuilder.Entity<ChatMessage>(builder =>
 			{
-
+				builder.HasOne(message => message.ChatRoom)
+					.WithMany(room => room.ChatMessages);
 			});
 		}
 
@@ -57,7 +68,8 @@ namespace Api.Models
 		{
 			modelBuilder.Entity<ChatRoom>(builder =>
 			{
-
+				builder.HasMany(room => room.ChatMessages)
+					.WithOne(message => message.ChatRoom);
 			});
 		}
 
