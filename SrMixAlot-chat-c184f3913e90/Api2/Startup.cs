@@ -4,6 +4,7 @@ using Api.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +23,18 @@ namespace Api
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+		{
+			services.AddIdentity<User, IdentityRole>(options =>
+			{
+                options.User.RequireUniqueEmail = true;
+
+				// set password requirements
+                options.Password.RequireDigit = false;
+				options.Password.RequiredLength = 6;
+				options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+			}).AddEntityFrameworkStores<ChatContext>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -56,7 +68,8 @@ namespace Api
             }
 
             app.UseHttpsRedirection();
+			app.UseAuthentication();
             app.UseMvc();
-        }
+		}
     }
 }
