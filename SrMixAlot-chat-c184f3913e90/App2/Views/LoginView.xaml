@@ -23,7 +23,7 @@
             <!-- Username -->
             <TextBox Header="Username"
                      Margin="10"
-                     Text="{x:Bind ViewModel.Username}"/>
+                     Text="{x:Bind ViewModel.Username, Mode=TwoWay}"/>
             
             <!-- Password -->
             <PasswordBox Header="Password"

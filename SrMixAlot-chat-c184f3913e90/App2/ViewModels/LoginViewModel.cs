@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Chat.Services.Data;
+﻿using Chat.Services.Data;
 using Chat.Services.Data.Interfaces;
 using Chat.Services.UI;
 using Chat.Services.UI.Interfaces;
 using GalaSoft.MvvmLight;
-using ServiceStack.Configuration;
 using StructureMap;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace Chat.ViewModels
 {
@@ -71,7 +65,6 @@ namespace Chat.ViewModels
         /// <param name="e"> Login button clicked event args. </param>
 		public void LoginClicked(object sender, RoutedEventArgs e)
 		{
-            // todo: submit login authentication request
 			var user = _authenticationService.AuthenticateUser(Username, Password);
 
 			// navigate to main page.

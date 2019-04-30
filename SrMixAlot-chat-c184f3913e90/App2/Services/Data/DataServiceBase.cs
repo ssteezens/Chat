@@ -11,7 +11,7 @@ namespace Chat.Services.Data
     {
         public DataServiceBase()
         {
-            Client = new JsonServiceClient("https://localhost:44382");
+            Client = new JsonServiceClient("https://localhost:5001");
 
             // TODO: refine this, maybe filter on sender
 			// TODO: wire this up using middleware

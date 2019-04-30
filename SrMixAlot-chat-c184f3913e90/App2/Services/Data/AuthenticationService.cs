@@ -17,12 +17,13 @@ namespace Chat.Services.Data
 		/// <returns> The authenticated user. </returns>
 		public User AuthenticateUser(string username, string password)
 		{
-			// todo: implement this
-			return new User()
+			var loginModel = new LoginModel()
 			{
-				NickName = username,
-				ImageFilePath = "ms-appx:///Assets/avatar64x64.png"
-            };
+				Username = username,
+				Password = password
+			};
+			
+            return Client.Post<User>("/api/account/login", loginModel);
 		}
 	}
 }
