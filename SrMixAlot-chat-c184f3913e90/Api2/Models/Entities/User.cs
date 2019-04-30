@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Api.Models
+namespace Api.Models.Entities
 {
     /// <summary>
     ///     It's a user.

@@ -27,6 +27,7 @@ namespace Chat.ViewModels
 			_chatRoomDataService = container.GetInstance<IChatRoomDataService>();
 
             var chatRooms = _chatRoomDataService.GetChatRooms();
+			
 			var chatRoomViewModels = chatRooms.Select(Mapper.Map<ChatRoomViewModel>).ToList();
 
 			// Test available chat rooms

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Api.Models;
+﻿using Api.Models.Entities;
 using Api.Services.Data.Interfaces;
+using System.Linq;
 
 namespace Api.Services.Data
 {
-	/// <summary>
-	///		Service for getting user related data.
-	/// </summary>
+    /// <summary>
+    ///		Service for getting user related data.
+    /// </summary>
     public class UserService : IUserService
     {
         private readonly ChatContext _context;

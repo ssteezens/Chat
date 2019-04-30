@@ -1,9 +1,9 @@
-﻿using Api.Models;
+﻿using Api.Models.Entities;
 using System.Collections.Generic;
 
 namespace Api.Services.Data.Interfaces
 {
-	/// <summary>
+    /// <summary>
     ///		Interface for chat room related data operations.
     /// </summary>
     public interface IChatRoomDataService

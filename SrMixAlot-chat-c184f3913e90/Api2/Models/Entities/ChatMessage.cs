@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Api.Models
+namespace Api.Models.Entities
 {
 	[Table("ChatMessages")]
     public class ChatMessage

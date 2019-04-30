@@ -1,4 +1,4 @@
-﻿using Api.Models;
+﻿using Api.Models.Entities;
 using System.Collections.Generic;
 
 namespace Api.Services.Data.Interfaces

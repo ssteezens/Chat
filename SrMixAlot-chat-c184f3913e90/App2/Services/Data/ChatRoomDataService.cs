@@ -15,7 +15,7 @@ namespace Chat.Services.Data
 		/// <returns> Enumerable of chat rooms. </returns>
 		public IEnumerable<ChatRoom> GetChatRooms()
 		{
-			return Client.Get<IEnumerable<ChatRoom>>("/ChatRoom/GetAll");
+            return Client.Get<IEnumerable<ChatRoom>>("/ChatRoom/GetAll");
 		}
     }
 }

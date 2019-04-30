@@ -1,4 +1,7 @@
-﻿using Api.Services.Data.Interfaces;
+﻿using System.Collections.Generic;
+using Api.Models.Dto;
+using Api.Services.Data.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -9,15 +12,18 @@ namespace Api.Controllers
     public class ChatRoomController : ControllerBase
     {
         private readonly IChatRoomDataService _chatRoomDataService;
+		private readonly IMapper _mapper;
 
-		/// <summary>
-        ///		Chat room controller constructor.
-        /// </summary>
-        /// <param name="chatRoomDataService"> Injected data service for chat rooms. </param>
-        public ChatRoomController(IChatRoomDataService chatRoomDataService)
+		///  <summary>
+		/// 		Chat room controller constructor.
+		///  </summary>
+		///  <param name="chatRoomDataService"> Injected data service for chat rooms. </param>
+		///  <param name="mapper"> Injected AutoMapper. </param>
+		public ChatRoomController(IChatRoomDataService chatRoomDataService, IMapper mapper)
 		{
-            _chatRoomDataService = chatRoomDataService;
-        }
+			_chatRoomDataService = chatRoomDataService;
+			_mapper = mapper;
+		}
 
 		/// <summary>
         ///		Gets all chat rooms from the database.
@@ -25,8 +31,12 @@ namespace Api.Controllers
         /// <returns> All chat rooms from ChatContext. </returns>
         [Route("/ChatRoom/GetAll")]
         public IActionResult GetAll()
-        {
-            return Ok(_chatRoomDataService.GetAll());
+		{
+			var rooms = _chatRoomDataService.GetAll();
+			// todo: return dto from service?
+			var roomDtos = _mapper.Map<IEnumerable<ChatRoomDto>>(rooms);
+
+            return Ok(roomDtos);
         }
     }
 }

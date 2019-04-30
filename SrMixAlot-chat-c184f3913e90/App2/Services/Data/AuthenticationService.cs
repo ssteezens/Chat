@@ -1,6 +1,5 @@
 ﻿using Chat.Models;
 using Chat.Services.Data.Interfaces;
-using System;
 
 namespace Chat.Services.Data
 {

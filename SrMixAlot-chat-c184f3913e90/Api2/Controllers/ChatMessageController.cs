@@ -1,4 +1,4 @@
-﻿using Api.Models;
+﻿using Api.Models.Entities;
 using Api.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

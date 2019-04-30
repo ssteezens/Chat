@@ -91,7 +91,7 @@ namespace Chat
 			Mapper.Initialize(cfg =>
 			{
 				cfg.CreateMap<ChatRoom, ChatRoomViewModel>()
-					.ForMember(dest => dest.ChatMessages, opt => opt.MapFrom(src => new ObservableCollection<ChatMessage>(src.ChatEntries)))
+					.ForMember(dest => dest.ChatMessages, opt => opt.MapFrom(src => new ObservableCollection<ChatMessage>(src.ChatMessages)))
 					.ForMember(dest => dest.Users, opt => opt.MapFrom(src => new ObservableCollection<User>(src.Users)));
 
 				cfg.CreateMap<ChatMessage, ChatMessage>().ReverseMap();

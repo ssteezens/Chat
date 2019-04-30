@@ -1,24 +1,28 @@
-﻿using Api.Models;
+﻿using Api.Models.Entities;
 using Api.Services.Data.Interfaces;
+using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Api.Services.Data
 {
-	/// <summary>
+    /// <summary>
     ///		Service for chat room related data.
     /// </summary>
     public class ChatRoomDataService : IChatRoomDataService
 	{
 		private readonly ChatContext _chatContext;
+		private readonly IMapper _mapper;
 
-		/// <summary>
-        ///		Chat room constructor.
-        /// </summary>
-        /// <param name="chatContext"> Ef core chat context. </param>
-		public ChatRoomDataService(ChatContext chatContext)
+		///  <summary>
+		/// 		Chat room constructor.
+		///  </summary>
+		///  <param name="chatContext"> Ef core chat context. </param>
+		///  <param name="mapper"> Injected AutoMapper. </param>
+		public ChatRoomDataService(ChatContext chatContext, IMapper mapper)
 		{
 			_chatContext = chatContext;
+			_mapper = mapper;
 		}
 
 		/// <summary>

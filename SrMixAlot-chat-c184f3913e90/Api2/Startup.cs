@@ -1,6 +1,8 @@
-﻿using Api.Models;
+﻿using Api.Models.Dto;
+using Api.Models.Entities;
 using Api.Services.Data;
 using Api.Services.Data.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -54,6 +56,18 @@ namespace Api
 			services.AddScoped<IChatRoomDataService, ChatRoomDataService>();
 			services.AddScoped<IChatMessageDataService, ChatMessageDataService>();
 			services.AddScoped<IUserService, UserService>();
+
+			Mapper.Initialize(config =>
+			{
+				config.CreateMap<User, UserDto>()
+					.ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.UserName));
+				config.CreateMap<ChatMessage, ChatMessageDto>();
+				config.CreateMap<ChatRoom, ChatRoomDto>()
+					.ForMember(dest => dest.Users, opt => opt.MapFrom(src => src.Users))
+					.ForMember(dest => dest.ChatMessages, opt => opt.MapFrom(src => src.ChatMessages));
+			});
+
+			services.AddScoped(_ => Mapper.Configuration.CreateMapper());
 		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
