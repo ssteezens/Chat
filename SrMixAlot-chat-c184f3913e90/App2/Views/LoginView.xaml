@@ -18,7 +18,8 @@
                     Grid.Column="1"
                     Padding="20"
                     BorderThickness="1,0"
-                    BorderBrush="Black">
+                    BorderBrush="Black"
+                    KeyDown="{x:Bind ViewModel.OnKeyDown}">
 
             <!-- Username -->
             <TextBox Header="Username"

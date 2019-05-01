@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
+using Chat.Models;
 using Chat.Services.Data;
 using Chat.Services.Data.Interfaces;
 using GalaSoft.MvvmLight;
-using StructureMap;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Chat.Models;
+using Windows.UI.Xaml;
 
 namespace Chat.ViewModels
 {
@@ -17,17 +17,10 @@ namespace Chat.ViewModels
 		private readonly IChatRoomDataService _chatRoomDataService;
 
         public MainViewModel()
-        {
-			var container = new Container(config =>
-			{
-				config.For<IChatRoomDataService>().Singleton().Use<ChatRoomDataService>()
-					.Named("ChatRoomDataService");
-			});
-			
-			_chatRoomDataService = container.GetInstance<IChatRoomDataService>();
+        {	
+			_chatRoomDataService = new ChatRoomDataService();
 
             var chatRooms = _chatRoomDataService.GetChatRooms();
-			
 			var chatRoomViewModels = chatRooms.Select(Mapper.Map<ChatRoomViewModel>).ToList();
 
 			// Test available chat rooms
@@ -37,8 +30,19 @@ namespace Chat.ViewModels
 
         #region Properties
 
+        private User _user;
         private ChatRoomViewModel _selectedChatRoom;
+		private AddChatRoomViewModel _addChatRoomViewModel = new AddChatRoomViewModel();
         private ObservableCollection<ChatRoomViewModel> _availableChatRooms = new ObservableCollection<ChatRoomViewModel>();
+
+		/// <summary>
+        ///		The current user.
+        /// </summary>
+		public User User
+		{
+			get => _user;
+			set => Set(ref _user, value, nameof(User));
+		}
 
         /// <summary>
         ///     The selected chat room.
@@ -58,7 +62,26 @@ namespace Chat.ViewModels
             private set => Set(ref _availableChatRooms, value, nameof(AvailableChatRooms));
         }
 
+		/// <summary>
+        ///		View model for adding a chat room.
+        /// </summary>
+		public AddChatRoomViewModel AddChatRoomViewModel
+		{
+            get => _addChatRoomViewModel;
+            set => Set(ref _addChatRoomViewModel, value, nameof(AddChatRoomViewModel));
+		}
+
         #endregion
+
+		/// <summary>
+        ///		Event handler for when the add chat button is clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		public void ToggleAddChatRoomControl(object sender, RoutedEventArgs e)
+		{
+            AddChatRoomViewModel.IsOpen = !AddChatRoomViewModel.IsOpen;
+		}
 
 		/// <summary>
         ///		Handles navigation from login, sets the current user.
@@ -66,7 +89,7 @@ namespace Chat.ViewModels
         /// <param name="user"></param>
 		public void HandleNavigationFromLogin(User user)
 		{
-
+            User = user;
 		}
     }
 }

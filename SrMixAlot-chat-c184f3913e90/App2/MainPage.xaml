@@ -17,7 +17,12 @@
             </DataTemplate>
         </ResourceDictionary>
     </Page.Resources>
+
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
@@ -31,8 +36,32 @@
                   ItemsSource="{x:Bind Vm.AvailableChatRooms}" 
                   ItemTemplate="{StaticResource ChatChooserListItem}"/>
 
+        <!-- Chat Selector Command Bar -->
+        <CommandBar Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="4,8"
+                    BorderThickness="0,0,1,0">
+            <AppBarButton Label="Add" Click="{x:Bind Vm.ToggleAddChatRoomControl}">
+                <SymbolIcon Symbol="Add"/>
+            </AppBarButton>
+        </CommandBar>
+
+        <!-- Add Chat Room Control -->
+        <c:AddChatRoomControl Margin="20"
+                              Grid.Row="0"
+                              Grid.Column="1"
+                              Width="200"
+                              Canvas.ZIndex="2"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Bottom"
+                              ViewModel="{x:Bind Vm.AddChatRoomViewModel}"/>
+
         <!-- Active chat window -->
-        <c:ChatRoomControl Margin="4" Grid.Column="1" ViewModel="{x:Bind Vm.SelectedChatRoom, Mode=OneWay}" />
+        <c:ChatRoomControl Margin="4" 
+                           Grid.Row="0"
+                           Grid.RowSpan="2"
+                           Grid.Column="1" 
+                           ViewModel="{x:Bind Vm.SelectedChatRoom, Mode=OneWay}" />
         
     </Grid>
 </Page>

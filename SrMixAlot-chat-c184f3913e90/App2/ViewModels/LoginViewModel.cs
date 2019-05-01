@@ -1,4 +1,5 @@
-﻿using Chat.Services.Data;
+﻿using Windows.System;
+using Chat.Services.Data;
 using Chat.Services.Data.Interfaces;
 using Chat.Services.UI;
 using Chat.Services.UI.Interfaces;
@@ -6,6 +7,7 @@ using GalaSoft.MvvmLight;
 using StructureMap;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 
 namespace Chat.ViewModels
 {
@@ -48,11 +50,20 @@ namespace Chat.ViewModels
         #region Event handlers
 
 		/// <summary>
+		///		Event handler for keyboard presses.
+		/// </summary>
+		public void OnKeyDown(object sender, KeyRoutedEventArgs e)
+		{
+			if (e.Key == VirtualKey.Enter)
+				Login();
+		}
+
+        /// <summary>
         ///		Event handler for when password has changed.
         /// </summary>
         /// <param name="sender"> The password box. </param>
         /// <param name="e"> Args for event. </param>
-		public void PasswordChanged(object sender, RoutedEventArgs e)
+        public void PasswordChanged(object sender, RoutedEventArgs e)
 		{
 			// todo: hash and salt password
 			Password = ((PasswordBox) sender).Password;
@@ -65,11 +76,19 @@ namespace Chat.ViewModels
         /// <param name="e"> Login button clicked event args. </param>
 		public void LoginClicked(object sender, RoutedEventArgs e)
 		{
+			Login();
+		}
+
+		/// <summary>
+        ///		Authenticates user, navigates to the main page.
+        /// </summary>
+		private void Login()
+		{
 			var user = _authenticationService.AuthenticateUser(Username, Password);
 
 			// navigate to main page.
 			_navigationService.Navigate(typeof(MainPage));
-		}
+        }
 
         #endregion
 
