@@ -32,14 +32,7 @@ namespace Chat.ViewModels
 			_chatMessageDataService = container.GetInstance<IChatMessageDataService>();
 		}
 
-        /// <summary>
-        ///     Chat's display name.
-        /// </summary>
-        public string DisplayName
-        {
-            get => _displayName;
-            set => Set(ref _displayName, value, nameof(DisplayName));
-        }
+        
 
         #region Event handlers
 
@@ -99,6 +92,15 @@ namespace Chat.ViewModels
         #endregion
 
         #region Properties
+
+		/// <summary>
+		///     Chat's display name.
+		/// </summary>
+		public string DisplayName
+		{
+			get => _displayName;
+			set => Set(ref _displayName, value, nameof(DisplayName));
+		}
 
         /// <summary>
         ///     Text entered into the user's TextBox.
