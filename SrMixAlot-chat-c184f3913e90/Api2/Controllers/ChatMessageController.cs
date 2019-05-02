@@ -7,7 +7,7 @@ namespace Api.Controllers
     /// <summary>
     ///		Api controller for chat message related actions.
     /// </summary>
-    public class ChatMessageController : ControllerBase
+    public class ChatMessageController : Controller
     {
         private readonly IChatMessageDataService _chatMessageDataService;
 
@@ -21,8 +21,7 @@ namespace Api.Controllers
         /// </summary>
         /// <param name="message"> Message to add to the database. </param>
         /// <returns> The message added to the database. </returns>
-        [HttpPost]
-        [Route("/ChatMessage/Add")]
+        [HttpPost("/ChatMessage/Add")]
         public IActionResult Add([FromBody] ChatMessage message)
 		{
 			return Ok(_chatMessageDataService.Add(message));
@@ -32,8 +31,7 @@ namespace Api.Controllers
         ///		Gets all chat messages from chat context.
         /// </summary>
         /// <returns> All messages from chat context. </returns>
-        [HttpGet]
-        [Route("/ChatMessage/GetAll")]
+        [HttpGet("/ChatMessage/GetAll")]
         public IActionResult GetAll()
 		{
 			return Ok(_chatMessageDataService.GetAll());

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Api.Models.Dto;
+using Api.Models.Entities;
 using Api.Services.Data.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,7 @@ namespace Api.Controllers
         ///		Gets all chat rooms from the database.
         /// </summary>
         /// <returns> All chat rooms from ChatContext. </returns>
-        [Route("/ChatRoom/GetAll")]
+        [HttpGet("/ChatRoom/GetAll")]
         public IActionResult GetAll()
 		{
 			var rooms = _chatRoomDataService.GetAll();
@@ -38,5 +39,18 @@ namespace Api.Controllers
 
             return Ok(roomDtos);
         }
+
+		/// <summary>
+        ///		Adds a chat room to the database.
+        /// </summary>
+        /// <param name="chatRoom"> Chat room to add to the database. </param>
+        /// <returns> An Ok or BadRequest. </returns>
+		[HttpPost("/ChatRoom/Add")]
+		public IActionResult Add([FromBody] ChatRoom chatRoom)
+		{
+			// todo: validation
+			
+			return Ok(_chatRoomDataService.Add(chatRoom));
+		}
     }
 }

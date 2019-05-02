@@ -13,5 +13,11 @@ namespace Chat.Services.Data.Interfaces
 		/// </summary>
 		/// <returns> Enumerable of chat rooms. </returns>
 		IEnumerable<ChatRoom> GetChatRooms();
-    }
+
+		/// <summary>
+        ///		Send a chat room to api to add to the database.
+        /// </summary>
+        /// <returns> ChatRoom added to the database. </returns>
+		ChatRoom AddChatRoom(ChatRoom chatRoom);
+	}
 }

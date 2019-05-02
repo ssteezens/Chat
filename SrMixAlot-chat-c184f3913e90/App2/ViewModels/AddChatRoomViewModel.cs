@@ -1,6 +1,8 @@
-﻿using Chat.Models;
+﻿using System.Collections.Generic;
+using Chat.Models;
 using GalaSoft.MvvmLight;
 using Windows.UI.Xaml;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace Chat.ViewModels
 {
@@ -10,7 +12,11 @@ namespace Chat.ViewModels
 
 		public AddChatRoomViewModel()
 		{
-			ChatRoomModel = new ChatRoom();
+			ChatRoomModel = new ChatRoom()
+			{
+				Users = new List<User>() { UserInstance.Current },
+				ChatMessages = new List<ChatMessage>()
+			};
 		}
 
 		/// <summary>
@@ -28,7 +34,8 @@ namespace Chat.ViewModels
 		{
 			// todo: validation
 
-			// todo: submit to server
+			// send event to be handled on main view model
+			MessengerInstance.Send(new NotificationMessage<ChatRoom>(ChatRoomModel, "Add"));
 
             IsOpen = false;
 		}

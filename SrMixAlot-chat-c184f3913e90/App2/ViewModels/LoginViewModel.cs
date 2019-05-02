@@ -8,6 +8,7 @@ using StructureMap;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Chat.Models;
 
 namespace Chat.ViewModels
 {
@@ -85,6 +86,9 @@ namespace Chat.ViewModels
 		private void Login()
 		{
 			var user = _authenticationService.AuthenticateUser(Username, Password);
+
+			// set the current user instance
+            UserInstance.Current = user;
 
 			// navigate to main page.
 			_navigationService.Navigate(typeof(MainPage));

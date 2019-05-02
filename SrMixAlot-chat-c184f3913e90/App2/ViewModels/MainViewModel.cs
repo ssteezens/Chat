@@ -3,6 +3,7 @@ using Chat.Models;
 using Chat.Services.Data;
 using Chat.Services.Data.Interfaces;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Messaging;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml;
@@ -26,6 +27,9 @@ namespace Chat.ViewModels
 			// Test available chat rooms
 			AvailableChatRooms = new ObservableCollection<ChatRoomViewModel>(chatRoomViewModels);
 			SelectedChatRoom = AvailableChatRooms.FirstOrDefault();
+
+			// register messenger
+			MessengerInstance.Register<NotificationMessage<ChatRoom>>(this, action => HandleChatRoomMessage(action.Content, action.Notification));
 		}
 
         #region Properties
@@ -73,12 +77,32 @@ namespace Chat.ViewModels
 
         #endregion
 
-		/// <summary>
+        #region Messenger Handlers
+
+		private void HandleChatRoomMessage(ChatRoom chatRoom, string message)
+		{
+			switch (message)
+			{
+				case "Add":
+				{
+					var room = _chatRoomDataService.AddChatRoom(chatRoom);
+					var chatRoomViewModel = Mapper.Map<ChatRoomViewModel>(room);
+
+					AvailableChatRooms.Add(chatRoomViewModel);
+
+					break;
+				}
+			}
+		}
+
+        #endregion
+
+        /// <summary>
         ///		Event handler for when the add chat button is clicked.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-		public void ToggleAddChatRoomControl(object sender, RoutedEventArgs e)
+        public void ToggleAddChatRoomControl(object sender, RoutedEventArgs e)
 		{
             AddChatRoomViewModel.IsOpen = !AddChatRoomViewModel.IsOpen;
 		}

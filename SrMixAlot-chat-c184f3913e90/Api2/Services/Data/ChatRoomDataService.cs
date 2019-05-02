@@ -44,5 +44,17 @@ namespace Api.Services.Data
 
 			return chatRooms;
 		}
+
+		/// <summary>
+		///		Add a chat room to the database.
+		/// </summary>
+		/// <param name="chatRoom"> Chat room to add. </param>
+		public ChatRoom Add(ChatRoom chatRoom)
+		{
+			_chatContext.ChatRooms.Add(chatRoom);
+			_chatContext.SaveChanges();
+
+			return chatRoom;
+		}
 	}
 }

@@ -17,5 +17,14 @@ namespace Chat.Services.Data
 		{
             return Client.Get<IEnumerable<ChatRoom>>("/ChatRoom/GetAll");
 		}
-    }
+
+		/// <summary>
+		///		Send a chat room to api to add to the database.
+		/// </summary>
+		/// <returns> ChatRoom added to the database. </returns>
+		public ChatRoom AddChatRoom(ChatRoom chatRoom)
+		{
+			return Client.Post<ChatRoom>("/ChatRoom/Add", chatRoom);
+		}
+	}
 }
