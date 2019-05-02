@@ -79,6 +79,11 @@ namespace Chat.ViewModels
 
         #region Messenger Handlers
 
+		/// <summary>
+        ///		Handle MessengerInstance messages related to a chat room.
+        /// </summary>
+        /// <param name="chatRoom"></param>
+        /// <param name="message"></param>
 		private void HandleChatRoomMessage(ChatRoom chatRoom, string message)
 		{
 			switch (message)
