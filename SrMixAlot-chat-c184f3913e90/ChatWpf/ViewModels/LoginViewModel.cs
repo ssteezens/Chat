@@ -2,11 +2,12 @@
 using ChatWpf.Services.Data.Interfaces;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using System.Windows.Controls;
 
 namespace ChatWpf.ViewModels
 {
-	/// <summary>
+    /// <summary>
     ///		View model for logging in.
     /// </summary>
     public class LoginViewModel : ViewModelBase
@@ -63,9 +64,8 @@ namespace ChatWpf.ViewModels
 
 			// set current user
             UserInstance.Current = user;
-
-			// todo: navigate to chat room
-			MessengerInstance.Send<string>("LoginSuccessful");
+			
+			MessengerInstance.Send(new NotificationMessage<string>("LoginSuccessful", "LoginSuccessful"));
 		}
 
 		/// <summary>

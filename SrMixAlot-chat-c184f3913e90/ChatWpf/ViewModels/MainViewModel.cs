@@ -1,11 +1,17 @@
-﻿using System.Collections.ObjectModel;
+﻿using AutoMapper;
 using ChatWpf.Services.Data.Interfaces;
 using ChatWpf.Services.UI.Interfaces;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Messaging;
+using System.Collections.ObjectModel;
 using System.Windows.Controls;
 
 namespace ChatWpf.ViewModels
 {
+    /// <summary>
+    ///		Main view model for application.
+    /// </summary>
     public class MainViewModel : ViewModelBase
     {
         private readonly IChatRoomDataService _chatRoomDataService;
@@ -15,6 +21,8 @@ namespace ChatWpf.ViewModels
 		{
 			_chatRoomDataService = chatRoomDataService;
 			_navigationService = navigationService;
+
+			MessengerInstance.Register<NotificationMessage<string>>(this, action => HandleLoginMessage(action.Notification));
 		}
 
         #region Properties
@@ -45,7 +53,10 @@ namespace ChatWpf.ViewModels
 			{
                 case "LoginSuccessful":
 				{
-
+					// get available chat rooms
+					GetAvailableChatRooms();
+					// navigate to main page
+					_navigationService.NavigateToUri("/Views/MainPage.xaml");
                     break;
 				}
 			}
@@ -53,10 +64,24 @@ namespace ChatWpf.ViewModels
 
         #endregion
 
+		/// <summary>
+        ///		Gets all available chat rooms from the data service.
+        /// </summary>
 		public void GetAvailableChatRooms()
 		{
-			var thing = _chatRoomDataService.GetChatRooms();
-		}
+			// get chat room models from data service
+			var chatRooms = _chatRoomDataService.GetChatRooms();
+
+			foreach (var room in chatRooms)
+			{
+				// create ChatRoomViewModel
+				var viewmodel = new ChatRoomViewModel(SimpleIoc.Default.GetInstance<IChatMessageDataService>());
+				// map chat room into ChatRoomViewModel
+				Mapper.Map(room, viewmodel);
+				// add to available chat rooms
+				AvailableChatRooms.Add(viewmodel);
+			}
+        }
 
         /// <summary>
         ///		Sets the navigation service's navigation frame.

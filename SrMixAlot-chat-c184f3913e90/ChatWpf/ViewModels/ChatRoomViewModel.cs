@@ -2,6 +2,7 @@
 using ChatWpf.Models;
 using ChatWpf.Services.Data.Interfaces;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 
 namespace ChatWpf.ViewModels
 {
@@ -15,9 +16,15 @@ namespace ChatWpf.ViewModels
 		public ChatRoomViewModel(IChatMessageDataService chatMessageDataService)
 		{
 			_chatMessageDataService = chatMessageDataService;
+
+			SendMessageCommand = new RelayCommand(SendMessage, CanSendMessage);
 		}
 
         #region Event Handlers 
+
+		private bool CanSendMessage => !string.IsNullOrEmpty(UserText);
+		
+        public RelayCommand SendMessageCommand { get; }
 		
 		/// <summary>
 		///		Sends the user's message to the server.
