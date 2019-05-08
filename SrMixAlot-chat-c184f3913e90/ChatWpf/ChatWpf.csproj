@@ -107,9 +107,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\AddChatRoomControl.xaml.cs">
+      <DependentUpon>AddChatRoomControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ChatRoomControl.xaml.cs">
       <DependentUpon>ChatRoomControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\StringLengthToEnabledConverter.cs" />
     <Compile Include="Models\ChatMessage.cs" />
     <Compile Include="Models\ChatRoom.cs" />
@@ -125,6 +129,7 @@
     <Compile Include="Services\Data\Interfaces\IDataServiceBase.cs" />
     <Compile Include="Services\UI\Interfaces\INavigationService.cs" />
     <Compile Include="Services\UI\NavigationService.cs" />
+    <Compile Include="ViewModels\AddChatRoomViewModel.cs" />
     <Compile Include="ViewModels\ChatRoomViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -135,6 +140,10 @@
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\AddChatRoomControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ChatRoomControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

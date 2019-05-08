@@ -12,6 +12,7 @@
         <ResourceDictionary>
             <viewModels:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
             <converters:StringLengthToEnabledConverter x:Key="StringLengthToEnabledConverter"/>
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

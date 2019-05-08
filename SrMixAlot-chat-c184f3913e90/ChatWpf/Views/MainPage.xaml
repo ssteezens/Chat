@@ -3,8 +3,8 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:ChatWpf.Views"
       xmlns:controls="clr-namespace:ChatWpf.Controls"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainPage"
@@ -24,13 +24,46 @@
         </Grid.ColumnDefinitions>
 
         <!-- Available Chat Rooms -->
-        <ListView Margin="4" 
-                  BorderBrush="Black"
-                  BorderThickness="0,0,1,0"
-                  SelectedItem="{Binding SelectedChatRoom, Mode=TwoWay}" 
-                  ItemsSource="{Binding AvailableChatRooms, Mode=OneWay}"
-                  ItemTemplate="{StaticResource ChatChooserListItem}"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
+            <!-- Chat room selector -->
+            <ListView Margin="4" 
+                      BorderBrush="Black"
+                      BorderThickness="0,0,1,0"
+                      SelectedItem="{Binding SelectedChatRoom, Mode=TwoWay}" 
+                      ItemsSource="{Binding AvailableChatRooms, Mode=OneWay}"
+                      ItemTemplate="{StaticResource ChatChooserListItem}"/>
+
+            <!-- Chat room toolbar -->
+            <ToolBarTray Grid.Row="1"
+                         HorizontalAlignment="Right">
+                <ToolBar>
+                    <!-- Add Button -->
+                    <Button Content="Add">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding ToggleAddChatRoomControlVisibilityCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </ToolBar>
+            </ToolBarTray>
+        </Grid>
+
+        <!-- Add Chat Room Control -->
+        <controls:AddChatRoomControl Grid.Column="1"
+                                     Panel.ZIndex="10"
+                                     Width="200"
+                                     Margin="20"
+                                     VerticalAlignment="Bottom"
+                                     HorizontalAlignment="Left"
+                                     DataContext="{Binding AddChatRoomViewModel, Mode=OneWay}"/>
+
+        <!-- Current chat window -->
         <controls:ChatRoomControl Grid.Column="1" 
                                   Margin="4"
                                   DataContext="{Binding SelectedChatRoom}"/>

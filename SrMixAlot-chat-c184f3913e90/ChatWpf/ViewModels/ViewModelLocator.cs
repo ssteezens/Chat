@@ -42,6 +42,7 @@ namespace ChatWpf.ViewModels
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<ChatRoomViewModel>();
+            SimpleIoc.Default.Register<AddChatRoomViewModel>();
         }
 
 		/// <summary>

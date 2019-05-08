@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using ChatWpf.Services.Data.Interfaces;
 using ChatWpf.Services.UI.Interfaces;
 using GalaSoft.MvvmLight;
@@ -6,6 +7,8 @@ using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
+using ChatWpf.Models;
+using GalaSoft.MvvmLight.Command;
 
 namespace ChatWpf.ViewModels
 {
@@ -22,7 +25,10 @@ namespace ChatWpf.ViewModels
 			_chatRoomDataService = chatRoomDataService;
 			_navigationService = navigationService;
 
-			MessengerInstance.Register<NotificationMessage<string>>(this, action => HandleLoginMessage(action.Notification));
+            ToggleAddChatRoomControlVisibilityCommand = new RelayCommand(ToggleAddChatRoomVisibility, true);
+            
+            MessengerInstance.Register<NotificationMessage<string>>(this, action => HandleLoginMessage(action.Notification));
+			MessengerInstance.Register<NotificationMessage<ChatRoom>>(this, action => HandleChatRoomMessage(action.Content, action.Notification));
 		}
 
         #region Properties
@@ -43,6 +49,11 @@ namespace ChatWpf.ViewModels
         /// </summary>
 		public ObservableCollection<ChatRoomViewModel> AvailableChatRooms { get; set; } = new ObservableCollection<ChatRoomViewModel>();
 
+        /// <summary>
+        ///     View model for adding a chat room.
+        /// </summary>
+        public AddChatRoomViewModel AddChatRoomViewModel { get; set; } = new AddChatRoomViewModel();
+
         #endregion
 
         #region Messenger Handlers
@@ -61,13 +72,43 @@ namespace ChatWpf.ViewModels
 				}
 			}
 		}
+        
+        private void HandleChatRoomMessage(ChatRoom room, string message)
+        {
+            switch (message)
+            {
+                case "Add":
+                {
+                    // send chat room to api
+                    room = _chatRoomDataService.AddChatRoom(room);
+                    // map to view model
+                    var viewmodel = new ChatRoomViewModel(SimpleIoc.Default.GetInstance<IChatMessageDataService>());
+                    Mapper.Map(room, viewmodel);
+                    // add to available chat rooms
+                    AvailableChatRooms.Add(viewmodel);
+
+                    break;
+                }
+            }
+        }
 
         #endregion
 
-		/// <summary>
+        #region Event Handlers
+
+        public RelayCommand ToggleAddChatRoomControlVisibilityCommand { get; }
+
+        private void ToggleAddChatRoomVisibility()
+        {
+            AddChatRoomViewModel.IsOpen = !AddChatRoomViewModel.IsOpen;
+        }
+
+        #endregion
+
+        /// <summary>
         ///		Gets all available chat rooms from the data service.
         /// </summary>
-		public void GetAvailableChatRooms()
+        public void GetAvailableChatRooms()
 		{
 			// get chat room models from data service
 			var chatRooms = _chatRoomDataService.GetChatRooms();
