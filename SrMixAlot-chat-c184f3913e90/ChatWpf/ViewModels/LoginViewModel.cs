@@ -25,25 +25,39 @@ namespace ChatWpf.ViewModels
         #region Properties
 
 		private bool _canLogin = true;
-		
-		/// <summary>
+        private string _username;
+        private string _password;
+
+        /// <summary>
         ///		Username for login.
         /// </summary>
-        public string Username { get; set; }
+        public string Username
+        {
+            get => _username;
+            set
+            {
+                _username = value;
+                RaisePropertyChanged(nameof(CanLogin));
+            }
+        }
 
-		/// <summary>
+        /// <summary>
         ///		Password for login.
         /// </summary>
-		public string Password { get; set; }
+        public string Password
+        {
+            get => _password;
+            set
+            {
+                _password = value;
+                RaisePropertyChanged(nameof(CanLogin));
+            }
+        }
 
-		/// <summary>
+        /// <summary>
         ///		Gets or sets whether the user can login.
         /// </summary>
-		public bool CanLogin
-		{
-			get => _canLogin;
-            set => _canLogin = value;
-		}
+        public bool CanLogin => !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password);
 
         #endregion
 

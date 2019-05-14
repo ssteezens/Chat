@@ -51,6 +51,7 @@
                         Margin="10"
                         HorizontalAlignment="Right"
                         IsDefault="True"
+                        IsEnabled="{Binding CanLogin, Mode=OneWay}"
                         Command="{Binding LoginCommand}"/>
 
         </StackPanel>
