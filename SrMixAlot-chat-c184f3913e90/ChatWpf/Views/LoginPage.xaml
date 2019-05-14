@@ -9,63 +9,50 @@
       Title="LoginPage"
       DataContext="{Binding LoginVm, Source={StaticResource Locator}}">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <Border Grid.Row="1"
-                Grid.Column="1"
-                BorderBrush="Black"
-                BorderThickness="1,0">
-            <StackPanel>
-                <StackPanel.InputBindings>
-                    <KeyBinding Key="Return"
+    <Border VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            BorderBrush="Black"
+            BorderThickness="1,0">
+        <StackPanel MinWidth="400">
+            <StackPanel.InputBindings>
+                <KeyBinding Key="Return"
                                 Command=""/>
-                </StackPanel.InputBindings>
+            </StackPanel.InputBindings>
 
-                <!-- Username label -->
-                <TextBlock Text="Username"/>
+            <!-- Username label -->
+            <TextBlock Text="Username"/>
 
-                <!-- Username Text Field -->
-                <TextBox Margin="10"
+            <!-- Username Text Field -->
+            <TextBox Margin="10"
                          Text="{Binding Username, Mode=TwoWay}"/>
 
-                <!-- Password label -->
-                <TextBlock Text="Password"/>
+            <!-- Password label -->
+            <TextBlock Text="Password"/>
 
-                <!-- Password Text Field -->
-                <PasswordBox x:Name="PasswordInput" 
+            <!-- Password Text Field -->
+            <PasswordBox x:Name="PasswordInput" 
                              Margin="10">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="PasswordChanged">
-                            <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PasswordChanged">
+                        <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
                                                    CommandParameter="{Binding ElementName=PasswordInput}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </PasswordBox>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </PasswordBox>
 
-                <!-- Create an account link -->
-                <TextBlock Margin="10,0"
+            <!-- Create an account link -->
+            <TextBlock Margin="10,0"
                            Foreground="Blue"
                            HorizontalAlignment="Left"
                            Text="Create an account"/>
 
-                <!-- Login button -->
-                <Button Content="Login"
+            <!-- Login button -->
+            <Button Content="Login"
                         Margin="10"
                         HorizontalAlignment="Right"
                         IsDefault="True"
                         Command="{Binding LoginCommand}"/>
 
-            </StackPanel>
-        </Border>
-    </Grid>
+        </StackPanel>
+    </Border>
 </Page>
