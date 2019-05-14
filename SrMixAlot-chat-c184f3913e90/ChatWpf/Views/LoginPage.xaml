@@ -62,6 +62,7 @@
                 <Button Content="Login"
                         Margin="10"
                         HorizontalAlignment="Right"
+                        IsDefault="True"
                         Command="{Binding LoginCommand}"/>
 
             </StackPanel>

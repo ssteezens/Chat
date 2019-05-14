@@ -18,7 +18,6 @@ namespace ChatWpf.ViewModels
 			_chatMessageDataService = chatMessageDataService;
 
 			SendMessageCommand = new RelayCommand(SendMessage, CanSendMessage);
-            SetUserTextCommand = new RelayCommand<string>(SetUserText, true);
 		}
 
         #region Event Handlers 
@@ -26,7 +25,6 @@ namespace ChatWpf.ViewModels
 		private bool CanSendMessage => !string.IsNullOrEmpty(UserText);
 		
         public RelayCommand SendMessageCommand { get; }
-        public RelayCommand<string> SetUserTextCommand { get; }
 		
 		/// <summary>
 		///		Sends the user's message to the server.
@@ -50,14 +48,6 @@ namespace ChatWpf.ViewModels
 			// clear user text
 			UserText = string.Empty;
 		}
-
-        /// <summary>
-        ///     Sets the user's text.
-        /// </summary>
-        private void SetUserText(string text)
-        {
-            UserText = text;
-        }
 
         #endregion
 
