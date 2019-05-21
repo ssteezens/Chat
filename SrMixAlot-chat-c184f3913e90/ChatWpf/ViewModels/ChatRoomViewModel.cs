@@ -3,6 +3,9 @@ using ChatWpf.Services.Data.Interfaces;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using ChatWpf.Services.MessageRecieving;
 
 namespace ChatWpf.ViewModels
 {
@@ -17,11 +20,28 @@ namespace ChatWpf.ViewModels
 		{
 			_chatMessageDataService = chatMessageDataService;
 
+			MessageConsumer = new MessageConsumer() { Enabled = true };
+
+			// start receiving messages from the server
+			MessageConsumer.Start();
+
+			var backgroundWorker = new BackgroundWorker();
+
 			SendMessageCommand = new RelayCommand(SendMessage, CanSendMessage);
             SetUserTextCommand = new RelayCommand<string>(SetUserText, true);
 		}
 
         #region Event Handlers 
+
+		private void worker_DoWork(object sender, DoWorkEventArgs e)
+		{
+
+		}
+
+		private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+		{
+
+		}
 
 		private bool CanSendMessage => !string.IsNullOrEmpty(UserText);
 		
@@ -65,6 +85,8 @@ namespace ChatWpf.ViewModels
 
         private string _displayName;
 		private string _userText;
+
+		public MessageConsumer MessageConsumer { get; set; }
 
 		/// <summary>
         ///		Chat room's display name.
