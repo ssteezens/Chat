@@ -1,4 +1,5 @@
-﻿using ChatWpf.Models;
+﻿using System;
+using ChatWpf.Models;
 using ChatWpf.Services.Data.Interfaces;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -27,6 +28,7 @@ namespace ChatWpf.ViewModels
 		private bool _canLogin = true;
         private string _username;
         private string _password;
+		private string _serverError;
 
         /// <summary>
         ///		Username for login.
@@ -59,6 +61,15 @@ namespace ChatWpf.ViewModels
         /// </summary>
         public bool CanLogin => !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password);
 
+		/// <summary>
+        ///		Gets or sets the server error.
+        /// </summary>
+		public string ServerError
+		{
+			get => _serverError;
+			set => Set(ref _serverError, value, nameof(ServerError));
+		}
+
         #endregion
 
         #region Event Handlers
@@ -73,13 +84,23 @@ namespace ChatWpf.ViewModels
         /// </summary>
 		private void Login()
 		{
-			// call authentication service and get current user
-			var user = _authenticationService.AuthenticateUser(Username, Password);
+			// clear the server error if there is one
+			ServerError = string.Empty;
 
-			// set current user
-            UserInstance.Current = user;
-			
-			MessengerInstance.Send(new NotificationMessage<string>("LoginSuccessful", "LoginSuccessful"));
+			try
+			{
+				// call authentication service and get current user
+				var user = _authenticationService.AuthenticateUser(Username, Password);
+
+				// set current user
+				UserInstance.Current = user;
+
+				MessengerInstance.Send(new NotificationMessage<string>("LoginSuccessful", "LoginSuccessful"));
+			}
+			catch (Exception)
+			{
+				ServerError = "Something went wrong when attempting to login.  Please verify your username and password and try again.";
+			}
 		}
 
 		/// <summary>
