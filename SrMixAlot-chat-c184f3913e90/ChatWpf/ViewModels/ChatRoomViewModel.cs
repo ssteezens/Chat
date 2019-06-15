@@ -1,11 +1,12 @@
 ﻿using ChatWpf.Models;
 using ChatWpf.Services.Data.Interfaces;
+using ChatWpf.Services.MessageRecieving;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Threading;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using ChatWpf.Services.MessageRecieving;
+using System.Threading;
 
 namespace ChatWpf.ViewModels
 {
@@ -15,33 +16,45 @@ namespace ChatWpf.ViewModels
     public class ChatRoomViewModel : ViewModelBase
     {
         private readonly IChatMessageDataService _chatMessageDataService;
-
+		
 		public ChatRoomViewModel(IChatMessageDataService chatMessageDataService)
 		{
 			_chatMessageDataService = chatMessageDataService;
 
-			MessageConsumer = new MessageConsumer() { Enabled = true };
+            //MessageConsumer = new MessageConsumer() { Enabled = true, QueueName = DisplayName };
+			MessageConsumer = new MessageConsumer() { Enabled = true, QueueName = DisplayName };
 
-			// start receiving messages from the server
-			MessageConsumer.Start();
-
-			var backgroundWorker = new BackgroundWorker();
+            new Thread(PollMessageUpdates).Start();
 
 			SendMessageCommand = new RelayCommand(SendMessage, CanSendMessage);
             SetUserTextCommand = new RelayCommand<string>(SetUserText, true);
+
+			MessengerInstance.Register<NotificationMessage<ChatMessage>>(this, action => HandleChatMessageNotification(action.Content, action.Notification));
 		}
+
+        #region Messenger Handlers
+
+		private void HandleChatMessageNotification(ChatMessage chatMessage, string notification)
+		{
+			switch (notification)
+			{
+				case "Add":
+				{
+					DispatcherHelper.CheckBeginInvokeOnUI(() => { ChatMessages.Add(chatMessage); });
+                    break;
+				}
+			}
+		}
+
+        #endregion
 
         #region Event Handlers 
 
-		private void worker_DoWork(object sender, DoWorkEventArgs e)
+        private void PollMessageUpdates()
 		{
-
-		}
-
-		private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-		{
-
-		}
+			// start receiving messages from the server
+			MessageConsumer.Start();
+        }
 
 		private bool CanSendMessage => !string.IsNullOrEmpty(UserText);
 		
@@ -86,6 +99,9 @@ namespace ChatWpf.ViewModels
         private string _displayName;
 		private string _userText;
 
+		/// <summary>
+        ///		Message consumer that keeps chat messages sync'd for a chat room.
+        /// </summary>
 		public MessageConsumer MessageConsumer { get; set; }
 
 		/// <summary>

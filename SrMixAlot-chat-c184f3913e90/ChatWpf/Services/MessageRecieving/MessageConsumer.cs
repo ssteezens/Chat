@@ -2,6 +2,8 @@
 using RabbitMQ.Client.MessagePatterns;
 using System;
 using System.Text;
+using ChatWpf.Models;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace ChatWpf.Services.MessageRecieving
 {
@@ -10,7 +12,7 @@ namespace ChatWpf.Services.MessageRecieving
 		private const string HostName = "localhost";
 		private const string UserName = "guest";
 		private const string Password = "guest";
-		private const string QueueName = "Module2.Sample4.Queue1";
+		
 		private const string VirtualHost = "";
 		private int Port = 0;
 
@@ -52,6 +54,7 @@ namespace ChatWpf.Services.MessageRecieving
             var consumer = new ConsumeDelegate(Poll);
             consumer.Invoke();
         }
+
         private delegate void ConsumeDelegate();
 
 		/// <summary>
@@ -66,8 +69,13 @@ namespace ChatWpf.Services.MessageRecieving
                 //Deserialize message
                 var message = Encoding.Default.GetString(deliveryArgs.Body);
 
-                //Handle Message
-                Console.WriteLine("Message Recieved - {0}", message);
+				var chatMessage = new ChatMessage()
+				{
+					Message = message
+				};
+
+				// send chat message to view model
+				Messenger.Default.Send(new NotificationMessage<ChatMessage>(chatMessage, "Add"));
 
                 //Acknowledge message is processed
                 _subscription.Ack(deliveryArgs);
@@ -82,6 +90,11 @@ namespace ChatWpf.Services.MessageRecieving
         ///		Gets or sets whether the message consumer is enabled.
         /// </summary>
 		public bool Enabled { get; set; }
+
+		/// <summary>
+        ///		Name of queue.
+        /// </summary>
+		public string QueueName { get; set; } = "Module2.Sample4.Queue1";
 
         #endregion
 

@@ -10,6 +10,7 @@ using AutoMapper;
 using ChatWpf.Models;
 using ChatWpf.ViewModels;
 using ChatWpf.Views;
+using GalaSoft.MvvmLight.Threading;
 
 namespace ChatWpf
 {
@@ -20,6 +21,8 @@ namespace ChatWpf
     {
 		public App()
 		{
+			DispatcherHelper.Initialize();
+
 			Mapper.Initialize(cfg =>
 			{
 				cfg.CreateMap<ChatRoom, ChatRoomViewModel>()

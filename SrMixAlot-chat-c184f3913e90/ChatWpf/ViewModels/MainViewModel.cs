@@ -58,6 +58,10 @@ namespace ChatWpf.ViewModels
 
         #region Messenger Handlers
 
+		/// <summary>
+        ///		Handles a login related message.
+        /// </summary>
+        /// <param name="message"> The message. </param>
 		private void HandleLoginMessage(string message)
 		{
 			switch (message)
@@ -73,6 +77,11 @@ namespace ChatWpf.ViewModels
 			}
 		}
         
+		/// <summary>
+        ///		Handles a chat room related message.
+        /// </summary>
+        /// <param name="room"> The chat room. </param>
+        /// <param name="message"> The message. </param>
         private void HandleChatRoomMessage(ChatRoom room, string message)
         {
             switch (message)
