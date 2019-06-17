@@ -12,7 +12,13 @@ namespace ChatWpf.Services.Data.Interfaces
 		///		Add a chat entry to a chat room.
 		/// </summary>
 		/// <returns> True if successful. </returns>
-		ChatMessage AddChatMessage(ChatMessage message);
+		ChatMessage Add(ChatMessage message);
+
+        /// <summary>
+        ///     Deletes a chat message.
+        /// </summary>
+        /// <param name="id"> Id of the message. </param>
+        void Delete(int id);
 
 		/// <summary>
 		///     Return a list of chat entries.

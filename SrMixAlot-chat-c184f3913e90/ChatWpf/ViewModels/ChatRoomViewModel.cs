@@ -3,6 +3,7 @@ using ChatWpf.Services.Data.Interfaces;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace ChatWpf.ViewModels
 {
@@ -18,6 +19,7 @@ namespace ChatWpf.ViewModels
 			_chatMessageDataService = chatMessageDataService;
 
 			SendMessageCommand = new RelayCommand(SendMessage, CanSendMessage);
+            DeleteMessageCommand = new RelayCommand<ChatMessage>(DeleteMessage, true);
 		}
 
         #region Event Handlers 
@@ -25,6 +27,7 @@ namespace ChatWpf.ViewModels
 		private bool CanSendMessage => !string.IsNullOrEmpty(UserText);
 		
         public RelayCommand SendMessageCommand { get; }
+        public RelayCommand<ChatMessage> DeleteMessageCommand { get; }
 		
 		/// <summary>
 		///		Sends the user's message to the server.
@@ -40,7 +43,7 @@ namespace ChatWpf.ViewModels
 			};
 
 			// submit chat to server
-			var addedMessage = _chatMessageDataService.AddChatMessage(message);
+			var addedMessage = _chatMessageDataService.Add(message);
 
 			// add message to list of messages
 			ChatMessages.Add(addedMessage);
@@ -48,6 +51,17 @@ namespace ChatWpf.ViewModels
 			// clear user text
 			UserText = string.Empty;
 		}
+
+        /// <summary>
+        ///     Deletes a chat message.
+        /// </summary>
+        /// <param name="message"> Message to delete. </param>
+        private void DeleteMessage(ChatMessage message)
+        {
+            _chatMessageDataService.Delete(message.Id);
+
+            ChatMessages.Remove(ChatMessages.Single(i => i.Id == message.Id));
+        }
 
         #endregion
 

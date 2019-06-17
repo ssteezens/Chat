@@ -25,7 +25,20 @@ namespace Api.Controllers
         public IActionResult Add([FromBody] ChatMessage message)
 		{
 			return Ok(_chatMessageDataService.Add(message));
-		}        
+		}
+
+        /// <summary>
+        ///     Deletes a chat message. 
+        /// </summary>
+        /// <param name="id"> Id of the messaage to delete. </param>
+        /// <returns> An ok. </returns>
+        [HttpGet("/ChatMessage/Delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+            _chatMessageDataService.Delete(id);
+
+            return Ok();
+        }
 
 		/// <summary>
         ///		Gets all chat messages from chat context.
