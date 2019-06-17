@@ -22,12 +22,11 @@ namespace ChatWpf.ViewModels
 			_chatMessageDataService = chatMessageDataService;
 
             //MessageConsumer = new MessageConsumer() { Enabled = true, QueueName = DisplayName };
-			MessageConsumer = new MessageConsumer() { Enabled = true, QueueName = DisplayName };
+			MessageConsumer = new MessageConsumer() { Enabled = true };
 
             new Thread(PollMessageUpdates).Start();
 
 			SendMessageCommand = new RelayCommand(SendMessage, CanSendMessage);
-            SetUserTextCommand = new RelayCommand<string>(SetUserText, true);
 
 			MessengerInstance.Register<NotificationMessage<ChatMessage>>(this, action => HandleChatMessageNotification(action.Content, action.Notification));
 		}
@@ -59,7 +58,6 @@ namespace ChatWpf.ViewModels
 		private bool CanSendMessage => !string.IsNullOrEmpty(UserText);
 		
         public RelayCommand SendMessageCommand { get; }
-        public RelayCommand<string> SetUserTextCommand { get; }
 		
 		/// <summary>
 		///		Sends the user's message to the server.
@@ -83,14 +81,6 @@ namespace ChatWpf.ViewModels
 			// clear user text
 			UserText = string.Empty;
 		}
-
-        /// <summary>
-        ///     Sets the user's text.
-        /// </summary>
-        private void SetUserText(string text)
-        {
-            UserText = text;
-        }
 
         #endregion
 
