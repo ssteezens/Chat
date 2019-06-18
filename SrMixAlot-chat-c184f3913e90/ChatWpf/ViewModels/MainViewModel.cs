@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
+using ChatWpf.Models;
 using ChatWpf.Services.Data.Interfaces;
 using ChatWpf.Services.UI.Interfaces;
-using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
-using ChatWpf.Models;
-using GalaSoft.MvvmLight.Command;
 
 namespace ChatWpf.ViewModels
 {
@@ -58,6 +56,10 @@ namespace ChatWpf.ViewModels
 
         #region Messenger Handlers
 
+        /// <summary>
+        ///     Handle login related messages.
+        /// </summary>
+        /// <param name="message"> The login message. </param>
 		private void HandleLoginMessage(string message)
 		{
 			switch (message)
@@ -73,6 +75,11 @@ namespace ChatWpf.ViewModels
 			}
 		}
         
+        /// <summary>
+        ///     Handle chat room related messages.
+        /// </summary>
+        /// <param name="room"> The chat room. </param>
+        /// <param name="message"> The chat room message. </param>
         private void HandleChatRoomMessage(ChatRoom room, string message)
         {
             switch (message)
@@ -96,8 +103,14 @@ namespace ChatWpf.ViewModels
 
         #region Event Handlers
 
+        /// <summary>
+        ///     Toggles add chat room visibility.
+        /// </summary>
         public RelayCommand ToggleAddChatRoomControlVisibilityCommand { get; }
 
+        /// <summary>
+        ///     Toggles the AddChatRoom visibility.
+        /// </summary>
         private void ToggleAddChatRoomVisibility()
         {
             AddChatRoomViewModel.IsOpen = !AddChatRoomViewModel.IsOpen;

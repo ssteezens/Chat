@@ -1,6 +1,5 @@
 ﻿using ChatWpf.Models;
 using ChatWpf.Services.Data.Interfaces;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -69,6 +68,7 @@ namespace ChatWpf.ViewModels
 
         private string _displayName;
 		private string _userText;
+        private ChatMessage _selectedChatMessage;
 
 		/// <summary>
         ///		Chat room's display name.
@@ -102,6 +102,24 @@ namespace ChatWpf.ViewModels
 		///     All user's in this chat.
 		/// </summary>
 		public ObservableCollection<User> Users { get; set; }
+
+        /// <summary>
+        ///     The selected chat message.
+        /// </summary>
+        public ChatMessage SelectedChatMessage
+        {
+            get => _selectedChatMessage;
+            set
+            {
+                if(_selectedChatMessage != null)
+                    _selectedChatMessage.IsSelected = false;
+
+                Set(ref _selectedChatMessage, value, nameof(SelectedChatMessage));
+
+                if(SelectedChatMessage != null)
+                    SelectedChatMessage.IsSelected = true;
+            }
+        }
 
 		/// <summary>
 		///		Id of the chat room.

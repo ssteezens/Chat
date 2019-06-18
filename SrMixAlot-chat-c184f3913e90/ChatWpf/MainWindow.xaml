@@ -6,7 +6,16 @@
         mc:Ignorable="d"
         Title="Chat" Height="800" Width="800">
 
-    <!-- Main Navigation Frame -->
-    <Frame x:Name="NavigationFrame" NavigationUIVisibility="Hidden"/>
+    <Grid>
+        <!-- Progress Indicator -->
+        <TextBlock Text="Loading ..." 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Panel.ZIndex="10"
+                   FontSize="16"
+                   Visibility="{Binding IsBusy, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
+        <!-- Main Navigation Frame -->
+        <Frame x:Name="NavigationFrame" NavigationUIVisibility="Hidden"/>
+    </Grid>
 </Window>

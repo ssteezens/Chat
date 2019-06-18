@@ -1,9 +1,9 @@
-﻿using System;
-using ChatWpf.Models;
+﻿using ChatWpf.Models;
 using ChatWpf.Services.Data.Interfaces;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace ChatWpf.ViewModels
@@ -19,7 +19,7 @@ namespace ChatWpf.ViewModels
 		{
 			_authenticationService = authenticationService;
 			
-			LoginCommand = new RelayCommand(Login, CanLogin);
+			LoginCommand = new RelayCommand(async () => await Login(), CanLogin);
 			PasswordChangedCommand = new RelayCommand<object>(PasswordChanged, true);
         }
 
@@ -72,7 +72,7 @@ namespace ChatWpf.ViewModels
 
         #endregion
 
-        #region Event Handlers
+        #region Commands
 
 		/// <summary>
         ///		Command for logging in.
@@ -82,15 +82,17 @@ namespace ChatWpf.ViewModels
 		/// <summary>
         ///		Calls authentication service and gets user.
         /// </summary>
-		private void Login()
-		{
+		private async Task Login()
+        {
+            IsBusy = true;
+
 			// clear the server error if there is one
 			ServerError = string.Empty;
 
 			try
 			{
 				// call authentication service and get current user
-				var user = _authenticationService.AuthenticateUser(Username, Password);
+				var user = await _authenticationService.AuthenticateUser(Username, Password);
 
 				// set current user
 				UserInstance.Current = user;
@@ -101,7 +103,9 @@ namespace ChatWpf.ViewModels
 			{
 				ServerError = "Something went wrong when attempting to login.  Please verify your username and password and try again.";
 			}
-		}
+
+            IsBusy = false;
+        }
 
 		/// <summary>
         ///		Command for the password changing.

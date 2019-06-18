@@ -11,6 +11,11 @@
             <DataTemplate x:Key="ChatMessageListItemTemplate">
                 <Grid HorizontalAlignment="Stretch" x:Name="ChatMessageGrid">
 
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
@@ -47,6 +52,39 @@
                                HorizontalAlignment="Stretch"
                                TextWrapping="Wrap"
                                Text="{Binding Message, Mode=OneWay}"/>
+
+                    <!-- Message Action Buttons -->
+                    <StackPanel Grid.Row="1" 
+                                Grid.Column="2"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Stretch"
+                                Visibility="{Binding IsSelected, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <!-- Edit Button -->
+                        <Button Margin="4,0"
+                                BorderThickness="0"
+                                Padding="0"
+                                Background="Transparent">
+                            <TextBlock Text="Edit" 
+                                       FontSize="10" />
+                        </Button>
+
+                        <!-- Info Button -->
+                        <Button BorderThickness="0"
+                                Padding="0"
+                                Background="Transparent">
+                            <TextBlock Text="Info"
+                                       FontSize="10" />
+                        </Button>
+
+                        <!-- Delete Button -->
+                        <Button BorderThickness="0"
+                                Padding="0"
+                                Background="Transparent"
+                                HorizontalAlignment="Right">
+                            <TextBlock Text="Delete"
+                                       FontSize="10" />
+                        </Button>
+                    </StackPanel>
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>
@@ -64,6 +102,7 @@
         <ListView Grid.Row="0" 
                   BorderBrush="Black"
                   BorderThickness="1"
+                  SelectedItem="{Binding SelectedChatMessage}"
                   ItemTemplate="{StaticResource ChatMessageListItemTemplate}"
                   ItemsSource="{Binding ChatMessages, Mode=OneWay}">
             <ListView.ItemContainerStyle>

@@ -1,5 +1,6 @@
 ﻿using ChatWpf.Models;
 using ChatWpf.Services.Data.Interfaces;
+using System.Threading.Tasks;
 
 namespace ChatWpf.Services.Data
 {
@@ -14,7 +15,7 @@ namespace ChatWpf.Services.Data
 		/// <param name="username"> The user's username. </param>
 		/// <param name="password"> The user's password. </param>
 		/// <returns> The authenticated user. </returns>
-		public User AuthenticateUser(string username, string password)
+		public Task<User> AuthenticateUser(string username, string password)
 		{
 			var loginModel = new LoginModel()
 			{
@@ -22,7 +23,7 @@ namespace ChatWpf.Services.Data
 				Password = password
 			};
 			
-            return Client.Post<User>("/api/account/login", loginModel);
+            return Client.PostAsync<User>("/api/account/login", loginModel);
 		}
 	}
 }

@@ -9,55 +9,65 @@
       Title="LoginPage"
       DataContext="{Binding LoginVm, Source={StaticResource Locator}}">
 
-    <Border VerticalAlignment="Center"
-            HorizontalAlignment="Center"
-            BorderBrush="Black"
-            BorderThickness="1,0">
-        <StackPanel MinWidth="400">
-            <StackPanel.InputBindings>
-                <KeyBinding Key="Return"
-                                Command=""/>
-            </StackPanel.InputBindings>
+    <Grid>
+        <!-- Progress Indicator -->
+        <TextBlock Text="Loading ..." 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Panel.ZIndex="10"
+                   FontSize="16"
+                   Visibility="{Binding IsBusy, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
-            <!-- Server Error -->
-            <TextBlock Text="{Binding ServerError, Mode=OneWay}"
-                       Foreground="Red"/>
+        <Border VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                BorderBrush="Black"
+                BorderThickness="1,0">
+            <StackPanel MinWidth="400">
+                <StackPanel.InputBindings>
+                    <KeyBinding Key="Return"
+                                    Command=""/>
+                </StackPanel.InputBindings>
 
-            <!-- Username label -->
-            <TextBlock Text="Username"/>
+                <!-- Server Error -->
+                <TextBlock Text="{Binding ServerError, Mode=OneWay}"
+                           Foreground="Red"/>
 
-            <!-- Username Text Field -->
-            <TextBox Margin="10"
-                         Text="{Binding Username, Mode=TwoWay}"/>
+                <!-- Username label -->
+                <TextBlock Text="Username"/>
 
-            <!-- Password label -->
-            <TextBlock Text="Password"/>
+                <!-- Username Text Field -->
+                <TextBox Margin="10"
+                             Text="{Binding Username, Mode=TwoWay}"/>
 
-            <!-- Password Text Field -->
-            <PasswordBox x:Name="PasswordInput" 
-                             Margin="10">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PasswordChanged">
-                        <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
-                                                   CommandParameter="{Binding ElementName=PasswordInput}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </PasswordBox>
+                <!-- Password label -->
+                <TextBlock Text="Password"/>
 
-            <!-- Create an account link -->
-            <TextBlock Margin="10,0"
-                           Foreground="Blue"
-                           HorizontalAlignment="Left"
-                           Text="Create an account"/>
+                <!-- Password Text Field -->
+                <PasswordBox x:Name="PasswordInput" 
+                                 Margin="10">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PasswordChanged">
+                            <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
+                                                       CommandParameter="{Binding ElementName=PasswordInput}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </PasswordBox>
 
-            <!-- Login button -->
-            <Button Content="Login"
-                        Margin="10"
-                        HorizontalAlignment="Right"
-                        IsDefault="True"
-                        IsEnabled="{Binding CanLogin, Mode=OneWay}"
-                        Command="{Binding LoginCommand}"/>
+                <!-- Create an account link -->
+                <TextBlock Margin="10,0"
+                               Foreground="Blue"
+                               HorizontalAlignment="Left"
+                               Text="Create an account"/>
 
-        </StackPanel>
-    </Border>
+                <!-- Login button -->
+                <Button Content="Login"
+                            Margin="10"
+                            HorizontalAlignment="Right"
+                            IsDefault="True"
+                            IsEnabled="{Binding CanLogin, Mode=OneWay}"
+                            Command="{Binding LoginCommand}"/>
+
+            </StackPanel>
+        </Border>
+    </Grid>
 </Page>
