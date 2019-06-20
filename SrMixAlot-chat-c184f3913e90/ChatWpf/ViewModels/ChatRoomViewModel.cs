@@ -6,6 +6,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 
 namespace ChatWpf.ViewModels
@@ -28,6 +29,7 @@ namespace ChatWpf.ViewModels
             new Thread(PollMessageUpdates).Start();
 
 			SendMessageCommand = new RelayCommand(SendMessage, CanSendMessage);
+			DeleteMessageCommand = new RelayCommand<ChatMessage>(DeleteMessage);
 
 			MessengerInstance.Register<NotificationMessage<ChatMessage>>(this, action => HandleChatMessageNotification(action.Content, action.Notification));
 		}
@@ -61,6 +63,7 @@ namespace ChatWpf.ViewModels
 		private bool CanSendMessage => !string.IsNullOrEmpty(UserText);
 		
         public RelayCommand SendMessageCommand { get; }
+        public RelayCommand<ChatMessage> DeleteMessageCommand { get; }
 		
 		/// <summary>
 		///		Sends the user's message to the server.
@@ -76,11 +79,22 @@ namespace ChatWpf.ViewModels
 			};
 
 			// submit chat to server
-			_chatMessageDataService.AddChatMessage(message);
+			_chatMessageDataService.Add(message);
 			
 			// clear user text
 			UserText = string.Empty;
 		}
+
+        /// <summary>
+        ///     Deletes a chat message.
+        /// </summary>
+        /// <param name="message"> Message to delete. </param>
+        private void DeleteMessage(ChatMessage message)
+        {
+            _chatMessageDataService.Delete(message.Id);
+
+            ChatMessages.Remove(ChatMessages.Single(i => i.Id == message.Id));
+        }
 
         #endregion
 
@@ -88,6 +102,7 @@ namespace ChatWpf.ViewModels
 
         private string _displayName;
 		private string _userText;
+        private ChatMessage _selectedChatMessage;
 
 		/// <summary>
         ///		Message consumer that keeps chat messages sync'd for a chat room.
@@ -126,6 +141,24 @@ namespace ChatWpf.ViewModels
 		///     All user's in this chat.
 		/// </summary>
 		public ObservableCollection<User> Users { get; set; }
+
+        /// <summary>
+        ///     The selected chat message.
+        /// </summary>
+        public ChatMessage SelectedChatMessage
+        {
+            get => _selectedChatMessage;
+            set
+            {
+                if(_selectedChatMessage != null)
+                    _selectedChatMessage.IsSelected = false;
+
+                Set(ref _selectedChatMessage, value, nameof(SelectedChatMessage));
+
+                if(SelectedChatMessage != null)
+                    SelectedChatMessage.IsSelected = true;
+            }
+        }
 
 		/// <summary>
 		///		Id of the chat room.

@@ -124,8 +124,14 @@ namespace ChatWpf.ViewModels
 
         #region Event Handlers
 
+        /// <summary>
+        ///     Toggles add chat room visibility.
+        /// </summary>
         public RelayCommand ToggleAddChatRoomControlVisibilityCommand { get; }
 
+        /// <summary>
+        ///     Toggles the AddChatRoom visibility.
+        /// </summary>
         private void ToggleAddChatRoomVisibility()
         {
             AddChatRoomViewModel.IsOpen = !AddChatRoomViewModel.IsOpen;

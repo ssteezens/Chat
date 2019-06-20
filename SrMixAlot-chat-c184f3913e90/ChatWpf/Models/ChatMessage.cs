@@ -5,6 +5,7 @@ namespace ChatWpf.Models
     public class ChatMessage : ObservableObject
 	{
 		private string _message = string.Empty;
+        private bool _isSelected;
 
 		/// <summary>
 		///     The chat entry's id.
@@ -20,6 +21,15 @@ namespace ChatWpf.Models
 		///     The user that sent the chat entry.
 		/// </summary>
 		public User User { get; set; }
+
+        /// <summary>
+        ///     Indicates if this message is selected.
+        /// </summary>
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set => Set(ref _isSelected, value, nameof(IsSelected));
+        }
 
 		/// <summary>
 		///     The text of the chat entry

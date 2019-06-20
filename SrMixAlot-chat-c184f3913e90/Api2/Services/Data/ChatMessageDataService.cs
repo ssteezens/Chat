@@ -30,6 +30,17 @@ namespace Api.Services.Data
 
 			return addedMessage;
         }
+        
+        /// <summary>
+        ///     Deletes a chat message.
+        /// </summary>
+        /// <param name="id"> Id of the chat message to delete. </param>
+        public void Delete(int id)
+        {
+            _chatContext.ChatMessages.Remove(_chatContext.ChatMessages.Single(i => i.Id == id));
+
+            _chatContext.SaveChanges();
+        }
 
 		/// <summary>
 		///		Gets all chat messages from the database.

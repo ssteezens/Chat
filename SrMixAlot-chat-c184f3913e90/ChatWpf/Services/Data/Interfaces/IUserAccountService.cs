@@ -1,4 +1,5 @@
 ﻿using ChatWpf.Models;
+using System.Threading.Tasks;
 
 namespace ChatWpf.Services.Data.Interfaces
 {
@@ -7,13 +8,13 @@ namespace ChatWpf.Services.Data.Interfaces
     /// </summary>
     public interface IUserAccountService
 	{
-        /// <summary>
-        ///     Authenticates the user.
-        /// </summary>
-        /// <param name="username"> The user's username. </param>
-        /// <param name="password"> The user's password. </param>
-        /// <returns></returns>
-		User LoginUser(string username, string password);
+		/// <summary>
+		///     Authenticates the user.
+		/// </summary>
+		/// <param name="username"> The user's username. </param>
+		/// <param name="password"> The user's password. </param>
+		/// <returns> Task result containing user. </returns>
+		Task<User> LoginUser(string username, string password);
 
         /// <summary>
         ///		Registers a user.
