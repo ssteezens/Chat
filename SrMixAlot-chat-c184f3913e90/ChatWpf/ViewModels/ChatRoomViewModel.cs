@@ -1,7 +1,6 @@
 ﻿using ChatWpf.Models;
 using ChatWpf.Services.Data.Interfaces;
 using ChatWpf.Services.MessageRecieving;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
