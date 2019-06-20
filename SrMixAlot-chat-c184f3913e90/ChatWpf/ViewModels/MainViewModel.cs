@@ -30,7 +30,7 @@ namespace ChatWpf.ViewModels
 
             ToggleAddChatRoomControlVisibilityCommand = new RelayCommand(ToggleAddChatRoomVisibility, true);
             
-            MessengerInstance.Register<NotificationMessage<string>>(this, action => HandleLoginMessage(action.Notification));
+            MessengerInstance.Register<NotificationMessage<string>>(this, action => HandleStringMessage(action.Notification));
 			MessengerInstance.Register<NotificationMessage<ChatRoom>>(this, action => HandleChatRoomMessage(action.Content, action.Notification));
 		}
 
@@ -65,7 +65,7 @@ namespace ChatWpf.ViewModels
         ///		Handles a login related message.
         /// </summary>
         /// <param name="message"> The message. </param>
-		private void HandleLoginMessage(string message)
+		private void HandleStringMessage(string message)
 		{
 			switch (message)
 			{
@@ -75,6 +75,16 @@ namespace ChatWpf.ViewModels
 					GetAvailableChatRooms();
 					// navigate to main page
 					_navigationService.NavigateToUri("/Views/MainPage.xaml");
+                    break;
+				}
+				case "GoToRegister":
+				{
+					_navigationService.NavigateToUri("/Views/RegisterPage.xaml");
+                    break;
+				}
+				case "GoBack":
+				{
+					_navigationService.GoBack();
                     break;
 				}
 			}

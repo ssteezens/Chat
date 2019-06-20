@@ -44,6 +44,19 @@ namespace Api.Controllers
 		}
 
 		/// <summary>
+        ///		Controller action for registering a user.
+        /// </summary>
+        /// <param name="registerModel"> Model containing the user and password. </param>
+        /// <returns> The created user. </returns>
+        [HttpPost("/api/account/register")]
+		public async Task<IActionResult> Register([FromBody] RegisterModel registerModel)
+		{
+			var identityResult = await _userService.CreateUserAsync(registerModel);
+
+			return Ok(identityResult == IdentityResult.Success);
+		}
+
+		/// <summary>
         ///		Logs out a user.
         /// </summary>
         /// <returns></returns>

@@ -25,6 +25,14 @@ namespace ChatWpf.Services.UI
 		}
 
 		/// <summary>
+		///		Navigate to the last page.
+		/// </summary>
+		public void GoBack()
+		{
+			NavigationFrame.GoBack();
+		}
+
+		/// <summary>
         ///		Sets the navigation from for navigation.s
         /// </summary>
         /// <param name="frame"> The navigation frame to set. </param>

@@ -23,7 +23,6 @@ namespace ChatWpf.ViewModels
 
 			_chatMessageDataService = chatMessageDataService;
 
-            //MessageConsumer = new MessageConsumer() { Enabled = true, QueueName = DisplayName };
             MessageConsumer = new MessageConsumer() { Enabled = true, QueueName = queueName, ChatRoomId = Id };
 
             new Thread(PollMessageUpdates).Start();

@@ -120,18 +120,21 @@
       <DependentUpon>ChatRoomControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\InverseBoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\StringLengthToEnabledConverter.cs" />
     <Compile Include="Models\ChatMessage.cs" />
     <Compile Include="Models\ChatRoom.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Services\Connection\Interfaces\IQueueService.cs" />
     <Compile Include="Services\Connection\QueueService.cs" />
-    <Compile Include="Services\Data\AuthenticationService.cs" />
+    <Compile Include="Services\Data\UserAccountService.cs" />
     <Compile Include="Services\Data\ChatMessageDataService.cs" />
     <Compile Include="Services\Data\ChatRoomDataService.cs" />
     <Compile Include="Services\Data\DataServiceBase.cs" />
-    <Compile Include="Services\Data\Interfaces\IAuthenticationService.cs" />
+    <Compile Include="Services\Data\Interfaces\IUserAccountService.cs" />
     <Compile Include="Services\Data\Interfaces\IChatMessageDataService.cs" />
     <Compile Include="Services\Data\Interfaces\IChatRoomDataService.cs" />
     <Compile Include="Services\Data\Interfaces\IDataServiceBase.cs" />
@@ -142,12 +145,16 @@
     <Compile Include="ViewModels\ChatRoomViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RegisterPage.xaml.cs">
+      <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\AddChatRoomControl.xaml">
       <SubType>Designer</SubType>
@@ -186,6 +193,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RegisterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

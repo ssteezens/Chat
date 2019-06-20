@@ -29,7 +29,7 @@
 
             <!-- Username Text Field -->
             <TextBox Margin="10"
-                         Text="{Binding Username, Mode=TwoWay}"/>
+                     Text="{Binding Username, Mode=TwoWay}"/>
 
             <!-- Password label -->
             <TextBlock Text="Password"/>
@@ -40,24 +40,28 @@
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PasswordChanged">
                         <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
-                                                   CommandParameter="{Binding ElementName=PasswordInput}"/>
+                                               CommandParameter="{Binding ElementName=PasswordInput}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </PasswordBox>
 
             <!-- Create an account link -->
-            <TextBlock Margin="10,0"
-                           Foreground="Blue"
-                           HorizontalAlignment="Left"
+            <Button BorderThickness="0"
+                    HorizontalAlignment="Left"
+                    Margin="10,0"
+                    Background="Transparent"
+                    Command="{Binding GoToRegisterCommand}">
+                <TextBlock Foreground="Blue"
                            Text="Create an account"/>
+            </Button>
 
             <!-- Login button -->
             <Button Content="Login"
-                        Margin="10"
-                        HorizontalAlignment="Right"
-                        IsDefault="True"
-                        IsEnabled="{Binding CanLogin, Mode=OneWay}"
-                        Command="{Binding LoginCommand}"/>
+                    Margin="10"
+                    HorizontalAlignment="Right"
+                    IsDefault="True"
+                    IsEnabled="{Binding CanLogin, Mode=OneWay}"
+                    Command="{Binding LoginCommand}"/>
 
         </StackPanel>
     </Border>

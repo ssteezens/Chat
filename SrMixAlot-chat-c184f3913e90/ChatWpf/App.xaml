@@ -17,6 +17,8 @@
             <viewModels:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
             <converters:StringLengthToEnabledConverter x:Key="StringLengthToEnabledConverter"/>
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+            <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

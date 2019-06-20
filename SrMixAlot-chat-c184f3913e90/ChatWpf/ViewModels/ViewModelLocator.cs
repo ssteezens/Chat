@@ -36,7 +36,7 @@ namespace ChatWpf.ViewModels
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-			SimpleIoc.Default.Register<IAuthenticationService, AuthenticationService>();
+			SimpleIoc.Default.Register<IUserAccountService, UserAccountService>();
 			SimpleIoc.Default.Register<IChatMessageDataService, ChatMessageDataService>();
 			SimpleIoc.Default.Register<IChatRoomDataService, ChatRoomDataService>();
 			SimpleIoc.Default.Register<INavigationService, NavigationService>();
@@ -44,6 +44,7 @@ namespace ChatWpf.ViewModels
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
+			SimpleIoc.Default.Register<RegisterViewModel>();
             SimpleIoc.Default.Register<ChatRoomViewModel>();
             SimpleIoc.Default.Register<AddChatRoomViewModel>();
         }
@@ -57,6 +58,11 @@ namespace ChatWpf.ViewModels
         ///		Login view model.
         /// </summary>
 		public LoginViewModel LoginVm => ServiceLocator.Current.GetInstance<LoginViewModel>();
+
+		/// <summary>
+        ///		Register view model.
+        /// </summary>
+		public RegisterViewModel RegisterVm => ServiceLocator.Current.GetInstance<RegisterViewModel>();
 
 		public static void Cleanup()
         {

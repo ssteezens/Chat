@@ -13,15 +13,16 @@ namespace ChatWpf.ViewModels
     /// </summary>
     public class LoginViewModel : ViewModelBase
     {
-        private readonly IAuthenticationService _authenticationService;
+        private readonly IUserAccountService _userAccountService;
 		
-		public LoginViewModel(IAuthenticationService authenticationService)
+		public LoginViewModel(IUserAccountService userAccountService)
 		{
-			_authenticationService = authenticationService;
+			_userAccountService = userAccountService;
 			
 			LoginCommand = new RelayCommand(Login, CanLogin);
 			PasswordChangedCommand = new RelayCommand<object>(PasswordChanged, true);
-        }
+			GoToRegisterCommand = new RelayCommand(GoToRegister);
+		}
 
         #region Properties
 
@@ -72,12 +73,22 @@ namespace ChatWpf.ViewModels
 
         #endregion
 
-        #region Event Handlers
+        #region Commands
 
 		/// <summary>
         ///		Command for logging in.
         /// </summary>
 		public RelayCommand LoginCommand { get; }
+
+		/// <summary>
+		///		Command for the password changing.
+		/// </summary>
+		public RelayCommand<object> PasswordChangedCommand { get; }
+
+        /// <summary>
+        ///		Command for going to the register page.
+        /// </summary>
+        public RelayCommand GoToRegisterCommand { get; }
 
 		/// <summary>
         ///		Calls authentication service and gets user.
@@ -90,7 +101,7 @@ namespace ChatWpf.ViewModels
 			try
 			{
 				// call authentication service and get current user
-				var user = _authenticationService.AuthenticateUser(Username, Password);
+				var user = _userAccountService.LoginUser(Username, Password);
 
 				// set current user
 				UserInstance.Current = user;
@@ -102,12 +113,7 @@ namespace ChatWpf.ViewModels
 				ServerError = "Something went wrong when attempting to login.  Please verify your username and password and try again.";
 			}
 		}
-
-		/// <summary>
-        ///		Command for the password changing.
-        /// </summary>
-		public RelayCommand<object> PasswordChangedCommand { get; }
-
+		
 		/// <summary>
         ///		Set the password to the value of the password box.
         /// </summary>
@@ -117,6 +123,12 @@ namespace ChatWpf.ViewModels
             var passwordBox = (PasswordBox)parameter;
 			Password = passwordBox.Password;
 		}
+
+		private void GoToRegister()
+		{
+            // navigate to the register page
+			MessengerInstance.Send(new NotificationMessage<string>("GoToRegister", "GoToRegister"));
+        }
 
         #endregion
     }
