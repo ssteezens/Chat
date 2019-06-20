@@ -17,12 +17,14 @@ namespace ChatWpf.ViewModels
     {
         private readonly IChatMessageDataService _chatMessageDataService;
 		
-		public ChatRoomViewModel(IChatMessageDataService chatMessageDataService)
+		public ChatRoomViewModel(int id, string queueName, IChatMessageDataService chatMessageDataService)
 		{
+            Id = id;
+
 			_chatMessageDataService = chatMessageDataService;
 
             //MessageConsumer = new MessageConsumer() { Enabled = true, QueueName = DisplayName };
-			MessageConsumer = new MessageConsumer() { Enabled = true };
+            MessageConsumer = new MessageConsumer() { Enabled = true, QueueName = queueName, ChatRoomId = Id };
 
             new Thread(PollMessageUpdates).Start();
 
@@ -39,7 +41,9 @@ namespace ChatWpf.ViewModels
 			{
 				case "Add":
 				{
-					DispatcherHelper.CheckBeginInvokeOnUI(() => { ChatMessages.Add(chatMessage); });
+					// if message is meant for this chat room
+					if(chatMessage.ChatRoomId == Id)
+						DispatcherHelper.CheckBeginInvokeOnUI(() => { ChatMessages.Add(chatMessage); });
                     break;
 				}
 			}
@@ -73,11 +77,8 @@ namespace ChatWpf.ViewModels
 			};
 
 			// submit chat to server
-			var addedMessage = _chatMessageDataService.AddChatMessage(message);
-
-			// add message to list of messages
-			ChatMessages.Add(addedMessage);
-
+			_chatMessageDataService.AddChatMessage(message);
+			
 			// clear user text
 			UserText = string.Empty;
 		}

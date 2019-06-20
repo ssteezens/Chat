@@ -1,5 +1,7 @@
 ﻿using Api.Models.Dto;
 using Api.Models.Entities;
+using Api.Services.Connection;
+using Api.Services.Connection.Interfaces;
 using Api.Services.Data;
 using Api.Services.Data.Interfaces;
 using AutoMapper;
@@ -47,17 +49,24 @@ namespace Api
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+			// add transient services
 			services.AddTransient<ChatSeeder>();
+			services.AddTransient<ConnectionInitializer>();
 
             var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<ChatContext>
                 (options => options.UseSqlServer(connection));
 
+			// add scoped services
 			services.AddScoped<IChatRoomDataService, ChatRoomDataService>();
 			services.AddScoped<IChatMessageDataService, ChatMessageDataService>();
 			services.AddScoped<IUserService, UserService>();
+			
+			// add singleton services
+			services.AddSingleton<IExchangeService, ExchangeService>();
+			services.AddSingleton<IMessageService, MessageService>();
 
-			Mapper.Initialize(config =>
+            Mapper.Initialize(config =>
 			{
 				config.CreateMap<User, UserDto>()
 					.ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.UserName));

@@ -12,6 +12,8 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using ChatWpf.Services.Connection;
+using ChatWpf.Services.Connection.Interfaces;
 using ChatWpf.Services.Data;
 using ChatWpf.Services.Data.Interfaces;
 using ChatWpf.Services.UI;
@@ -38,6 +40,7 @@ namespace ChatWpf.ViewModels
 			SimpleIoc.Default.Register<IChatMessageDataService, ChatMessageDataService>();
 			SimpleIoc.Default.Register<IChatRoomDataService, ChatRoomDataService>();
 			SimpleIoc.Default.Register<INavigationService, NavigationService>();
+			SimpleIoc.Default.Register<IQueueService, QueueService>();
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();

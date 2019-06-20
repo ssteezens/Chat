@@ -41,14 +41,23 @@ namespace ChatWpf.ViewModels
             set => Set(ref _isOpen, value, nameof(IsOpen));
         }
 
+		/// <summary>
+        ///		The chat room model.
+        /// </summary>
         public ChatRoom ChatRoomModel { get; set; }
 
         #endregion
 
-        #region Event handlers
+        #region Commands
 
+		/// <summary>
+        ///		Command for when the submit button is pressed.
+        /// </summary>
         public RelayCommand SubmitCommand { get; }
 
+		/// <summary>
+        ///		Send chat room to main view model.
+        /// </summary>
         private void Submit()
         {
             // todo: validation

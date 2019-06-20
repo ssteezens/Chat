@@ -1,4 +1,5 @@
 ﻿using Api.Models.Entities;
+using Api.Services.Connection.Interfaces;
 using Api.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,11 +11,13 @@ namespace Api.Controllers
     public class ChatMessageController : Controller
     {
         private readonly IChatMessageDataService _chatMessageDataService;
+		private readonly IMessageService _messageService;
 
-        public ChatMessageController(IChatMessageDataService chatMessageDataService)
-        {
+		public ChatMessageController(IChatMessageDataService chatMessageDataService, IMessageService messageService)
+		{
 			_chatMessageDataService = chatMessageDataService;
-        }
+			_messageService = messageService;
+		}
 
 		/// <summary>
         ///		Adds a chat message to the database.
@@ -24,6 +27,8 @@ namespace Api.Controllers
         [HttpPost("/ChatMessage/Add")]
         public IActionResult Add([FromBody] ChatMessage message)
 		{
+			_messageService.SendMessageToExchange($"Chat.Room.{message.ChatRoomId}", message.Message);
+
 			return Ok(_chatMessageDataService.Add(message));
 		}        
 

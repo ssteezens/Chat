@@ -125,6 +125,8 @@
     <Compile Include="Models\ChatRoom.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Services\Connection\Interfaces\IQueueService.cs" />
+    <Compile Include="Services\Connection\QueueService.cs" />
     <Compile Include="Services\Data\AuthenticationService.cs" />
     <Compile Include="Services\Data\ChatMessageDataService.cs" />
     <Compile Include="Services\Data\ChatRoomDataService.cs" />

@@ -12,9 +12,6 @@ namespace ChatWpf.Services.MessageRecieving
 		private const string HostName = "localhost";
 		private const string UserName = "guest";
 		private const string Password = "guest";
-		
-		private const string VirtualHost = "";
-		private int Port = 0;
 
 		private ConnectionFactory _connectionFactory;
 		private IConnection _connection;
@@ -32,12 +29,6 @@ namespace ChatWpf.Services.MessageRecieving
                 UserName = UserName,
                 Password = Password
             };
-
-            if (string.IsNullOrEmpty(VirtualHost) == false)
-                _connectionFactory.VirtualHost = VirtualHost;
-
-            if (Port > 0)
-                _connectionFactory.Port = Port;
 
             _connection = _connectionFactory.CreateConnection();
             _model = _connection.CreateModel();
@@ -71,7 +62,8 @@ namespace ChatWpf.Services.MessageRecieving
 
 				var chatMessage = new ChatMessage()
 				{
-					Message = message
+					Message = message,
+					ChatRoomId = ChatRoomId
 				};
 
 				// send chat message to view model
@@ -83,9 +75,7 @@ namespace ChatWpf.Services.MessageRecieving
         }
 
         #region Properties
-
-		public delegate void OnReceiveMessage(string message);
-
+		
 		/// <summary>
         ///		Gets or sets whether the message consumer is enabled.
         /// </summary>
@@ -95,6 +85,11 @@ namespace ChatWpf.Services.MessageRecieving
         ///		Name of queue.
         /// </summary>
 		public string QueueName { get; set; } = "Module2.Sample4.Queue1";
+
+		/// <summary>
+        ///		Id of chat room.
+        /// </summary>
+		public int ChatRoomId { get; set; }
 
         #endregion
 

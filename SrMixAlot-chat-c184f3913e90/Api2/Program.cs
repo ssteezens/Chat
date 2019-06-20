@@ -1,4 +1,5 @@
 ﻿using Api.Models.Entities;
+using Api.Services.Connection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,9 @@ namespace Api
 
 			// seed the database
 			RunSeeding(host);
+
+			// initialize connection queue's and bindings to exchange
+			InitializeConnectionBindings(host);
 
 			// run web server
             host.Run();
@@ -32,6 +36,20 @@ namespace Api
 				seeder.SeedAsync().Wait();
             }
 		}
+
+		private static void InitializeConnectionBindings(IWebHost host)
+		{
+			// get scope factory from web host
+			var scopeFactory = host.Services.GetService<IServiceScopeFactory>();
+
+			using (var scope = scopeFactory.CreateScope())
+			{
+				// get connection initializer from web host scope factory so that you can access scoped services within transient ones
+				var connectionInitializer = scope.ServiceProvider.GetService<ConnectionInitializer>();
+				// initalize
+				connectionInitializer.Initialize();
+			}
+        }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
