@@ -22,14 +22,6 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Grid.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="Delete"
-                                      Command="{Binding DataContext.DeleteMessageCommand, Source={x:Reference Name=ChatRoomUserControl}}"
-                                      CommandParameter="{Binding}"/>
-                        </ContextMenu>
-                    </Grid.ContextMenu>
-
                     <Ellipse Grid.Column="0" 
                              Margin="4,0,0,0"
                              Stroke="Black"
@@ -80,7 +72,9 @@
                         <Button BorderThickness="0"
                                 Padding="0"
                                 Background="Transparent"
-                                HorizontalAlignment="Right">
+                                HorizontalAlignment="Right"
+                                Command="{Binding DataContext.DeleteMessageCommand, Source={x:Reference Name=ChatRoomUserControl}}"
+                                CommandParameter="{Binding}">
                             <TextBlock Text="Delete"
                                        FontSize="10" />
                         </Button>

@@ -34,7 +34,7 @@ namespace ChatWpf.Services.Connection
 		public void CreateQueue(string queueName)
 		{
 			// todo: error handling
-			_channel.QueueDeclare(queueName, true, false, false, null);
+			_channel.QueueDeclare(queueName, true, false, true, null);
 		}
 
 		/// <summary>
