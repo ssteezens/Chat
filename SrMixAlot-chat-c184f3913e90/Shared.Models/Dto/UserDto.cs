@@ -1,4 +1,4 @@
-﻿namespace Api.Models.Dto
+﻿namespace Shared.Models.Dto
 {
     /// <summary>
     ///		DTO object for a user.

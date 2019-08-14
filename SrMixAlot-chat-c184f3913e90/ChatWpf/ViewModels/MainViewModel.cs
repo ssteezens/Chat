@@ -2,13 +2,14 @@
 using ChatWpf.Models;
 using ChatWpf.Services.Connection.Interfaces;
 using ChatWpf.Services.Data.Interfaces;
+using ChatWpf.Services.MessageBrokering;
 using ChatWpf.Services.UI.Interfaces;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading;
 using System.Windows.Controls;
 
 namespace ChatWpf.ViewModels
@@ -32,6 +33,8 @@ namespace ChatWpf.ViewModels
             
             MessengerInstance.Register<NotificationMessage<string>>(this, action => HandleStringMessage(action.Notification));
 			MessengerInstance.Register<NotificationMessage<ChatRoom>>(this, action => HandleChatRoomMessage(action.Content, action.Notification));
+			
+			SetupMessageBrokerListener();
 		}
 
         #region Properties
@@ -57,15 +60,25 @@ namespace ChatWpf.ViewModels
         /// </summary>
         public AddChatRoomViewModel AddChatRoomViewModel { get; set; } = new AddChatRoomViewModel();
 
+		/// <summary>
+        ///		Gets or sets the name of the queue for this client.
+        /// </summary>
+		public string ClientQueueName { get; set; }
+
+		/// <summary>
+        ///		Gets or sets the message broker listener.
+        /// </summary>
+		private MessageBrokerListener MessageBrokerListener { get; set; }
+
         #endregion
 
         #region Messenger Handlers
 
-		/// <summary>
+        /// <summary>
         ///		Handles a login related message.
         /// </summary>
         /// <param name="message"> The message. </param>
-		private void HandleStringMessage(string message)
+        private void HandleStringMessage(string message)
 		{
 			switch (message)
 			{
@@ -103,14 +116,10 @@ namespace ChatWpf.ViewModels
                 {
                     // send chat room to api
                     room = _chatRoomDataService.AddChatRoom(room);
-					// create unique queue name
-					var queueName = Guid.NewGuid().ToString();
-					// create a connection queue from this client for this chat room
-					_queueService.CreateQueue(queueName);
 					// bind queue to chat room's exchange
-					_queueService.BindToExchange(queueName, $"Chat.Room.{room.Id}", string.Empty);
+					_queueService.BindToExchange(ClientQueueName, $"Chat.Room.{room.Id}", string.Empty);
                     // map to view model
-                    var viewmodel = new ChatRoomViewModel(room.Id, queueName, SimpleIoc.Default.GetInstance<IChatMessageDataService>());
+                    var viewmodel = new ChatRoomViewModel(room.Id, SimpleIoc.Default.GetInstance<IChatMessageDataService>());
                     Mapper.Map(room, viewmodel);
                     // add to available chat rooms
                     AvailableChatRooms.Add(viewmodel);
@@ -119,10 +128,10 @@ namespace ChatWpf.ViewModels
                 }
             }
         }
-
+		
         #endregion
 
-        #region Event Handlers
+        #region Commands
 
         /// <summary>
         ///     Toggles add chat room visibility.
@@ -139,6 +148,25 @@ namespace ChatWpf.ViewModels
 
         #endregion
 
+        #region Private Methods
+
+        /// <summary>
+        ///		Sets up the message broker listener.
+        /// </summary>
+        private void SetupMessageBrokerListener()
+		{
+			// create unique queue name
+			ClientQueueName = Guid.NewGuid().ToString();
+			// create a connection queue from this client for this chat room
+			_queueService.CreateQueue(ClientQueueName);
+
+            // message broker listener
+            MessageBrokerListener = new MessageBrokerListener() { Enabled = true, QueueName = ClientQueueName };
+
+			// start the message broker listener on its own thread
+			new Thread(() => MessageBrokerListener.Start()).Start();
+		}
+		
         /// <summary>
         ///		Gets all available chat rooms from the data service.
         /// </summary>
@@ -149,13 +177,10 @@ namespace ChatWpf.ViewModels
 
 			foreach (var room in chatRooms)
 			{
-				var queueName = Guid.NewGuid().ToString();
-				// create a connection queue from this client for this chat room
-                _queueService.CreateQueue(queueName);
 				// bind queue to chat room's exchange
-				_queueService.BindToExchange(queueName, $"Chat.Room.{room.Id}", string.Empty);
+				_queueService.BindToExchange(ClientQueueName, $"Chat.Room.{room.Id}", string.Empty);
 				// create ChatRoomViewModel
-				var viewmodel = new ChatRoomViewModel(room.Id, queueName, SimpleIoc.Default.GetInstance<IChatMessageDataService>());
+				var viewmodel = new ChatRoomViewModel(room.Id, SimpleIoc.Default.GetInstance<IChatMessageDataService>());
 				// map chat room into ChatRoomViewModel
 				Mapper.Map(room, viewmodel);
 				// add to available chat rooms
@@ -179,5 +204,7 @@ namespace ChatWpf.ViewModels
 		{
 			_navigationService.NavigateToUri("Views/LoginPage.xaml");
 		}
+
+        #endregion
     }
 }

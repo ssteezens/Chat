@@ -1,12 +1,10 @@
 ﻿using ChatWpf.Models;
 using ChatWpf.Services.Data.Interfaces;
-using ChatWpf.Services.MessageRecieving;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading;
 using System.Windows;
 
 namespace ChatWpf.ViewModels
@@ -18,17 +16,17 @@ namespace ChatWpf.ViewModels
     {
         private readonly IChatMessageDataService _chatMessageDataService;
 		
-		public ChatRoomViewModel(int id, string queueName, IChatMessageDataService chatMessageDataService)
+		/// <summary>
+        ///		Constructs a chat room view model.
+        /// </summary>
+        /// <param name="id"> Id of the chat room. </param>
+        /// <param name="chatMessageDataService"> Service for managing chat message data. </param>
+		public ChatRoomViewModel(int id, IChatMessageDataService chatMessageDataService)
 		{
-            Id = id;
-
 			_chatMessageDataService = chatMessageDataService;
 
-            MessageConsumer = new MessageConsumer() { Enabled = true, QueueName = queueName, ChatRoomId = Id };
-
-            new Thread(PollMessageUpdates).Start();
-
-			SendMessageCommand = new RelayCommand(SendMessage, CanSendMessage);
+			Id = id;
+			SendMessageCommand = new RelayCommand(SendMessage, () => !string.IsNullOrEmpty(UserText));
 			DeleteMessageCommand = new RelayCommand<ChatMessage>(DeleteMessage);
 
 			MessengerInstance.Register<NotificationMessage<ChatMessage>>(this, action => HandleChatMessageNotification(action.Content, action.Notification));
@@ -36,6 +34,11 @@ namespace ChatWpf.ViewModels
 
         #region Messenger Handlers
 
+		/// <summary>
+        ///		Handler for ChatMessage related messages.
+        /// </summary>
+        /// <param name="chatMessage"> Message to handle. </param>
+        /// <param name="notification"> Type of operation. </param>
 		private void HandleChatMessageNotification(ChatMessage chatMessage, string notification)
 		{
 			switch (notification)
@@ -52,17 +55,16 @@ namespace ChatWpf.ViewModels
 
         #endregion
 
-        #region Event Handlers 
+        #region Commands 
 
-        private void PollMessageUpdates()
-		{
-			// start receiving messages from the server
-			MessageConsumer.Start();
-        }
-
-		private bool CanSendMessage => !string.IsNullOrEmpty(UserText);
-		
+		/// <summary>
+        ///		Gets a command for sending a message.
+        /// </summary>
         public RelayCommand SendMessageCommand { get; }
+
+		/// <summary>
+        ///		Gets a command for deleting a message.
+        /// </summary>
         public RelayCommand<ChatMessage> DeleteMessageCommand { get; }
 		
 		/// <summary>
@@ -108,11 +110,6 @@ namespace ChatWpf.ViewModels
         private string _displayName;
 		private string _userText;
         private ChatMessage _selectedChatMessage;
-
-		/// <summary>
-        ///		Message consumer that keeps chat messages sync'd for a chat room.
-        /// </summary>
-		public MessageConsumer MessageConsumer { get; set; }
 
 		/// <summary>
         ///		Chat room's display name.

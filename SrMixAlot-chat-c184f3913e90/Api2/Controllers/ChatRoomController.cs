@@ -1,10 +1,10 @@
-﻿using Api.Models.Dto;
-using Api.Models.Entities;
+﻿using Api.Models.Entities;
 using Api.Services.Connection.Interfaces;
 using Api.Services.Data.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using Shared.Models.Dto;
 
 namespace Api.Controllers
 {
@@ -38,7 +38,6 @@ namespace Api.Controllers
         public IActionResult GetAll()
 		{
 			var rooms = _chatRoomDataService.GetAll();
-			// todo: return dto from service?
 			var roomDtos = _mapper.Map<IEnumerable<ChatRoomDto>>(rooms);
 
             return Ok(roomDtos);

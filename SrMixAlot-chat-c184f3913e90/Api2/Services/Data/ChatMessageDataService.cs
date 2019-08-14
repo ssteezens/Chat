@@ -2,6 +2,8 @@
 using Api.Services.Data.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using Shared.Models.Dto;
 
 namespace Api.Services.Data
 {
@@ -11,10 +13,12 @@ namespace Api.Services.Data
     public class ChatMessageDataService : IChatMessageDataService
 	{
 		private readonly ChatContext _chatContext;
+        private readonly IMapper _mapper;
 
-		public ChatMessageDataService(ChatContext chatContext)
+		public ChatMessageDataService(ChatContext chatContext, IMapper mapper)
 		{
 			_chatContext = chatContext;
+			_mapper = mapper;
 		}
 
 		/// <summary>
@@ -27,8 +31,8 @@ namespace Api.Services.Data
 			var addedMessage = _chatContext.Add(message).Entity;
 
 			_chatContext.SaveChanges();
-
-			return addedMessage;
+			
+			return addedMessage; 
         }
         
         /// <summary>

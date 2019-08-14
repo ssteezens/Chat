@@ -1,5 +1,4 @@
-﻿using Api.Models.Dto;
-using Api.Models.Entities;
+﻿using Api.Models.Entities;
 using Api.Services.Connection;
 using Api.Services.Connection.Interfaces;
 using Api.Services.Data;
@@ -13,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Models.Dto;
 
 namespace Api
 {

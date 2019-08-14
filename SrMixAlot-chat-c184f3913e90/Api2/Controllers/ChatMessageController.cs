@@ -1,7 +1,9 @@
 ﻿using Api.Models.Entities;
 using Api.Services.Connection.Interfaces;
 using Api.Services.Data.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Models.Dto;
 
 namespace Api.Controllers
 {
@@ -12,11 +14,13 @@ namespace Api.Controllers
     {
         private readonly IChatMessageDataService _chatMessageDataService;
 		private readonly IMessageService _messageService;
+        private readonly IMapper _mapper;
 
-		public ChatMessageController(IChatMessageDataService chatMessageDataService, IMessageService messageService)
+		public ChatMessageController(IChatMessageDataService chatMessageDataService, IMessageService messageService, IMapper mapper)
 		{
 			_chatMessageDataService = chatMessageDataService;
 			_messageService = messageService;
+			_mapper = mapper;
 		}
 
 		/// <summary>
@@ -27,9 +31,12 @@ namespace Api.Controllers
         [HttpPost("/ChatMessage/Add")]
         public IActionResult Add([FromBody] ChatMessage message)
 		{
-			_messageService.SendMessageToExchange($"Chat.Room.{message.ChatRoomId}", message.Message);
+			var addedMessage = _chatMessageDataService.Add(message);
+			var messageDto = _mapper.Map<ChatMessageDto>(addedMessage);
 
-			return Ok(_chatMessageDataService.Add(message));
+            _messageService.SendMessageToExchange($"Chat.Room.{message.ChatRoomId}", messageDto);
+
+			return Ok(messageDto);
 		}
 
         /// <summary>

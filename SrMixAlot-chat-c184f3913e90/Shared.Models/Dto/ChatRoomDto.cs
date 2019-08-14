@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Api.Models.Dto
+namespace Shared.Models.Dto
 {
     /// <summary>
     ///		DTO object for a chat room.

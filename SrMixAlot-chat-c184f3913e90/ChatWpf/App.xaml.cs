@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using AutoMapper;
+﻿using AutoMapper;
 using ChatWpf.Models;
 using ChatWpf.ViewModels;
-using ChatWpf.Views;
 using GalaSoft.MvvmLight.Threading;
+using Shared.Models.Dto;
+using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace ChatWpf
 {
@@ -22,14 +16,23 @@ namespace ChatWpf
 		public App()
 		{
 			DispatcherHelper.Initialize();
+			
+			SetupMapping();
+		}
 
+		/// <summary>
+        ///		Setup auto mapper.
+        /// </summary>
+		private void SetupMapping()
+		{
 			Mapper.Initialize(cfg =>
 			{
 				cfg.CreateMap<ChatRoom, ChatRoomViewModel>()
 					.ForMember(dest => dest.ChatMessages, opt => opt.MapFrom(src => new ObservableCollection<ChatMessage>(src.ChatMessages)))
 					.ForMember(dest => dest.Users, opt => opt.MapFrom(src => new ObservableCollection<User>(src.Users)));
 
-				cfg.CreateMap<ChatMessage, ChatMessage>().ReverseMap();
+				cfg.CreateMap<ChatMessage, ChatMessageDto>().ReverseMap();
+				cfg.CreateMap<ChatRoom, ChatRoomDto>().ReverseMap();
 			});
         }
     }
