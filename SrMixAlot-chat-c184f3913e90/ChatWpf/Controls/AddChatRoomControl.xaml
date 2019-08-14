@@ -23,6 +23,7 @@
             <!-- Submit button -->
             <Button Margin="4" 
                     Content="Submit"
+                    IsDefault="True"
                     HorizontalAlignment="Right">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
