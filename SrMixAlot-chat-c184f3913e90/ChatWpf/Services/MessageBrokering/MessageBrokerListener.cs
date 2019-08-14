@@ -10,6 +10,9 @@ using Shared.Models.Dto;
 
 namespace ChatWpf.Services.MessageBrokering
 {
+	/// <summary>
+    ///		Listener for messages sent by message broker.
+    /// </summary>
     public class MessageBrokerListener : IDisposable
     {
 		private const string HostName = "localhost";
@@ -17,13 +20,10 @@ namespace ChatWpf.Services.MessageBrokering
 		private const string Password = "guest";
 
 		private ConnectionFactory _connectionFactory;
-		private IConnection _connection;
-		private IModel _model;
+		private readonly IConnection _connection;
+		private readonly IModel _model;
 		private Subscription _subscription;
 		
-        /// <summary>
-        ///		Ctor with a key to lookup the configuration
-        /// </summary>
         public MessageBrokerListener()
         {
             _connectionFactory = new ConnectionFactory
@@ -68,19 +68,23 @@ namespace ChatWpf.Services.MessageBrokering
 				switch (receivedMessage)
 				{
                     case ChatMessageDto chatMessageDto:
+					{
 						var chatMessage = Mapper.Map<ChatMessage>(chatMessageDto);
 						// send chat message to view model
-						Messenger.Default.Send(new NotificationMessage<ChatMessage>(chatMessage, "Add"));
-                        break;
+						Messenger.Default.Send(new NotificationMessage<ChatMessage>(chatMessage, chatMessageDto.OperationType.ToString()));
+						break;
+					}
                     case ChatRoomDto chatRoomDto:
+					{
 						var chatRoom = Mapper.Map<ChatRoom>(chatRoomDto);
-						Messenger.Default.Send(new NotificationMessage<ChatRoom>(chatRoom, "Add"));
-                        break;
+						Messenger.Default.Send(new NotificationMessage<ChatRoom>(chatRoom, chatRoomDto.OperationType.ToString()));
+						break;
+					}
                     default:
 						throw new NotSupportedException("Unsupported message type sent to handler.");
 				}
 				
-                //Acknowledge message is processed
+                // acknowledge message is processed
                 _subscription.Ack(deliveryArgs);
             }
         }
@@ -101,10 +105,8 @@ namespace ChatWpf.Services.MessageBrokering
 
         public void Dispose()
 		{
-			if (_model != null)
-				_model.Dispose();
-			if (_connection != null)
-				_connection.Dispose();
+			_model?.Dispose();
+			_connection?.Dispose();
 
 			_connectionFactory = null;
 

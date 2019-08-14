@@ -26,5 +26,10 @@ namespace Shared.Models.Dto
         ///		Gets or sets the room's users.
         /// </summary>
 		public IEnumerable<UserDto> Users { get; set; }
+
+		/// <summary>
+        ///		Gets or sets type of operation for the dto.
+        /// </summary>
+		public MessageOperationTypes OperationType { get; set; }
     }
 }

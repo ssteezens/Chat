@@ -34,6 +34,8 @@ namespace Api.Controllers
 			var addedMessage = _chatMessageDataService.Add(message);
 			var messageDto = _mapper.Map<ChatMessageDto>(addedMessage);
 
+			messageDto.OperationType = MessageOperationTypes.Add;
+
             _messageService.SendMessageToExchange($"Chat.Room.{message.ChatRoomId}", messageDto);
 
 			return Ok(messageDto);
@@ -42,12 +44,17 @@ namespace Api.Controllers
         /// <summary>
         ///     Deletes a chat message. 
         /// </summary>
-        /// <param name="id"> Id of the messaage to delete. </param>
+        /// <param name="id"> Id of the message to delete. </param>
         /// <returns> An ok. </returns>
         [HttpGet("/ChatMessage/Delete/{id}")]
         public IActionResult Delete(int id)
         {
-            _chatMessageDataService.Delete(id);
+            var deletedMessage = _chatMessageDataService.Delete(id);
+			var messageDto = _mapper.Map<ChatMessageDto>(deletedMessage);
+
+			messageDto.OperationType = MessageOperationTypes.Remove;
+
+			_messageService.SendMessageToExchange($"Chat.Room.{messageDto.ChatRoomId}", messageDto);
 
             return Ok();
         }

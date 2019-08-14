@@ -1,9 +1,8 @@
 ﻿using Api.Models.Entities;
 using Api.Services.Data.Interfaces;
+using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
-using Shared.Models.Dto;
 
 namespace Api.Services.Data
 {
@@ -39,11 +38,13 @@ namespace Api.Services.Data
         ///     Deletes a chat message.
         /// </summary>
         /// <param name="id"> Id of the chat message to delete. </param>
-        public void Delete(int id)
+        public ChatMessage Delete(int id)
         {
-            _chatContext.ChatMessages.Remove(_chatContext.ChatMessages.Single(i => i.Id == id));
+            var deletedMessage = _chatContext.ChatMessages.Remove(_chatContext.ChatMessages.Single(i => i.Id == id)).Entity;
 
             _chatContext.SaveChanges();
+
+            return deletedMessage;
         }
 
 		/// <summary>

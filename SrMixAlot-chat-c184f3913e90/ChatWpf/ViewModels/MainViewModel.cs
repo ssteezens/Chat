@@ -9,6 +9,7 @@ using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 using System.Windows.Controls;
 
@@ -126,6 +127,15 @@ namespace ChatWpf.ViewModels
 
                     break;
                 }
+				case "Remove":
+				{
+					var roomToRemove = AvailableChatRooms.SingleOrDefault(i => i.Id == room.Id);
+
+					if (roomToRemove != null)
+						AvailableChatRooms.Remove(roomToRemove);
+
+					break;
+				}
             }
         }
 		

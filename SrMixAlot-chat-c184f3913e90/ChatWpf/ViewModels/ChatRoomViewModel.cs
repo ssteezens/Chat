@@ -41,13 +41,33 @@ namespace ChatWpf.ViewModels
         /// <param name="notification"> Type of operation. </param>
 		private void HandleChatMessageNotification(ChatMessage chatMessage, string notification)
 		{
+            if (chatMessage.ChatRoomId != Id)
+                return;
+
 			switch (notification)
 			{
 				case "Add":
 				{
 					// if message is meant for this chat room
-					if(chatMessage.ChatRoomId == Id)
-						DispatcherHelper.CheckBeginInvokeOnUI(() => { ChatMessages.Add(chatMessage); });
+					DispatcherHelper.CheckBeginInvokeOnUI(() => { ChatMessages.Add(chatMessage); });
+                    break;
+				}
+				case "Remove":
+				{
+					var messageToRemove = ChatMessages.SingleOrDefault(i => i.Id == chatMessage.Id);
+
+					if (messageToRemove != null)
+						DispatcherHelper.CheckBeginInvokeOnUI(() => { ChatMessages.Remove(messageToRemove); }); 
+
+                    break;
+				}
+				case "Edit":
+				{
+					var messageToEdit = ChatMessages.SingleOrDefault(i => i.Id == chatMessage.Id);
+
+					if (messageToEdit != null)
+						DispatcherHelper.CheckBeginInvokeOnUI(() => messageToEdit.Message = chatMessage.Message);
+					
                     break;
 				}
 			}
