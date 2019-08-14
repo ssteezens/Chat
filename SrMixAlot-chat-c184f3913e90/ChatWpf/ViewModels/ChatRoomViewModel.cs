@@ -7,6 +7,7 @@ using GalaSoft.MvvmLight.Threading;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
+using System.Windows;
 
 namespace ChatWpf.ViewModels
 {
@@ -89,10 +90,15 @@ namespace ChatWpf.ViewModels
         /// </summary>
         /// <param name="message"> Message to delete. </param>
         private void DeleteMessage(ChatMessage message)
-        {
-            _chatMessageDataService.Delete(message.Id);
+		{
+			var confirmationResult = MessageBox.Show("Delete this message?", "Confirmation", MessageBoxButton.YesNo);
 
-            ChatMessages.Remove(ChatMessages.Single(i => i.Id == message.Id));
+			if (confirmationResult == MessageBoxResult.Yes)
+			{
+				_chatMessageDataService.Delete(message.Id);
+
+				ChatMessages.Remove(ChatMessages.Single(i => i.Id == message.Id));
+            }
         }
 
         #endregion
