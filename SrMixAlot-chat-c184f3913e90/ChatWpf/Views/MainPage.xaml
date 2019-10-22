@@ -12,7 +12,15 @@
     <Page.Resources>
         <ResourceDictionary>
             <DataTemplate x:Key="ChatChooserListItem">
-                <TextBlock Text="{Binding DisplayName}"/>
+                <Grid VerticalAlignment="Stretch"
+                      HorizontalAlignment="Stretch">
+                    <TextBlock Text="{Binding DisplayName}"/>
+                    <Grid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem>Settings</MenuItem>
+                        </ContextMenu>
+                    </Grid.ContextMenu>
+                </Grid>
             </DataTemplate>
         </ResourceDictionary>
     </Page.Resources>

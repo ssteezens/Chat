@@ -5,7 +5,6 @@ using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using GalaSoft.MvvmLight;
 
 namespace ChatWpf.ViewModels
 {

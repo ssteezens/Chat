@@ -96,6 +96,7 @@
         <ListView Grid.Row="0" 
                   BorderBrush="Black"
                   BorderThickness="1"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                   SelectedItem="{Binding SelectedChatMessage}"
                   ItemTemplate="{StaticResource ChatMessageListItemTemplate}"
                   ItemsSource="{Binding ChatMessages, Mode=OneWay}">
