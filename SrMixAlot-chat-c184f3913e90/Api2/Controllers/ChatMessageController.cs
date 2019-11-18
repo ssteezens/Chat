@@ -2,6 +2,8 @@
 using Api.Services.Connection.Interfaces;
 using Api.Services.Data.Interfaces;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Dto;
 
@@ -10,6 +12,7 @@ namespace Api.Controllers
     /// <summary>
     ///		Api controller for chat message related actions.
     /// </summary>
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ChatMessageController : Controller
     {
         private readonly IChatMessageDataService _chatMessageDataService;

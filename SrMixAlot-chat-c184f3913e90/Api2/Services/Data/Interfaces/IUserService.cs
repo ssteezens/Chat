@@ -23,5 +23,7 @@ namespace Api.Services.Data.Interfaces
 		/// <param name="registerModel"> Model which contains user and password. </param>
 		/// <returns> The created user. </returns>
 		Task<IdentityResult> CreateUserAsync(RegisterModel registerModel);
+
+		string CreateToken(User user);
 	}
 }

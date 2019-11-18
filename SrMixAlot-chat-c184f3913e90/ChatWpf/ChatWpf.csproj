@@ -136,11 +136,9 @@
     <Compile Include="Services\Data\UserAccountService.cs" />
     <Compile Include="Services\Data\ChatMessageDataService.cs" />
     <Compile Include="Services\Data\ChatRoomDataService.cs" />
-    <Compile Include="Services\Data\DataServiceBase.cs" />
     <Compile Include="Services\Data\Interfaces\IUserAccountService.cs" />
     <Compile Include="Services\Data\Interfaces\IChatMessageDataService.cs" />
     <Compile Include="Services\Data\Interfaces\IChatRoomDataService.cs" />
-    <Compile Include="Services\Data\Interfaces\IDataServiceBase.cs" />
     <Compile Include="Services\MessageBrokering\MessageBrokerListener.cs" />
     <Compile Include="Services\UI\Interfaces\INavigationService.cs" />
     <Compile Include="Services\UI\NavigationService.cs" />

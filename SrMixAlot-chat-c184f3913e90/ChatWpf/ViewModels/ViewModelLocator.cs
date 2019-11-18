@@ -20,6 +20,8 @@ using ChatWpf.Services.UI;
 using ChatWpf.Services.UI.Interfaces;
 using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
+using ServiceStack;
+using System.Net;
 
 namespace ChatWpf.ViewModels
 {
@@ -36,6 +38,12 @@ namespace ChatWpf.ViewModels
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
+			var jsonClient = new JsonServiceClient("https://localhost:5001");
+			// TODO: refine this, maybe filter on sender
+			// TODO: wire this up using middleware
+			ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+
+            SimpleIoc.Default.Register<IJsonServiceClient>(() => jsonClient);
 			SimpleIoc.Default.Register<IUserAccountService, UserAccountService>();
 			SimpleIoc.Default.Register<IChatMessageDataService, ChatMessageDataService>();
 			SimpleIoc.Default.Register<IChatRoomDataService, ChatRoomDataService>();

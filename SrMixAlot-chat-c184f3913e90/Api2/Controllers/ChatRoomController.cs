@@ -4,6 +4,8 @@ using Api.Services.Data.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Shared.Models.Dto;
 
 namespace Api.Controllers
@@ -11,6 +13,7 @@ namespace Api.Controllers
     /// <summary>
     ///		Api controller for chat room related actions.
     /// </summary>
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ChatRoomController : ControllerBase
     {
         private readonly IChatRoomDataService _chatRoomDataService;
@@ -37,12 +40,12 @@ namespace Api.Controllers
         [HttpGet("/ChatRoom/GetAll")]
         public IActionResult GetAll()
 		{
-			var rooms = _chatRoomDataService.GetAll();
+			var rooms = _chatRoomDataService.GetAll(User.Identity.Name);
 			var roomDtos = _mapper.Map<IEnumerable<ChatRoomDto>>(rooms);
-
+			
             return Ok(roomDtos);
         }
-
+		
 		/// <summary>
         ///		Adds a chat room to the database.
         /// </summary>

@@ -1,4 +1,5 @@
 ﻿using ChatWpf.Models;
+using Shared.Models.Dto;
 using System.Threading.Tasks;
 
 namespace ChatWpf.Services.Data.Interfaces
@@ -14,7 +15,7 @@ namespace ChatWpf.Services.Data.Interfaces
 		/// <param name="username"> The user's username. </param>
 		/// <param name="password"> The user's password. </param>
 		/// <returns> Task result containing user. </returns>
-		Task<User> LoginUser(string username, string password);
+		Task<UserDto> LoginUser(string username, string password);
 
         /// <summary>
         ///		Registers a user.
