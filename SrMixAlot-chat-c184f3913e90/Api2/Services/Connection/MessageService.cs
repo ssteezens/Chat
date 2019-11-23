@@ -1,4 +1,5 @@
-﻿using Api.Services.Connection.Interfaces;
+﻿using System;
+using Api.Services.Connection.Interfaces;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;
@@ -44,15 +45,16 @@ namespace Api.Services.Connection
             _channel.BasicPublish(exchangeName, string.Empty, properties, messageBuffer);
 		}
 
-		/// <summary>
-		///		Send a message to an exchange.
-		/// </summary>
-		/// <param name="exchangeName"> Name of exchange to send to. </param>
-		/// <param name="message"> Message to send. </param>
-        public void SendMessageToExchange(string exchangeName, object message)
+		///  <summary>
+		/// 		Send a message to an exchange.
+		///  </summary>
+		///  <param name="exchangeName"> Name of exchange to send to. </param>
+		///  <param name="message"> Message to send. </param>
+		public void SendMessageToExchange(string exchangeName, object message)
 		{
 			var properties = _channel.CreateBasicProperties();
-			var messageJson = JsonConvert.SerializeObject(message);
+			var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };
+            var messageJson = JsonConvert.SerializeObject(message, typeof(object), settings);
 			var messageBuffer = Encoding.Default.GetBytes(messageJson);
 
 			_channel.BasicPublish(exchangeName, string.Empty, properties, messageBuffer);

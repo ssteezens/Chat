@@ -8,15 +8,22 @@ namespace ChatWpf.Services.Data
     /// <summary>
     ///		Service for chat message related data.
     /// </summary>
-    public class ChatMessageDataService : DataServiceBase, IChatMessageDataService
+    public class ChatMessageDataService : IChatMessageDataService
     {
+        private readonly IJsonServiceClient _jsonServiceClient;
+
+		public ChatMessageDataService(IJsonServiceClient jsonServiceClient)
+		{
+			_jsonServiceClient = jsonServiceClient;
+		}
+
 		/// <summary>
 		///		Add a chat entry to a chat room.
 		/// </summary>
 		/// <returns> True if successful. </returns>
 		public ChatMessage Add(ChatMessage message)
 		{
-			return Client.Post<ChatMessage>("/ChatMessage/Add", message);
+			return _jsonServiceClient.Post<ChatMessage>("/ChatMessage/Add", message);
 		}
 
         /// <summary>
@@ -25,7 +32,7 @@ namespace ChatWpf.Services.Data
         /// <param name="id"></param>
         public void Delete(int id)
         {
-            Client.Get<IReturnVoid>($"/ChatMessage/Delete/{id}");
+            _jsonServiceClient.Get<IReturnVoid>($"/ChatMessage/Delete/{id}");
         }
 
 		/// <summary>
@@ -34,7 +41,7 @@ namespace ChatWpf.Services.Data
 		/// <returns> List of chat entries. </returns>
 		public IEnumerable<ChatMessage> GetChatEntries()
 		{
-			return Client.Get<IEnumerable<ChatMessage>>("/ChatMessage/GetAll");
+			return _jsonServiceClient.Get<IEnumerable<ChatMessage>>("/ChatMessage/GetAll");
 		}
     }
 }

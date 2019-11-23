@@ -1,27 +1,30 @@
-﻿using RabbitMQ.Client;
-using RabbitMQ.Client.MessagePatterns;
-using System;
+﻿using System;
 using System.Text;
+using AutoMapper;
 using ChatWpf.Models;
 using GalaSoft.MvvmLight.Messaging;
+using Newtonsoft.Json;
+using RabbitMQ.Client;
+using RabbitMQ.Client.MessagePatterns;
+using Shared.Models.Dto;
 
-namespace ChatWpf.Services.MessageRecieving
+namespace ChatWpf.Services.MessageBrokering
 {
-    public class MessageConsumer : IDisposable
+	/// <summary>
+    ///		Listener for messages sent by message broker.
+    /// </summary>
+    public class MessageBrokerListener : IDisposable
     {
 		private const string HostName = "localhost";
 		private const string UserName = "guest";
 		private const string Password = "guest";
 
 		private ConnectionFactory _connectionFactory;
-		private IConnection _connection;
-		private IModel _model;
+		private readonly IConnection _connection;
+		private readonly IModel _model;
 		private Subscription _subscription;
 		
-        /// <summary>
-        ///		Ctor with a key to lookup the configuration
-        /// </summary>
-        public MessageConsumer()
+        public MessageBrokerListener()
         {
             _connectionFactory = new ConnectionFactory
             {
@@ -58,18 +61,30 @@ namespace ChatWpf.Services.MessageRecieving
                 //Get next message
                 var deliveryArgs = _subscription.Next();
                 //Deserialize message
-                var message = Encoding.Default.GetString(deliveryArgs.Body);
+                var messageString = Encoding.Default.GetString(deliveryArgs.Body);
+				var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };
+				var receivedMessage = JsonConvert.DeserializeObject(messageString, settings);
 
-				var chatMessage = new ChatMessage()
+				switch (receivedMessage)
 				{
-					Message = message,
-					ChatRoomId = ChatRoomId
-				};
-
-				// send chat message to view model
-				Messenger.Default.Send(new NotificationMessage<ChatMessage>(chatMessage, "Add"));
-
-                //Acknowledge message is processed
+                    case ChatMessageDto chatMessageDto:
+					{
+						var chatMessage = Mapper.Map<ChatMessage>(chatMessageDto);
+						// send chat message to view model
+						Messenger.Default.Send(new NotificationMessage<ChatMessage>(chatMessage, chatMessageDto.OperationType.ToString()));
+						break;
+					}
+                    case ChatRoomDto chatRoomDto:
+					{
+						var chatRoom = Mapper.Map<ChatRoom>(chatRoomDto);
+						Messenger.Default.Send(new NotificationMessage<ChatRoom>(chatRoom, chatRoomDto.OperationType.ToString()));
+						break;
+					}
+                    default:
+						throw new NotSupportedException("Unsupported message type sent to handler.");
+				}
+				
+                // acknowledge message is processed
                 _subscription.Ack(deliveryArgs);
             }
         }
@@ -85,20 +100,13 @@ namespace ChatWpf.Services.MessageRecieving
         ///		Name of queue.
         /// </summary>
 		public string QueueName { get; set; } = "Module2.Sample4.Queue1";
-
-		/// <summary>
-        ///		Id of chat room.
-        /// </summary>
-		public int ChatRoomId { get; set; }
-
+		
         #endregion
 
         public void Dispose()
 		{
-			if (_model != null)
-				_model.Dispose();
-			if (_connection != null)
-				_connection.Dispose();
+			_model?.Dispose();
+			_connection?.Dispose();
 
 			_connectionFactory = null;
 

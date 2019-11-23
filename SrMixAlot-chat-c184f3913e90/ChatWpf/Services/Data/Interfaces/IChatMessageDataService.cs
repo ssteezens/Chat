@@ -6,7 +6,7 @@ namespace ChatWpf.Services.Data.Interfaces
 	/// <summary>
     ///		Interface for chat message data service.
     /// </summary>
-    public interface IChatMessageDataService : IDataServiceBase
+    public interface IChatMessageDataService 
     {
 		/// <summary>
 		///		Add a chat entry to a chat room.

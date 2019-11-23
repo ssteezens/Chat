@@ -1,5 +1,6 @@
 ﻿using Api.Models.Entities;
 using Api.Services.Data.Interfaces;
+using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,10 +12,12 @@ namespace Api.Services.Data
     public class ChatMessageDataService : IChatMessageDataService
 	{
 		private readonly ChatContext _chatContext;
+        private readonly IMapper _mapper;
 
-		public ChatMessageDataService(ChatContext chatContext)
+		public ChatMessageDataService(ChatContext chatContext, IMapper mapper)
 		{
 			_chatContext = chatContext;
+			_mapper = mapper;
 		}
 
 		/// <summary>
@@ -27,19 +30,21 @@ namespace Api.Services.Data
 			var addedMessage = _chatContext.Add(message).Entity;
 
 			_chatContext.SaveChanges();
-
-			return addedMessage;
+			
+			return addedMessage; 
         }
         
         /// <summary>
         ///     Deletes a chat message.
         /// </summary>
         /// <param name="id"> Id of the chat message to delete. </param>
-        public void Delete(int id)
+        public ChatMessage Delete(int id)
         {
-            _chatContext.ChatMessages.Remove(_chatContext.ChatMessages.Single(i => i.Id == id));
+            var deletedMessage = _chatContext.ChatMessages.Remove(_chatContext.ChatMessages.Single(i => i.Id == id)).Entity;
 
             _chatContext.SaveChanges();
+
+            return deletedMessage;
         }
 
 		/// <summary>

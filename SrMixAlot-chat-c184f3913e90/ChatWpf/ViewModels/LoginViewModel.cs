@@ -1,4 +1,5 @@
-﻿using ChatWpf.Models;
+﻿using AutoMapper;
+using ChatWpf.Models;
 using ChatWpf.Services.Data.Interfaces;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -106,7 +107,7 @@ namespace ChatWpf.ViewModels
 				var user = await _userAccountService.LoginUser(Username, Password);
 
 				// set current user
-				UserInstance.Current = user;
+				UserInstance.Current = Mapper.Map<User>(user);
 
 				MessengerInstance.Send(new NotificationMessage<string>("LoginSuccessful", "LoginSuccessful"));
 			}

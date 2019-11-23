@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Api.Models.Dto
+namespace Shared.Models.Dto
 {
     /// <summary>
     ///		DTO object for a chat room.
@@ -26,5 +26,10 @@ namespace Api.Models.Dto
         ///		Gets or sets the room's users.
         /// </summary>
 		public IEnumerable<UserDto> Users { get; set; }
+
+		/// <summary>
+        ///		Gets or sets type of operation for the dto.
+        /// </summary>
+		public MessageOperationTypes OperationType { get; set; }
     }
 }

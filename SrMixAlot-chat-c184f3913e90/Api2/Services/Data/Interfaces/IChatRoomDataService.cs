@@ -15,10 +15,16 @@ namespace Api.Services.Data.Interfaces
 		IEnumerable<ChatRoom> GetAll();
 
 		/// <summary>
+		///		Gets all chat rooms from the database.
+		/// </summary>
+		/// <returns> All chat rooms from the database.</returns>
+		IEnumerable<ChatRoom> GetAll(string username);
+
+        /// <summary>
         ///		Add a chat room to the database.
         /// </summary>
         /// <param name="chatRoom"> Chat room to add. </param>
         /// <returns> Chat room added to the database. </returns>
-		ChatRoom Add(ChatRoom chatRoom);
+        ChatRoom Add(ChatRoom chatRoom);
 	}
 }

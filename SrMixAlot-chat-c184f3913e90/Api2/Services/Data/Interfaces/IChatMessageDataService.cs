@@ -19,7 +19,7 @@ namespace Api.Services.Data.Interfaces
         ///     Deletes the chat message with the specified id.
         /// </summary>
         /// <param name="id"> Id of the message to delete. </param>
-        void Delete(int id);
+        ChatMessage Delete(int id);
 
 		/// <summary>
         ///		Gets all chat messages from the database.

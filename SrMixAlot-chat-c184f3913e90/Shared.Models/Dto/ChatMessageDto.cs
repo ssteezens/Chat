@@ -1,4 +1,4 @@
-﻿namespace Api.Models.Dto
+﻿namespace Shared.Models.Dto
 {
     /// <summary>
     ///		DTO object for a chat message. 
@@ -24,5 +24,10 @@
         ///		Gets or sets the message.
         /// </summary>
 		public string Message { get; set; }
+
+		/// <summary>
+        ///		Gets or sets the type of operation to be performed for this dto.
+        /// </summary>
+		public MessageOperationTypes OperationType { get; set; }
     }
 }

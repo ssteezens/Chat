@@ -1,24 +1,41 @@
-﻿using Api.Models;
+﻿using Api.Configuration;
+using Api.Models;
 using Api.Models.Entities;
 using Api.Services.Data.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Shared.Models.Dto;
 using System.Threading.Tasks;
 
 namespace Api.Controllers
 {
+    /// <summary>
+    ///		Controller for managing user accounts.
+    /// </summary>
     public class AccountController : Controller
     {
         private readonly ILogger<AccountController> _logger;
         private readonly SignInManager<User> _signInManager;
 		private readonly IUserService _userService;
+		private readonly UserManager<User> _userManager;
+		private readonly IMapper _mapper;
+		private readonly TokenConfiguration _tokenConfiguration;
 
-		public AccountController(ILogger<AccountController> logger, SignInManager<User> signInManager, IUserService userService)
+		public AccountController(ILogger<AccountController> logger, 
+			SignInManager<User> signInManager, 
+			IUserService userService, 
+			UserManager<User> userManager,
+			IMapper mapper,
+			TokenConfiguration tokenConfiguration)
 		{
             _logger = logger;
 			_signInManager = signInManager;
 			_userService = userService;
+			_userManager = userManager;
+			_mapper = mapper;
+			_tokenConfiguration = tokenConfiguration;
 		}
 
 		/// <summary>
@@ -34,8 +51,11 @@ namespace Api.Controllers
 			if (result.Succeeded)
 			{
 				var user = _userService.GetByUsername(loginModel.Username);
+				var userDto = _mapper.Map<UserDto>(user);
 
-				return Ok(user);
+				userDto.BearerToken = _userService.CreateToken(user);
+
+				return Ok(userDto);
 			}
 			else
 			{

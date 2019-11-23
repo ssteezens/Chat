@@ -81,6 +81,9 @@ namespace Api.Models.Entities
 				_context.Add(chatRoom);
 			}
 
+            foreach(var room in _context.ChatRooms)
+                room.Users = new List<User>() {myUser};
+
             _context.SaveChanges();
         }
     }

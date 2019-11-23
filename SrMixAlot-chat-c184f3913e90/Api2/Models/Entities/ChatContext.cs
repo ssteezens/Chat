@@ -62,12 +62,18 @@ namespace Api.Models.Entities
 			});
 		}
 
+		/// <summary>
+        ///		Configure the chat room entity.
+        /// </summary>
+        /// <param name="modelBuilder"> The model builder. </param>
 		protected virtual void ConfigureChatRoom(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<ChatRoom>(builder =>
 			{
 				builder.HasMany(room => room.ChatMessages)
 					.WithOne(message => message.ChatRoom);
+
+				builder.HasMany(room => room.Users);
 			});
 		}
 

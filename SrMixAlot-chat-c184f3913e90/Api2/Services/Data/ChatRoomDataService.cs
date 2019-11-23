@@ -3,6 +3,7 @@ using Api.Services.Data.Interfaces;
 using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Services.Data
 {
@@ -43,6 +44,19 @@ namespace Api.Services.Data
 			}
 
 			return chatRooms;
+		}
+
+		/// <summary>
+		///		Gets all chat rooms from the database.
+		/// </summary>
+		/// <returns> All chat rooms from the database.</returns>
+		public IEnumerable<ChatRoom> GetAll(string username)
+		{
+			var chatRooms = _chatContext.ChatRooms
+				.Include(room => room.ChatMessages)
+				.Where(room => room.Users.Any(user => user.UserName == username));
+
+            return chatRooms;
 		}
 
 		/// <summary>

@@ -1,4 +1,5 @@
-﻿using Api.Models.Dto;
+﻿using System.Text;
+using Api.Configuration;
 using Api.Models.Entities;
 using Api.Services.Connection;
 using Api.Services.Connection.Interfaces;
@@ -13,6 +14,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using Shared.Models.Dto;
 
 namespace Api
 {
@@ -38,6 +41,23 @@ namespace Api
 				options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
 			}).AddEntityFrameworkStores<ChatContext>();
+
+			// todo: set this from configuration
+			var tokenConfiguration = new TokenConfiguration();
+			services.AddSingleton(tokenConfiguration);
+
+			// add authentication
+			services.AddAuthentication()
+				.AddCookie()
+				.AddJwtBearer(cfg =>
+				{
+					cfg.TokenValidationParameters = new TokenValidationParameters()
+					{
+						ValidIssuer = tokenConfiguration.Issuer,
+						ValidAudience = tokenConfiguration.Audience,
+						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenConfiguration.Key))
+					};
+				});
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

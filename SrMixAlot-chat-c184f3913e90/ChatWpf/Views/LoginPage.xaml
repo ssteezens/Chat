@@ -22,7 +22,7 @@
                 HorizontalAlignment="Center"
                 BorderBrush="Black"
                 BorderThickness="1,0">
-            <StackPanel MinWidth="400">
+            <StackPanel Width="400">
                 <StackPanel.InputBindings>
                     <KeyBinding Key="Return"
                                     Command=""/>
@@ -30,7 +30,8 @@
 
                 <!-- Server Error -->
                 <TextBlock Text="{Binding ServerError, Mode=OneWay}"
-                           Foreground="Red"/>
+                           Foreground="Red"
+                           TextWrapping="Wrap"/>
 
                 <!-- Username label -->
                 <TextBlock Text="Username"/>
