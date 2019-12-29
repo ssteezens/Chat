@@ -15,6 +15,6 @@ namespace Api.Models.Entities
         /// <summary>
         ///     The file path to user's profile photo
         /// </summary>
-        public string ImageFilePath { get; set; }
+        public string ProfileImageData { get; set; }
     }
 }

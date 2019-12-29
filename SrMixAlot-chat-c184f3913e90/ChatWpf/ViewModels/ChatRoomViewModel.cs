@@ -28,7 +28,7 @@ namespace ChatWpf.ViewModels
 			Id = id;
 			SendMessageCommand = new RelayCommand(SendMessage, () => !string.IsNullOrEmpty(UserText));
 			DeleteMessageCommand = new RelayCommand<ChatMessage>(DeleteMessage);
-
+            
 			MessengerInstance.Register<NotificationMessage<ChatMessage>>(this, action => HandleChatMessageNotification(action.Content, action.Notification));
 		}
 
@@ -95,7 +95,7 @@ namespace ChatWpf.ViewModels
 			// create chat entry
 			var message = new ChatMessage()
 			{
-				User = ActiveUser,
+				User = UserInstance.Current,
 				Message = UserText,
 				ChatRoomId = Id
 			};
@@ -140,21 +140,16 @@ namespace ChatWpf.ViewModels
 			set => Set(ref _displayName, value, nameof(DisplayName));
 		}
 
-		/// <summary>
-		///     Text entered into the user's TextBox.
-		/// </summary>
-		public string UserText
-		{
-			get => _userText;
-			set => Set(ref _userText, value, nameof(UserText));
-		}
+        /// <summary>
+        ///     Text entered into the user's TextBox.
+        /// </summary>
+        public string UserText
+        {
+            get => _userText;
+            set => Set(ref _userText, value, nameof(UserText));
+        }
 
-		/// <summary>
-		///     The active user.
-		/// </summary>
-		public User ActiveUser { get; set; }
-
-		/// <summary>
+        /// <summary>
 		///     All the chat entry's for this chat pane.
 		/// </summary>
 		public ObservableCollection<ChatMessage> ChatMessages { get; set; }

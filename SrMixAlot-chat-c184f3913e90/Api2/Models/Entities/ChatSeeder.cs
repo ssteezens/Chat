@@ -27,7 +27,7 @@ namespace Api.Models.Entities
         {
             _context.Database.EnsureCreated();
 
-			var myUser = await _userManager.FindByEmailAsync("sstevens@daytonfreight.com");
+            var myUser = await _userManager.FindByEmailAsync("sstevens@daytonfreight.com");
 			if (myUser == null)
 			{
 				myUser = new User()
@@ -44,21 +44,17 @@ namespace Api.Models.Entities
 					throw new InvalidOperationException("Could not correct new user");
 				}
 			}
-
-			var seedUser = new User()
-			{
-				NickName = "Db Seeded"
-			};
+            
 			var chatMessage = new ChatMessage()
 			{
 				Message = "Seeded chat message",
-				User = seedUser,
+				User = myUser,
 			};
 			var chatRoom = new ChatRoom()
 			{
 				ChatMessages = new List<ChatMessage>() { chatMessage },
 				DisplayName = "Seeded Chat Room",
-				Users = new List<User>() { seedUser }
+				Users = new List<User>() { myUser }
 			};
 
 			chatMessage.ChatRoom = chatRoom;
@@ -66,7 +62,7 @@ namespace Api.Models.Entities
             // create sample user data if none exist
             if (!_context.ChatUsers.Any())
             {
-                _context.Add(seedUser);
+                _context.Add(myUser);
             }
 
 			// create sample chat message data if none exist
@@ -81,8 +77,21 @@ namespace Api.Models.Entities
 				_context.Add(chatRoom);
 			}
 
-            foreach(var room in _context.ChatRooms)
-                room.Users = new List<User>() {myUser};
+            _context.SaveChanges();
+        }
+
+        private void RemoveUsers()
+        {
+            var users = _context.Users.ToList();
+            var messages = _context.ChatMessages.ToList();
+            var rooms = _context.ChatRooms.ToList();
+
+            foreach (var message in messages)
+                _context.ChatMessages.Remove(message);
+            foreach (var room in rooms)
+                _context.ChatRooms.Remove(room);
+            foreach (var user in users)
+                _context.Users.Remove(user);
 
             _context.SaveChanges();
         }

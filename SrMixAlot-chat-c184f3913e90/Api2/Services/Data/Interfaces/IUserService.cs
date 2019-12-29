@@ -2,6 +2,7 @@
 using Api.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
+using Shared.Models.Dto;
 
 namespace Api.Services.Data.Interfaces
 {
@@ -25,5 +26,7 @@ namespace Api.Services.Data.Interfaces
 		Task<IdentityResult> CreateUserAsync(RegisterModel registerModel);
 
 		string CreateToken(User user);
-	}
+
+        bool UpdateUser(UserDto userDto);
+    }
 }

@@ -4,6 +4,7 @@ using Api.Models.Entities;
 using Api.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Shared.Models.Dto;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -82,5 +83,23 @@ namespace Api.Services.Data
 
 			return results.token;
 		}
-	}
+
+        public bool UpdateUser(UserDto userDto)
+        {
+            var thing = _context.Users.Where(i => i.UserName == userDto.Username);
+            var user = _context.Users.SingleOrDefault(i => i.UserName == userDto.Username);
+
+            if (user == null)
+                return false;
+
+            user.ProfileImageData = userDto.ProfileImageData;
+            user.NickName = userDto.Nickname;
+
+            var returnValue = _context.SaveChanges() > 0;
+
+            var thing2 = _context.Users.Where(i => i.UserName == userDto.Username);
+
+            return returnValue;
+        }
+    }
 }

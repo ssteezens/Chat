@@ -23,5 +23,12 @@ namespace ChatWpf.Services.Data.Interfaces
         /// <param name="registerModel"> Model containing the user and password. </param>
 		/// <returns> True or false if the registration was successful. </returns>
         bool RegisterUser(RegisterModel registerModel);
-	}
+
+        /// <summary>
+        ///     Updates a user.
+        /// </summary>
+        /// <param name="userDto"> The user update model. </param>
+        /// <returns> True or false if the operation was successful. </returns>
+        bool UpdateUser(UpdateUserDto userDto);
+    }
 }

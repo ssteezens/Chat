@@ -73,7 +73,7 @@ namespace Api
 			services.AddTransient<ChatSeeder>();
 			services.AddTransient<ConnectionInitializer>();
 
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=ChatDb;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<ChatContext>
                 (options => options.UseSqlServer(connection));
 

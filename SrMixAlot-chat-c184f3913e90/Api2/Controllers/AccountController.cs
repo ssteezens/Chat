@@ -1,4 +1,5 @@
-﻿using Api.Configuration;
+﻿using System;
+using Api.Configuration;
 using Api.Models;
 using Api.Models.Entities;
 using Api.Services.Data.Interfaces;
@@ -50,13 +51,20 @@ namespace Api.Controllers
 
 			if (result.Succeeded)
 			{
-				var user = _userService.GetByUsername(loginModel.Username);
-				var userDto = _mapper.Map<UserDto>(user);
+                try
+                {
+                    var user = _userService.GetByUsername(loginModel.Username);
+                    var userDto = _mapper.Map<UserDto>(user);
 
-				userDto.BearerToken = _userService.CreateToken(user);
+                    userDto.BearerToken = _userService.CreateToken(user);
 
-				return Ok(userDto);
-			}
+                    return Ok(userDto);
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
 			else
 			{
 				return BadRequest("Could not authenticate user.");

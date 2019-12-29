@@ -18,7 +18,7 @@
 		/// <summary>
         ///		Gets or sets the user's image file path.
         /// </summary>
-		public string ImageFilePath { get; set; }
+		public string ProfileImageData { get; set; }
 
 		/// <summary>
         ///		Gets or sets the user's JwtBearerToken

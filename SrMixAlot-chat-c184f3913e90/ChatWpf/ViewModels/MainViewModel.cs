@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Windows.Controls;
+using CommonServiceLocator;
 
 namespace ChatWpf.ViewModels
 {
@@ -31,6 +32,7 @@ namespace ChatWpf.ViewModels
 			_queueService = queueService;
 
             ToggleAddChatRoomControlVisibilityCommand = new RelayCommand(ToggleAddChatRoomVisibility, true);
+            ShowUserProfileCommand = new RelayCommand(ShowUserProfileControl);
             
             MessengerInstance.Register<NotificationMessage<string>>(this, action => HandleStringMessage(action.Notification));
 			MessengerInstance.Register<NotificationMessage<ChatRoom>>(this, action => HandleChatRoomMessage(action.Content, action.Notification));
@@ -41,6 +43,7 @@ namespace ChatWpf.ViewModels
         #region Properties
 
         private ChatRoomViewModel _selectedChatRoom;
+        private bool _userProfileControlIsVisible;
 
 		/// <summary>
         ///		The selected chat room.
@@ -70,6 +73,15 @@ namespace ChatWpf.ViewModels
         ///		Gets or sets the message broker listener.
         /// </summary>
 		private MessageBrokerListener MessageBrokerListener { get; set; }
+
+        /// <summary>
+        ///     Show or hide the user profile control.
+        /// </summary>
+        public bool UserProfileControlIsVisible
+        {
+            get => _userProfileControlIsVisible;
+            set => Set(ref _userProfileControlIsVisible, value, nameof(ShowUserProfileControl));
+        }
 
         #endregion
 
@@ -148,12 +160,20 @@ namespace ChatWpf.ViewModels
         /// </summary>
         public RelayCommand ToggleAddChatRoomControlVisibilityCommand { get; }
 
+        public RelayCommand ShowUserProfileCommand { get; }
+
         /// <summary>
         ///     Toggles the AddChatRoom visibility.
         /// </summary>
         private void ToggleAddChatRoomVisibility()
         {
             AddChatRoomViewModel.IsOpen = !AddChatRoomViewModel.IsOpen;
+        }
+
+        private void ShowUserProfileControl()
+        {
+            var userProfileViewModel = ServiceLocator.Current.GetInstance<UserProfileViewModel>();
+            userProfileViewModel.WindowIsVisible = true;
         }
 
         #endregion

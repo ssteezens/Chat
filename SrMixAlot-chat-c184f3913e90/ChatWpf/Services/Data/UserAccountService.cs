@@ -48,5 +48,15 @@ namespace ChatWpf.Services.Data
 		{
 			return _jsonClient.Post<bool>("/api/account/register", registerModel);
 		}
-	}
+
+        /// <summary>
+        ///     Updates a user.
+        /// </summary>
+        /// <param name="userDto"> The user update model. </param>
+        /// <returns> True or false if the operation was successful. </returns>
+        public bool UpdateUser(UpdateUserDto userDto)
+        {
+            return _jsonClient.Post<bool>("/User/Update", userDto);
+        }
+    }
 }

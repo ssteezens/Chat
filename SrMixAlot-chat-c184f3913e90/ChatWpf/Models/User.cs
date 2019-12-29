@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System.Runtime.InteropServices;
+using GalaSoft.MvvmLight;
 
 namespace ChatWpf.Models
 {
@@ -7,6 +8,9 @@ namespace ChatWpf.Models
     /// </summary>
     public class User : ObservableObject
     {
+        private string _nickName;
+        private string _profileImageData;
+
 		/// <summary>
         ///		Username for the user.
         /// </summary>
@@ -15,12 +19,20 @@ namespace ChatWpf.Models
         /// <summary>
         ///     Nickname for the user.
         /// </summary>
-        public string NickName { get; set; }
+        public string NickName
+        {
+            get => _nickName;
+            set => Set(ref _nickName, value, nameof(NickName));
+        }
 
         /// <summary>
         ///     The file path to user's profile photo.
         /// </summary>
-        public string ImageFilePath { get; set; }
+        public string ProfileImageData
+        {
+            get => _profileImageData;
+            set => Set(ref _profileImageData, value, nameof(ProfileImageData));
+        }
 
 		/// <summary>
         ///		The user's email.
@@ -40,5 +52,7 @@ namespace ChatWpf.Models
 			get => _currentUser;
             set => _currentUser = value;
 		}
-	}
+
+        public static string DisplayName => string.IsNullOrEmpty(Current.NickName) ? Current.NickName : Current.Username;
+    }
 }

@@ -55,6 +55,7 @@ namespace ChatWpf.ViewModels
 			SimpleIoc.Default.Register<RegisterViewModel>();
             SimpleIoc.Default.Register<ChatRoomViewModel>();
             SimpleIoc.Default.Register<AddChatRoomViewModel>();
+            SimpleIoc.Default.Register<UserProfileViewModel>();
         }
 
 		/// <summary>
@@ -71,6 +72,11 @@ namespace ChatWpf.ViewModels
         ///		Register view model.
         /// </summary>
 		public RegisterViewModel RegisterVm => ServiceLocator.Current.GetInstance<RegisterViewModel>();
+
+        /// <summary>
+        ///     User profile view model.
+        /// </summary>
+        public UserProfileViewModel UserProfileVm => ServiceLocator.Current.GetInstance<UserProfileViewModel>();
 
 		public static void Cleanup()
         {
