@@ -26,8 +26,11 @@ namespace Api.Services.Data
 		/// <param name="message"> Message to add to the database. </param>
 		/// <returns></returns>
 		public ChatMessage Add(ChatMessage message)
-		{
-			var addedMessage = _chatContext.Add(message).Entity;
+        {
+            // todo: change the model on the frontend to send a model like this
+            message.UserId = message.User.Id;
+            message.User = null;
+			var addedMessage = _chatContext.ChatMessages.Add(message).Entity;
 
 			_chatContext.SaveChanges();
 			

@@ -11,6 +11,11 @@ namespace ChatWpf.Models
         private string _nickName;
         private string _profileImageData;
 
+        /// <summary>
+        ///     The user's id.
+        /// </summary>
+        public string Id { get; set; }
+
 		/// <summary>
         ///		Username for the user.
         /// </summary>

@@ -59,7 +59,11 @@ namespace Api.Models.Entities
 			{
 				builder.HasOne(message => message.ChatRoom)
 					.WithMany(room => room.ChatMessages);
-			});
+
+                builder.HasOne(message => message.User)
+                    .WithMany()
+                    .HasForeignKey(message => message.UserId);
+            });
 		}
 
 		/// <summary>

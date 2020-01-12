@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-using ChatWpf.Models;
+﻿using ChatWpf.Models;
 using ChatWpf.Services.Data.Interfaces;
 using ServiceStack;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ChatWpf.Services.Data
 {
@@ -23,8 +24,15 @@ namespace ChatWpf.Services.Data
 		/// <returns> Enumerable of chat rooms. </returns>
 		public IEnumerable<ChatRoom> GetChatRooms()
 		{
-            return _jsonServiceClient.Get<IEnumerable<ChatRoom>>("/ChatRoom/GetAll");
-		}
+            // todo: take dto model and do this with mapping 
+            var rooms = _jsonServiceClient.Get<IEnumerable<ChatRoom>>("/ChatRoom/GetAll");
+
+            foreach (var room in rooms)
+                foreach (var message in room.ChatMessages)
+                    message.User = room.Users.SingleOrDefault(i => i.Id == message.UserId);
+             
+            return rooms;
+        }
 
 		/// <summary>
 		///		Get an enumeration of chat rooms available to the user.

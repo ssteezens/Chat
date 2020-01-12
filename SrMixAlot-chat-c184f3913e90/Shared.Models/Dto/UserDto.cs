@@ -5,6 +5,11 @@
     /// </summary>
     public class UserDto
     {
+        /// <summary>
+        ///     The user's id.
+        /// </summary>
+        public string Id { get; set; }
+
 		/// <summary>
         ///		Gets or sets the user's username.
         /// </summary>
