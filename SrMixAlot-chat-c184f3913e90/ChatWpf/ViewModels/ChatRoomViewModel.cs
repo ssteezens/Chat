@@ -41,6 +41,7 @@ namespace ChatWpf.ViewModels
         /// <param name="notification"> Type of operation. </param>
 		private void HandleChatMessageNotification(ChatMessage chatMessage, string notification)
 		{
+			// todo: set listeners to be specific to chat room
             if (chatMessage.ChatRoomId != Id)
                 return;
 
@@ -48,7 +49,10 @@ namespace ChatWpf.ViewModels
 			{
 				case "Add":
 				{
-					// if message is meant for this chat room
+					// todo: add this to dto model 
+					// set user for message
+					chatMessage.User = Users.SingleOrDefault(i => i.Id == chatMessage.UserId);
+
 					DispatcherHelper.CheckBeginInvokeOnUI(() => { ChatMessages.Add(chatMessage); });
                     break;
 				}
