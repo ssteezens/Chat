@@ -19,13 +19,7 @@ namespace ChatWpf.Converters
             if (string.IsNullOrEmpty(stringValue))
                 return null;
 
-            var bitmapImage = new BitmapImage();
-
-            bitmapImage.BeginInit();
-            bitmapImage.StreamSource = new MemoryStream(System.Convert.FromBase64String(stringValue));
-            bitmapImage.EndInit();
-
-            return bitmapImage;
+            return System.Convert.FromBase64String(stringValue);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

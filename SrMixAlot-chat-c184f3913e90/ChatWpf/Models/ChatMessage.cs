@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using System;
 
 namespace ChatWpf.Models
 {
@@ -45,6 +46,11 @@ namespace ChatWpf.Models
                 return defaultImg;
             }
         }
+
+        /// <summary>
+        ///     Profile image data in bytes.
+        /// </summary>
+        public byte[] ProfileImageBytes => Convert.FromBase64String(ProfileImageData);
 
         /// <summary>
         ///     Indicates if this message is selected.

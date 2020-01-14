@@ -10,6 +10,9 @@ using System.IO;
 
 namespace ChatWpf.ViewModels
 {
+    /// <summary>
+    ///     View model for the user profile control.
+    /// </summary>
     public class UserProfileViewModel : ViewModelBase
     {
         private readonly IUserAccountService _userAccountService;
@@ -27,23 +30,41 @@ namespace ChatWpf.ViewModels
 
         private bool _windowIsVisible;
 
+        /// <summary>
+        ///     Controls whether the windows is visible.
+        /// </summary>
         public bool WindowIsVisible
         {
             get => _windowIsVisible;
             set => Set(ref _windowIsVisible, value, nameof(WindowIsVisible));
         }
 
+        /// <summary>
+        ///     Nickname  of the current user.
+        /// </summary>
         public string NickName
         {
             get => UserInstance.Current.NickName;
             set => UserInstance.Current.NickName = value;
         }
 
+        /// <summary>
+        ///     Base64 profile image data.
+        /// </summary>
         public string ProfileImageData
         {
             get => UserInstance.Current.ProfileImageData;
-            set => UserInstance.Current.ProfileImageData = value;
+            set 
+            { 
+                UserInstance.Current.ProfileImageData = value;
+                RaisePropertyChanged(nameof(ProfileImageBytes));
+            }
         }
+
+        /// <summary>
+        ///     Profile image data in bytes.
+        /// </summary>
+        public byte[] ProfileImageBytes => Convert.FromBase64String(ProfileImageData);
 
         #endregion
 
@@ -59,6 +80,9 @@ namespace ChatWpf.ViewModels
         /// </summary>
         public RelayCommand SaveProfileCommand { get; }
 
+        /// <summary>
+        ///     Command to back out of user profile control.
+        /// </summary>
         public RelayCommand GoBackCommand { get; }
 
         /// <summary>
@@ -95,6 +119,11 @@ namespace ChatWpf.ViewModels
             }
         }
 
+        /// <summary>
+        ///     Downscales the image to 64x64.
+        /// </summary>
+        /// <param name="imageBytes"> Image bytes to downscale. </param>
+        /// <returns> The images bytes of the downscaled image. </returns>
         public byte[] DownscaleImage(byte[] imageBytes)
         {
             var myMemStream = new MemoryStream(imageBytes);
