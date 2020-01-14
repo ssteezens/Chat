@@ -29,8 +29,7 @@
                              Width="32" 
                              Height="32">
                         <Ellipse.Fill>
-                            <!--<ImageBrush ImageSource="{Binding User.ImageFilePath, FallbackValue='Assets/avatar64x64.png'}" />-->
-                            <ImageBrush ImageSource="{Binding ProfileImageData, Converter={StaticResource Base64ImageConverter}}" />
+                            <ImageBrush ImageSource="{Binding ProfileImageData, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Base64ImageConverter}}" />
                         </Ellipse.Fill>
                     </Ellipse>
 

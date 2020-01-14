@@ -14,18 +14,18 @@ namespace ChatWpf.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var s = value as string;
+            var stringValue = value as string;
 
-            if (string.IsNullOrEmpty(s))
+            if (string.IsNullOrEmpty(stringValue))
                 return null;
 
-            var bi = new BitmapImage();
+            var bitmapImage = new BitmapImage();
 
-            bi.BeginInit();
-            bi.StreamSource = new MemoryStream(System.Convert.FromBase64String(s));
-            bi.EndInit();
+            bitmapImage.BeginInit();
+            bitmapImage.StreamSource = new MemoryStream(System.Convert.FromBase64String(stringValue));
+            bitmapImage.EndInit();
 
-            return bi;
+            return bitmapImage;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

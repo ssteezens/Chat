@@ -84,13 +84,15 @@ namespace ChatWpf.ViewModels
             if (fileDialog.ShowDialog() == true)
                 filePath = fileDialog.FileName;
 
+            if(filePath != string.Empty)
+            {
+                // get base64 image
+                var bytes = File.ReadAllBytes(filePath);
+                var downScaledBytes = DownscaleImage(bytes);
 
-            // get base64 image
-            var bytes = File.ReadAllBytes(filePath);
-            var downScaledBytes = DownscaleImage(bytes);
-
-            ProfileImageData = Convert.ToBase64String(downScaledBytes);
-            RaisePropertyChanged(ProfileImageData);
+                ProfileImageData = Convert.ToBase64String(downScaledBytes);
+                RaisePropertyChanged(ProfileImageData);
+            }
         }
 
         public byte[] DownscaleImage(byte[] imageBytes)
