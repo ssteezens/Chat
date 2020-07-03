@@ -83,13 +83,14 @@
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- List of chat messages -->
@@ -108,25 +109,30 @@
             </ListView.ItemContainerStyle>
         </ListView>
 
-        <!-- Create chat message -->
-        <TextBox Grid.Row="1" 
-                 Margin="0,8"
-                 TextWrapping="Wrap"
-                 BorderBrush="Black"
-                 BorderThickness="1"
-                 x:Name="UserTextInput"
-                 Text="{Binding UserText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <!-- Create chat message -->
+            <TextBox Margin="0,8"
+                     TextWrapping="Wrap"
+                     BorderBrush="Black"
+                     BorderThickness="1"
+                     x:Name="UserTextInput"
+                     Text="{Binding UserText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <!-- Send button -->
-        <Button Grid.Row="1"
-                Margin="20"
-                Padding="20"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"
-                IsDefault="True"
-                Command="{Binding SendMessageCommand}"
-                IsEnabled="{Binding UserText, Mode=OneWay,Converter={StaticResource StringLengthToEnabledConverter}}">
-            Send
-        </Button>
+            <!-- Send button -->
+            <Button Grid.Column="1" 
+                    Margin="4,8,2,8"
+                    Padding="20"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    IsDefault="True"
+                    Command="{Binding SendMessageCommand}"
+                    IsEnabled="{Binding UserText, Mode=OneWay,Converter={StaticResource StringLengthToEnabledConverter}}">
+                Send
+            </Button>
+        </Grid>
     </Grid>
 </UserControl>
