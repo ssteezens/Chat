@@ -104,6 +104,9 @@ namespace ChatWpf.ViewModels
 				{
 					// get available chat rooms
 					GetAvailableChatRooms();
+                    // default the selected chat room to the first available
+                    if (AvailableChatRooms.Any())
+                        SelectedChatRoom = AvailableChatRooms.First();
 					// navigate to main page
 					_navigationService.NavigateToUri("/Views/MainPage.xaml");
                     break;
