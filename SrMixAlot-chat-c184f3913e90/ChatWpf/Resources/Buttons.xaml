@@ -6,19 +6,20 @@
     <Style TargetType="Button">
         <Setter Property="Padding" Value="5"/>
         <Setter Property="Margin" Value="5"/>
-        <Setter Property="Background" Value="White" />
+        <Setter Property="Background" Value="{StaticResource Button.Background}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Button.BorderBrush}" />
     </Style>
 
     <!-- Circle Button Style -->
     <Style x:Key="CircleButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="White"/>
+        <Setter Property="Background" Value="{StaticResource Button.Background}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid>
                         <!-- Outer Ellipse -->
                         <Ellipse Stroke="Black"
-                                 StrokeThickness="1"
+                                 StrokeThickness="0"
                                  Fill="{TemplateBinding Background}"
                                  Width="{TemplateBinding Width}"
                                  Height="{TemplateBinding Height}"/>
@@ -37,7 +38,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="Black"></Setter>
+                <Setter Property="Background" Value="{StaticResource Button.MouseOver.Background}"/>
             </Trigger>
         </Style.Triggers>
     </Style>

@@ -1,9 +1,8 @@
-﻿using System.Runtime.InteropServices;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 
 namespace ChatWpf.Models
 {
-	/// <summary>
+    /// <summary>
     ///		Class for a user.
     /// </summary>
     public class User : ObservableObject

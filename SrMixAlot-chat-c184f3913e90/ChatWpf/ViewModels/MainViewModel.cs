@@ -83,6 +83,11 @@ namespace ChatWpf.ViewModels
             set => Set(ref _userProfileControlIsVisible, value, nameof(ShowUserProfileControl));
         }
 
+        /// <summary>
+        ///     Profile image data in bytes.
+        /// </summary>
+        public byte[] ProfileImageBytes => Convert.FromBase64String(UserInstance.Current.ProfileImageData);
+
         #endregion
 
         #region Messenger Handlers

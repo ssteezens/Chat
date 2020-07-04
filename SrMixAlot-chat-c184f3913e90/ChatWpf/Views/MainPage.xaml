@@ -44,9 +44,27 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
+                <!-- Show User Profile Button -->
                 <Button Command="{Binding ShowUserProfileCommand}"
-                        Margin="2">
-                    <TextBlock Text="{x:Static models:UserInstance.DisplayName}"/>
+                        Margin="2"
+                        HorizontalContentAlignment="Left"
+                        BorderThickness="1">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Stretch">
+                        <!-- Profile Image -->
+                        <Ellipse Margin="4,0,0,0"
+                                 Stroke="Black"
+                                 StrokeThickness="0"
+                                 Width="32" 
+                                 Height="32">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="{Binding ProfileImageBytes}"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+
+                        <!-- Username -->
+                        <TextBlock Text="{x:Static models:UserInstance.DisplayName}"/>
+                    </StackPanel>
                 </Button>
 
                 <!-- Chat room selector -->

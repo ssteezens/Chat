@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ChatWpf.Resources">
+    
+    <!-- Primary background color -->
+    <SolidColorBrush x:Key="PrimaryColor" Color="#FFFFFF" />
+
+    <!-- Buttons -->
+    <SolidColorBrush x:Key="Button.Background" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#e6e6e6" />
+    <SolidColorBrush x:Key="Button.BorderBrush" Color="#666666"/>
+
+    <!-- Borders -->
+    <SolidColorBrush x:Key="Border.BorderBrush" Color="#000000"/>
+
+</ResourceDictionary>
