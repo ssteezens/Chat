@@ -84,9 +84,13 @@ namespace Api.Services.Data
 			return results.token;
 		}
 
+		/// <summary>
+		///		Update a user.
+		/// </summary>
+		/// <param name="userDto"> The <see cref="UserDto"/>. </param>
+		/// <returns> True or false to indicate success or failure. </returns>
         public bool UpdateUser(UserDto userDto)
         {
-            var thing = _context.Users.Where(i => i.UserName == userDto.Username);
             var user = _context.Users.SingleOrDefault(i => i.UserName == userDto.Username);
 
             if (user == null)
@@ -96,8 +100,6 @@ namespace Api.Services.Data
             user.NickName = userDto.Nickname;
 
             var returnValue = _context.SaveChanges() > 0;
-
-            var thing2 = _context.Users.Where(i => i.UserName == userDto.Username);
 
             return returnValue;
         }
