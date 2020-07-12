@@ -53,7 +53,11 @@ namespace ChatWpf.ViewModels
 					// set user for message
 					chatMessage.User = Users.SingleOrDefault(i => i.Id == chatMessage.UserId);
 
-					DispatcherHelper.CheckBeginInvokeOnUI(() => { ChatMessages.Add(chatMessage); });
+					DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                    {
+						if(ChatMessages.All(i => i.Id != chatMessage.Id))
+                            ChatMessages.Add(chatMessage);
+                    });
                     break;
 				}
 				case "Remove":
@@ -105,7 +109,10 @@ namespace ChatWpf.ViewModels
 			};
 
 			// submit chat to server
-			_chatMessageDataService.Add(message);
+			var addedMessage = _chatMessageDataService.Add(message);
+
+			// add returned message from server which contains id
+			ChatMessages.Add(addedMessage);
 			
 			// clear user text
 			UserText = string.Empty;

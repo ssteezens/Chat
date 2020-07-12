@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Text;
 using AutoMapper;
 using ChatWpf.Models;
@@ -15,9 +16,6 @@ namespace ChatWpf.Services.MessageBrokering
     /// </summary>
     public class MessageBrokerListener : IDisposable
     {
-		private const string HostName = "localhost";
-		private const string UserName = "guest";
-		private const string Password = "guest";
 
 		private ConnectionFactory _connectionFactory;
 		private readonly IConnection _connection;
@@ -26,11 +24,15 @@ namespace ChatWpf.Services.MessageBrokering
 		
         public MessageBrokerListener()
         {
+            var hostname = ConfigurationManager.AppSettings["json_listener_host_name"];
+            var username = ConfigurationManager.AppSettings["json_listener_username"];
+            var password = ConfigurationManager.AppSettings["json_listener_password"];
+
             _connectionFactory = new ConnectionFactory
             {
-                HostName = HostName,
-                UserName = UserName,
-                Password = Password
+                HostName = hostname,
+                UserName = username,
+                Password = password
             };
 
             _connection = _connectionFactory.CreateConnection();

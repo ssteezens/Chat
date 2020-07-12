@@ -12,6 +12,7 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using System.Configuration;
 using ChatWpf.Services.Connection;
 using ChatWpf.Services.Connection.Interfaces;
 using ChatWpf.Services.Data;
@@ -38,7 +39,9 @@ namespace ChatWpf.ViewModels
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-			var jsonClient = new JsonServiceClient("https://localhost:5001");
+            var baseUrl = ConfigurationManager.AppSettings["api_base_url"];
+			var jsonClient = new JsonServiceClient(baseUrl);
+
 			// TODO: refine this, maybe filter on sender
 			// TODO: wire this up using middleware
 			ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
