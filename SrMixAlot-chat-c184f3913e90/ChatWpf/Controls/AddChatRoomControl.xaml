@@ -12,6 +12,11 @@
             BorderThickness="1">
         <StackPanel Background="White">
 
+            <Border Background="#333333">
+                <TextBlock Text="Add Room"
+                           Foreground="White"/>
+            </Border>
+
             <!-- Room Name Label -->
             <TextBlock Margin="4" 
                        Text="Room Name: "/>

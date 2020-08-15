@@ -16,44 +16,44 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Label Content="Username:"/>
+            <Border Background="#333333"
+                    Grid.ColumnSpan="2">
+                <TextBlock Text="Add User"
+                           Foreground="White"/>
+            </Border>
 
-            <TextBox x:Name="UsernameTextBox" Grid.Row="1" 
-                     Grid.Column="0"
-                     Grid.ColumnSpan="2"
-                     Width="200" 
-                     Margin="4">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="TextChanged">
-                        <command:EventToCommand Command="{Binding SearchForUsersCommand}" 
-                                                CommandParameter="{Binding Text, ElementName=UsernameTextBox}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </TextBox>
-            
-            <ListView Grid.Row="2"
-                      Grid.Column="0"
-                      Grid.ColumnSpan="2"
-                      ItemsSource="{Binding UserResults}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Username}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <StackPanel Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2">
+                <Label Content="Username:"/>
 
-            <Button Grid.Row="3"
-                    Grid.Column="1">
-                Submit
-            </Button>
+                <TextBox x:Name="UsernameTextBox" 
+                         Width="200" 
+                         Margin="4">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <command:EventToCommand Command="{Binding SearchForUsersCommand}" 
+                                                    CommandParameter="{Binding Text, ElementName=UsernameTextBox}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+
+                <ListView ItemsSource="{Binding UserResults}"
+                          Margin="4"
+                          BorderThickness="0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Username}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
         </Grid>
     </Border>
 </UserControl>
