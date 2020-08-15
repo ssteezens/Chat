@@ -1,4 +1,5 @@
-﻿using Api.Models;
+﻿using System.Collections.Generic;
+using Api.Models;
 using Api.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
@@ -25,8 +26,25 @@ namespace Api.Services.Data.Interfaces
 		/// <returns> The created user. </returns>
 		Task<IdentityResult> CreateUserAsync(RegisterModel registerModel);
 
+        /// <summary>
+        ///		Create a Jwt bearer token for the user.
+        /// </summary>
+        /// <param name="user"> User to create token for. </param>
+        /// <returns> Jwt bearer token for user. </returns>
 		string CreateToken(User user);
 
+        /// <summary>
+        ///		Update a user.
+        /// </summary>
+        /// <param name="userDto"> The <see cref="UserDto"/>. </param>
+        /// <returns> True or false to indicate success or failure. </returns>
         bool UpdateUser(UserDto userDto);
+
+        /// <summary>
+        ///		Get users matching username search criteria.
+        /// </summary>
+        /// <param name="username"> The username part to search for. </param>
+        /// <returns> Users matching username search criteria. </returns>
+		Task<IEnumerable<UserDto>> GetUsersMatchingUsername(string username);
     }
 }

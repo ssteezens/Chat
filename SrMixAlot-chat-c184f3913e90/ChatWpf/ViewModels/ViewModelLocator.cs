@@ -12,7 +12,6 @@
   See http://www.galasoft.ch/mvvm
 */
 
-using System.Configuration;
 using ChatWpf.Services.Connection;
 using ChatWpf.Services.Connection.Interfaces;
 using ChatWpf.Services.Data;
@@ -22,6 +21,7 @@ using ChatWpf.Services.UI.Interfaces;
 using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
 using ServiceStack;
+using System.Configuration;
 using System.Net;
 
 namespace ChatWpf.ViewModels
@@ -59,6 +59,7 @@ namespace ChatWpf.ViewModels
             SimpleIoc.Default.Register<ChatRoomViewModel>();
             SimpleIoc.Default.Register<AddChatRoomViewModel>();
             SimpleIoc.Default.Register<UserProfileViewModel>();
+            SimpleIoc.Default.Register<AddUserViewModel>();
         }
 
 		/// <summary>
@@ -80,6 +81,11 @@ namespace ChatWpf.ViewModels
         ///     User profile view model.
         /// </summary>
         public UserProfileViewModel UserProfileVm => ServiceLocator.Current.GetInstance<UserProfileViewModel>();
+
+        /// <summary>
+        ///     Add user view model.
+        /// </summary>
+        public AddUserViewModel AddUserVm => ServiceLocator.Current.GetInstance<AddUserViewModel>();
 
 		public static void Cleanup()
         {

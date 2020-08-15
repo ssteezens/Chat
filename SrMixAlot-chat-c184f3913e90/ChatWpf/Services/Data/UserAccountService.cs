@@ -1,4 +1,5 @@
-﻿using ChatWpf.Models;
+﻿using System.Collections.Generic;
+using ChatWpf.Models;
 using ChatWpf.Services.Data.Interfaces;
 using System.Threading.Tasks;
 using ServiceStack;
@@ -57,6 +58,16 @@ namespace ChatWpf.Services.Data
         public bool UpdateUser(UpdateUserDto userDto)
         {
             return _jsonClient.Post<bool>("/User/Update", userDto);
+        }
+
+        /// <summary>
+        ///     Finds users with matching usernames.
+        /// </summary>
+        /// <param name="username"> The username to search for. </param>
+        /// <returns> Users matching the username search criteria. </returns>
+		public async Task<IEnumerable<UserDto>> GetUsersWithUsername(string username)
+        {
+            return await _jsonClient.GetAsync<IEnumerable<UserDto>>($"/User/Search?username={username}");
         }
     }
 }

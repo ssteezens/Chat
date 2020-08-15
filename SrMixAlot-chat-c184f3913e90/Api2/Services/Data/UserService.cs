@@ -6,11 +6,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Shared.Models.Dto;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Services.Data
 {
@@ -22,13 +25,17 @@ namespace Api.Services.Data
         private readonly ChatContext _context;
 		private readonly UserManager<User> _userManager;
 		private readonly TokenConfiguration _tokenConfiguration;
+        private readonly IMapper _mapper;
 
-		public UserService(ChatContext context, UserManager<User> userManager, TokenConfiguration tokenConfiguration)
+        public UserService(ChatContext context, UserManager<User> userManager, 
+            TokenConfiguration tokenConfiguration,
+            IMapper mapper)
 		{
 			_context = context;
 			_userManager = userManager;
 			_tokenConfiguration = tokenConfiguration;
-		}
+            _mapper = mapper;
+        }
 
 		/// <summary>
 		///		Gets a user from the database by username.
@@ -102,6 +109,18 @@ namespace Api.Services.Data
             var returnValue = _context.SaveChanges() > 0;
 
             return returnValue;
+        }
+
+		/// <summary>
+		///		Get users matching username search criteria.
+		/// </summary>
+		/// <param name="username"> The username part to search for. </param>
+		/// <returns> Users matching username search criteria. </returns>
+        public async Task<IEnumerable<UserDto>> GetUsersMatchingUsername(string username)
+        {
+            var users = await _context.Users.Where(i => i.UserName.StartsWith(username)).ToListAsync();
+
+            return _mapper.Map<List<UserDto>>(users);
         }
     }
 }

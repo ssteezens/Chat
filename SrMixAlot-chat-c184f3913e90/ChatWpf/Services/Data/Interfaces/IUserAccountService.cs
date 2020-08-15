@@ -1,4 +1,5 @@
-﻿using ChatWpf.Models;
+﻿using System.Collections.Generic;
+using ChatWpf.Models;
 using Shared.Models.Dto;
 using System.Threading.Tasks;
 
@@ -30,5 +31,12 @@ namespace ChatWpf.Services.Data.Interfaces
         /// <param name="userDto"> The user update model. </param>
         /// <returns> True or false if the operation was successful. </returns>
         bool UpdateUser(UpdateUserDto userDto);
+
+        /// <summary>
+        ///     Finds users with matching usernames.
+        /// </summary>
+        /// <param name="username"> The username to search for. </param>
+        /// <returns> Users matching the username search criteria. </returns>
+        Task<IEnumerable<UserDto>> GetUsersWithUsername(string username);
     }
 }

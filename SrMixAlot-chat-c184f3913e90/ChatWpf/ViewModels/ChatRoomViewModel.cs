@@ -1,6 +1,7 @@
 ﻿using ChatWpf.Models;
 using ChatWpf.Services.Data.Interfaces;
 using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
 using System.Collections.ObjectModel;
@@ -26,9 +27,16 @@ namespace ChatWpf.ViewModels
 			_chatMessageDataService = chatMessageDataService;
 
 			Id = id;
-			SendMessageCommand = new RelayCommand(SendMessage, () => !string.IsNullOrEmpty(UserText));
+			
+			// commands
+            SendMessageCommand = new RelayCommand(SendMessage, () => !string.IsNullOrEmpty(UserText));
 			DeleteMessageCommand = new RelayCommand<ChatMessage>(DeleteMessage);
-            
+			ToggleAddUserControlCommand = new RelayCommand(ToggleAddUserControl);
+
+			// view models
+            AddUserViewModel = SimpleIoc.Default.GetInstance<AddUserViewModel>();
+
+            // view model message listeners
 			MessengerInstance.Register<NotificationMessage<ChatMessage>>(this, action => HandleChatMessageNotification(action.Content, action.Notification));
 		}
 
@@ -94,6 +102,11 @@ namespace ChatWpf.ViewModels
         ///		Gets a command for deleting a message.
         /// </summary>
         public RelayCommand<ChatMessage> DeleteMessageCommand { get; }
+
+		/// <summary>
+		///		Command to toggle the add user control open or closed.
+		/// </summary>
+		public RelayCommand ToggleAddUserControlCommand { get; }
 		
 		/// <summary>
 		///		Sends the user's message to the server.
@@ -134,6 +147,14 @@ namespace ChatWpf.ViewModels
             }
         }
 
+		/// <summary>
+		///		Toggle the add user control open or closed.
+		/// </summary>
+        private void ToggleAddUserControl()
+        {
+            AddUserViewModel.ControlIsOpen = !AddUserViewModel.ControlIsOpen;
+        }
+
         #endregion
 
         #region Properties 
@@ -141,8 +162,9 @@ namespace ChatWpf.ViewModels
         private string _displayName;
 		private string _userText;
         private ChatMessage _selectedChatMessage;
+        private AddUserViewModel _addUserViewModel;
 
-		/// <summary>
+        /// <summary>
         ///		Chat room's display name.
         /// </summary>
 		public string DisplayName
@@ -192,6 +214,15 @@ namespace ChatWpf.ViewModels
 		///		Id of the chat room.
 		/// </summary>
 		public int Id { get; set; }
+
+		/// <summary>
+		///		View model for adding a user to the room.
+		/// </summary>
+        public AddUserViewModel AddUserViewModel
+        {
+            get => _addUserViewModel;
+            set => Set(ref _addUserViewModel, value, nameof(AddUserViewModel));
+        }
 
         #endregion
     }

@@ -120,6 +120,9 @@
     <Compile Include="Controls\AddChatRoomControl.xaml.cs">
       <DependentUpon>AddChatRoomControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AddUserToRoomControl.xaml.cs">
+      <DependentUpon>AddUserToRoomControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ChatRoomControl.xaml.cs">
       <DependentUpon>ChatRoomControl.xaml</DependentUpon>
     </Compile>
@@ -149,6 +152,7 @@
     <Compile Include="Services\UI\Interfaces\INavigationService.cs" />
     <Compile Include="Services\UI\NavigationService.cs" />
     <Compile Include="ViewModels\AddChatRoomViewModel.cs" />
+    <Compile Include="ViewModels\AddUserViewModel.cs" />
     <Compile Include="ViewModels\ChatRoomViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -166,6 +170,10 @@
       <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\AddChatRoomControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\AddUserToRoomControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
