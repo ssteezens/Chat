@@ -109,7 +109,7 @@
 
         <!-- Current chat window -->
         <controls:ChatRoomControl Grid.Column="1" 
-                                  Margin="4,4,8,4"
+                                  Margin="0,4,8,4"
                                   DataContext="{Binding SelectedChatRoom}"/>
 
         <!-- User profile control -->

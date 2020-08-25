@@ -86,7 +86,7 @@
             </DataTemplate>
 
             <!-- User List Item -->
-            <DataTemplate x:Key="UserListItemTemplate" DataType="models:User">
+            <DataTemplate x:Key="UserListItemTemplate" DataType="{x:Type models:User}">
                 <StackPanel Orientation="Horizontal">
                     <Ellipse Margin="0,0,0,0"
                              Stroke="Black"
@@ -94,7 +94,7 @@
                              Width="28" 
                              Height="28">
                         <Ellipse.Fill>
-                            <ImageBrush ImageSource="{Binding ProfileImageData}" />
+                            <ImageBrush ImageSource="{Binding ProfileImageBytes}" />
                         </Ellipse.Fill>
                     </Ellipse>
 
@@ -142,8 +142,9 @@
 
             <!-- User List -->
             <ListView Grid.Column="1"
-                      Margin="0,0,0,0"
+                      Margin="0,0,2,0"
                       VerticalAlignment="Stretch"
+                      HorizontalAlignment="Stretch"
                       Width="{Binding ElementName=SendButton, Path=ActualWidth}"
                       ItemTemplate="{StaticResource UserListItemTemplate}"
                       ItemsSource="{Binding Users}" />
@@ -151,7 +152,7 @@
             <!-- Add User Button -->
             <Button Grid.Column="1"
                     VerticalAlignment="Bottom"
-                    Margin="0"
+                    Margin="0,0,2,0"
                     BorderThickness="1,1,1,1"
                     Command="{Binding ToggleAddUserControlCommand}">
                 Add User

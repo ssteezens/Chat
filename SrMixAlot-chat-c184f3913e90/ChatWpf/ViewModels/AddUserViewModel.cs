@@ -1,9 +1,11 @@
-﻿using ChatWpf.Services.Data.Interfaces;
+﻿using AutoMapper;
+using ChatWpf.Models;
+using ChatWpf.Services.Data.Interfaces;
 using GalaSoft.MvvmLight.CommandWpf;
 using Shared.Models.Dto;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using ChatWpf.Models;
 
 namespace ChatWpf.ViewModels
 {
@@ -15,7 +17,7 @@ namespace ChatWpf.ViewModels
         private readonly IUserAccountService _userAccountService;
         private readonly IChatRoomDataService _chatRoomDataService;
         private bool _controlIsOpen;
-        private ObservableCollection<UserDto> _userResults;
+        private ObservableCollection<User> _userResults;
 
         public AddUserViewModel(IUserAccountService userAccountService, IChatRoomDataService chatRoomDataService)
         {
@@ -23,7 +25,7 @@ namespace ChatWpf.ViewModels
             _chatRoomDataService = chatRoomDataService;
 
             SearchForUsersCommand = new RelayCommand<string>(async (username) => await SearchForUsers(username));
-            AddUserCommand = new RelayCommand<UserDto>(AddUser);
+            AddUserCommand = new RelayCommand<User>(AddUser);
         }
 
         /// <summary>
@@ -34,7 +36,7 @@ namespace ChatWpf.ViewModels
         /// <summary>
         ///     Command to invite a user.
         /// </summary>
-        public RelayCommand<UserDto> AddUserCommand { get; }
+        public RelayCommand<User> AddUserCommand { get; }
 
         /// <summary>
         ///     Search for users by the specified username search text.
@@ -46,23 +48,26 @@ namespace ChatWpf.ViewModels
                 return;
 
             var users = await _userAccountService.GetUsersWithUsername(searchText);
+            var userModels = Mapper.Map<IEnumerable<User>>(users);
 
-            UserResults = new ObservableCollection<UserDto>(users);
+            UserResults = new ObservableCollection<User>(userModels);
         }
 
         /// <summary>
         ///     Invite user to room.
         /// </summary>
         /// <param name="user"> The <see cref="UserDto"/> to invite. </param>
-        private void AddUser(UserDto user)
+        private void AddUser(User user)
         {
-            _chatRoomDataService.AddUser(user, ChatRoomModel.Id);
+            var userDto = Mapper.Map<UserDto>(user);
+
+            _chatRoomDataService.AddUser(userDto, ChatRoomModel.Id);
         }
 
         /// <summary>
         ///     Gets or sets the search result users.
         /// </summary>
-        public ObservableCollection<UserDto> UserResults
+        public ObservableCollection<User> UserResults
         {
             get => _userResults;
             set => Set(ref _userResults, value, nameof(UserResults));
