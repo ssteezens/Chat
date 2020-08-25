@@ -29,7 +29,8 @@ namespace ChatWpf
 			{
 				cfg.CreateMap<ChatRoom, ChatRoomViewModel>()
 					.ForMember(dest => dest.ChatMessages, opt => opt.MapFrom(src => new ObservableCollection<ChatMessage>(src.ChatMessages)))
-					.ForMember(dest => dest.Users, opt => opt.MapFrom(src => new ObservableCollection<User>(src.Users)));
+					.ForMember(dest => dest.Users, opt => opt.MapFrom(src => new ObservableCollection<User>(src.Users)))
+                    .ForMember(dest => dest.ChatRoomModel, opt => opt.MapFrom(src => src));
 
 				cfg.CreateMap<ChatMessage, ChatMessageDto>().ReverseMap();
 				cfg.CreateMap<ChatRoom, ChatRoomDto>().ReverseMap();

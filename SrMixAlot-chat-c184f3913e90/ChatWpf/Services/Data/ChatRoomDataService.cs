@@ -3,6 +3,7 @@ using ChatWpf.Services.Data.Interfaces;
 using ServiceStack;
 using System.Collections.Generic;
 using System.Linq;
+using Shared.Models.Dto;
 
 namespace ChatWpf.Services.Data
 {
@@ -51,5 +52,15 @@ namespace ChatWpf.Services.Data
 		{
 			return _jsonServiceClient.Post<ChatRoom>("/ChatRoom/Add", chatRoom);
 		}
-	}
+
+        /// <summary>
+        ///     Add a user to a room.
+        /// </summary>
+        /// <param name="userDto"> The <see cref="UserDto"/> to add. </param>
+        /// <param name="chatRoomId"> The id of the chat room. </param>
+        public void AddUser(UserDto userDto, int chatRoomId)
+        {
+            _jsonServiceClient.Post<UserDto>($"/ChatRoom/Users/Add/{chatRoomId}", userDto);
+        }
+    }
 }

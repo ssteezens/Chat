@@ -33,6 +33,7 @@
                         Grid.ColumnSpan="2">
                 <Label Content="Username:"/>
 
+                <!-- Username search text box -->
                 <TextBox x:Name="UsernameTextBox" 
                          Width="200" 
                          Margin="4">
@@ -44,12 +45,32 @@
                     </i:Interaction.Triggers>
                 </TextBox>
 
+                <!-- User Results -->
                 <ListView ItemsSource="{Binding UserResults}"
                           Margin="4"
-                          BorderThickness="0">
+                          BorderThickness="0"
+                          x:Name="UserResultListView">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Username}"/>
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="{Binding Username}"
+                                           HorizontalAlignment="Stretch"
+                                           FontSize="14"
+                                           VerticalAlignment="Center" />
+                                
+                                <Button Grid.Column="1"
+                                        HorizontalAlignment="Right"
+                                        Padding="0"
+                                        Command="{Binding DataContext.AddUserCommand, ElementName=UserResultListView}"
+                                        CommandParameter="{Binding}">
+                                    Add
+                                </Button>
+                            </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

@@ -35,6 +35,7 @@ namespace ChatWpf.ViewModels
 
 			// view models
             AddUserViewModel = SimpleIoc.Default.GetInstance<AddUserViewModel>();
+            AddUserViewModel.ChatRoomModel = ChatRoomModel;
 
             // view model message listeners
 			MessengerInstance.Register<NotificationMessage<ChatMessage>>(this, action => HandleChatMessageNotification(action.Content, action.Notification));
@@ -124,8 +125,11 @@ namespace ChatWpf.ViewModels
 			// submit chat to server
 			var addedMessage = _chatMessageDataService.Add(message);
 
+			// get id from returned message
+            message.Id = addedMessage.Id;
+
 			// add returned message from server which contains id
-			ChatMessages.Add(addedMessage);
+			ChatMessages.Add(message);
 			
 			// clear user text
 			UserText = string.Empty;
@@ -163,6 +167,7 @@ namespace ChatWpf.ViewModels
 		private string _userText;
         private ChatMessage _selectedChatMessage;
         private AddUserViewModel _addUserViewModel;
+        private ChatRoom _chatRoomModel;
 
         /// <summary>
         ///		Chat room's display name.
@@ -222,6 +227,20 @@ namespace ChatWpf.ViewModels
         {
             get => _addUserViewModel;
             set => Set(ref _addUserViewModel, value, nameof(AddUserViewModel));
+        }
+
+		/// <summary>
+		///		The model for the view model.
+		/// </summary>
+        public ChatRoom ChatRoomModel
+        {
+            get => _chatRoomModel;
+            set
+            {
+                Set(ref _chatRoomModel, value, nameof(ChatRoomModel));
+
+                AddUserViewModel.ChatRoomModel = ChatRoomModel;
+            }
         }
 
         #endregion

@@ -17,11 +17,11 @@ namespace Api.Models.Entities
         /// <summary>
         ///     All the chat messages for this chat pane.
         /// </summary>
-        public IEnumerable<ChatMessage> ChatMessages { get; set; }
+        public ICollection<ChatMessage> ChatMessages { get; set; }
 
         /// <summary>
         ///     All user's in this chat.
         /// </summary>
-        public IEnumerable<User> Users { get; set; }
+        public ICollection<User> Users { get; set; }
     }
 }

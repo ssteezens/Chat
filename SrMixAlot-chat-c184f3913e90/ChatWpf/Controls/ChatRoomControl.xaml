@@ -136,7 +136,8 @@
             <!-- Add User Control -->
             <controls:AddUserToRoomControl Grid.Column="0" 
                                            VerticalAlignment="Bottom"
-                                           HorizontalAlignment="Right" DataContext="{Binding AddUserViewModel}"
+                                           HorizontalAlignment="Right" 
+                                           DataContext="{Binding AddUserViewModel}"
                                            Margin="10"/>
 
             <!-- User List -->

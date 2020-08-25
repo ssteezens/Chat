@@ -86,7 +86,9 @@ namespace ChatWpf.ViewModels
         /// <summary>
         ///     Profile image data in bytes.
         /// </summary>
-        public byte[] ProfileImageBytes => Convert.FromBase64String(UserInstance.Current.ProfileImageData);
+        public byte[] ProfileImageBytes => UserInstance.Current.ProfileImageData != null 
+            ? Convert.FromBase64String(UserInstance.Current.ProfileImageData)
+            : null;
 
         #endregion
 

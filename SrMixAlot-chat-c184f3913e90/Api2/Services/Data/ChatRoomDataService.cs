@@ -32,18 +32,11 @@ namespace Api.Services.Data
 		/// <returns> All chat rooms from the database.</returns>
 		public IEnumerable<ChatRoom> GetAll()
 		{
-			var users = _chatContext.Users.ToList();
-			var messages = _chatContext.ChatMessages.ToList();
-			var chatRooms = _chatContext.ChatRooms.ToList();
+            var chatRooms = _chatContext.ChatRooms
+                .Include(room => room.ChatMessages)
+                .ThenInclude(message => message.User);
 
-			// TODO: configure entities 
-			foreach (var room in chatRooms)
-			{
-				room.Users = users;
-				room.ChatMessages = messages.Where(i => i.ChatRoomId == room.Id);
-			}
-
-			return chatRooms;
+            return chatRooms;
 		}
 
 		/// <summary>
@@ -71,5 +64,22 @@ namespace Api.Services.Data
 
 			return chatRoom;
 		}
-	}
+
+		/// <summary>
+		///		Add a user to the chat room.
+		/// </summary>
+		/// <param name="username"> The username to add. </param>
+		/// <param name="chatRoomId"> The id of the chat room. </param>
+        public void AddUser(string username, int chatRoomId)
+        {
+            var user = _chatContext.Users.SingleOrDefault(i => i.UserName == username);
+            var room = _chatContext.ChatRooms.Find(chatRoomId);
+
+			_chatContext.Entry(room).Collection(i => i.Users).Load();
+
+            room.Users.Add(user);
+
+            _chatContext.SaveChanges();
+        }
+    }
 }

@@ -64,5 +64,18 @@ namespace Api.Controllers
 			
 			return Ok(room);
 		}
+
+		/// <summary>
+		///		Add user to chat room.
+		/// </summary>
+		/// <param name="user"> The <see cref="UserDto"/> to add. </param>
+		/// <param name="chatRoomId"> The id of the chat room. </param>
+		[HttpPost("/ChatRoom/Users/Add/{chatRoomId}")]
+        public IActionResult AddUser([FromBody] UserDto user, int chatRoomId)
+        {
+			_chatRoomDataService.AddUser(user.Username, chatRoomId);
+
+            return Ok();
+        }
     }
 }
