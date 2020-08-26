@@ -4,6 +4,7 @@ using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using User = Api.Models.Entities.User;
 
 namespace Api.Services.Data
 {
@@ -58,11 +59,27 @@ namespace Api.Services.Data
 		/// </summary>
 		/// <param name="chatRoom"> Chat room to add. </param>
 		public ChatRoom Add(ChatRoom chatRoom)
-		{
-			_chatContext.ChatRooms.Add(chatRoom);
+        {
+            var users = chatRoom.Users.ToList();
+
+            chatRoom.Users = new List<User>();
+
+            _chatContext.ChatRooms.Add(chatRoom);
 			_chatContext.SaveChanges();
 
-			return chatRoom;
+			_chatContext.Entry(chatRoom).Collection(i => i.Users).Load();
+
+            foreach (var user in users)
+            {
+                var userFromContext = _chatContext.Users.SingleOrDefault(i => i.UserName == user.UserName);
+
+				if(userFromContext != null)
+                    chatRoom.Users.Add(userFromContext);
+            }
+
+            _chatContext.SaveChanges();
+
+            return chatRoom;
 		}
 
 		/// <summary>

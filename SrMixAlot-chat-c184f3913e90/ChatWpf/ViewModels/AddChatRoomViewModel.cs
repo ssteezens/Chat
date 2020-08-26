@@ -57,6 +57,8 @@ namespace ChatWpf.ViewModels
         {
             // todo: validation
 
+            ChatRoomModel.Users = new List<User> { UserInstance.Current };
+
             // send event to be handled on main view model
             MessengerInstance.Send(new NotificationMessage<ChatRoom>(ChatRoomModel, "Add"));
 

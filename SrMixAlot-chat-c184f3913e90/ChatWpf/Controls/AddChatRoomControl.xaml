@@ -23,7 +23,7 @@
 
             <!-- Room Name -->
             <TextBox Margin="4"  
-                     Text="{Binding ChatRoomModel.DisplayName, Mode=TwoWay}"/>
+                     Text="{Binding ChatRoomModel.DisplayName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <!-- Submit button -->
             <Button Margin="4" 

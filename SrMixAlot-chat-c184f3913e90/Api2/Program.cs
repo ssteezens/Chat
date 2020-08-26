@@ -33,7 +33,7 @@ namespace Api
 				// get seeder from web host scope factory so that you can access scoped services within transient ones
 				var seeder = scope.ServiceProvider.GetService<ChatSeeder>();
 				// run the seeder
-				seeder.SeedAsync().Wait();
+				//seeder.SeedAsync().Wait();
             }
 		}
 

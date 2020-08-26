@@ -114,7 +114,7 @@
 
         <!-- User profile control -->
         <controls:UserProfileControl Grid.Column="1"
-                                     Margin="4,4,8,11"
+                                     Margin="0,4,8,11"
                                      Visibility="{Binding UserProfileControlIsVisible, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
     </Grid>
