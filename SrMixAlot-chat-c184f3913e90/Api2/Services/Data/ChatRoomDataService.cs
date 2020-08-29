@@ -47,6 +47,7 @@ namespace Api.Services.Data
 		public IEnumerable<ChatRoom> GetAll(string username)
 		{
 			var chatRooms = _chatContext.ChatRooms
+                .Include(room => room.Users)
 				.Include(room => room.ChatMessages)
                 .ThenInclude(message => message.User)
 				.Where(room => room.Users.Any(user => user.UserName == username));

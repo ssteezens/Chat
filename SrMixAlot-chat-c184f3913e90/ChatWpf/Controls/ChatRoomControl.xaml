@@ -110,7 +110,21 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid>
+        <Popup Grid.Row="0"
+               x:Name="ThePopup"
+               IsOpen="{Binding AddUserViewModel.ControlIsOpen}"
+               StaysOpen="False"
+               AllowsTransparency="True"
+               Placement="Center">
+            <controls:AddUserToRoomControl DataContext="{Binding AddUserViewModel}"
+                                           IsHitTestVisible="True"
+                                           Width="240"
+                                           Height="300"
+                                           Background="White"
+                                           Panel.ZIndex="100"/>
+        </Popup>
+
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
@@ -132,13 +146,6 @@
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
-
-            <!-- Add User Control -->
-            <controls:AddUserToRoomControl Grid.Column="0" 
-                                           VerticalAlignment="Bottom"
-                                           HorizontalAlignment="Right" 
-                                           DataContext="{Binding AddUserViewModel}"
-                                           Margin="10"/>
 
             <!-- User List -->
             <ListView Grid.Column="1"

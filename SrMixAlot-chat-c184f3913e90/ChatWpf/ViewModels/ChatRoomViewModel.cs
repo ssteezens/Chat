@@ -39,6 +39,7 @@ namespace ChatWpf.ViewModels
 
             // view model message listeners
 			MessengerInstance.Register<NotificationMessage<ChatMessage>>(this, action => HandleChatMessageNotification(action.Content, action.Notification));
+			MessengerInstance.Register<NotificationMessage<User>>(this, action => HandleUserNotification(action.Content, action.Notification));
 		}
 
         #region Messenger Handlers
@@ -89,6 +90,21 @@ namespace ChatWpf.ViewModels
 				}
 			}
 		}
+
+		/// <summary>
+		///		Handler for <see cref="User"/> related notifications.
+		/// </summary>
+		/// <param name="user"> The <see cref="User"/> subject of the notification. </param>
+		/// <param name="notification"> The notification that describes the type operation. </param>
+        private void HandleUserNotification(User user, string notification)
+        {
+            switch (notification)
+            {
+				case "Add":
+					DispatcherHelper.CheckBeginInvokeOnUI(() => { Users.Add(user); });
+                    break;
+            }
+        }
 
         #endregion
 

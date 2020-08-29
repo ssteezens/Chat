@@ -6,6 +6,7 @@ using Shared.Models.Dto;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace ChatWpf.ViewModels
 {
@@ -62,6 +63,9 @@ namespace ChatWpf.ViewModels
             var userDto = Mapper.Map<UserDto>(user);
 
             _chatRoomDataService.AddUser(userDto, ChatRoomModel.Id);
+
+            // send message that a user has been added
+            MessengerInstance.Send(new NotificationMessage<User>(user, "Add"));
         }
 
         /// <summary>

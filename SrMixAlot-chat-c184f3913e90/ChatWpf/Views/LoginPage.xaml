@@ -21,7 +21,8 @@
         <Border VerticalAlignment="Center"
                 HorizontalAlignment="Center"
                 BorderBrush="Black"
-                BorderThickness="1,0">
+                BorderThickness="1"
+                CornerRadius="1">
             <StackPanel Width="400">
                 <StackPanel.InputBindings>
                     <KeyBinding Key="Return"
@@ -54,15 +55,15 @@
                     </i:Interaction.Triggers>
                 </PasswordBox>
 
-            <!-- Create an account link -->
-            <Button BorderThickness="0"
-                    HorizontalAlignment="Left"
-                    Margin="10,0"
-                    Background="Transparent"
-                    Command="{Binding GoToRegisterCommand}">
-                <TextBlock Foreground="Blue"
-                           Text="Create an account"/>
-            </Button>
+                <!-- Create an account link -->
+                <Button BorderThickness="0"
+                        HorizontalAlignment="Left"
+                        Margin="10,0"
+                        Background="Transparent"
+                        Command="{Binding GoToRegisterCommand}">
+                    <TextBlock Foreground="Blue"
+                               Text="Create an account"/>
+                </Button>
 
                 <!-- Login button -->
                 <Button Content="Login"

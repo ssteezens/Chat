@@ -24,6 +24,28 @@ namespace ChatWpf.Controls
         public ChatRoomControl()
         {
             InitializeComponent();
+
+            // todo: refactor into control
+            var window = Application.Current.Windows[0];
+
+            ThePopup.PlacementTarget = window;
+
+            window.LocationChanged += (sender, args) =>
+            {
+                var offset = ThePopup.HorizontalOffset;
+                ThePopup.HorizontalOffset = offset + 1;
+                ThePopup.HorizontalOffset = offset;
+            };
+
+            window.SizeChanged += (sender, args) =>
+            {
+                var offset = ThePopup.HorizontalOffset;
+                ThePopup.HorizontalOffset = offset + 1;
+                ThePopup.HorizontalOffset = offset;
+
+                ThePopup.Width = window.Width;
+                ThePopup.Height = window.Height;
+            };
         }
 
 		public ChatRoomViewModel Vm { get; set; }
