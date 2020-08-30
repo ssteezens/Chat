@@ -33,9 +33,21 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <!-- Add Chat Room Control -->
+        <controls:CenteredPopupControl Grid.Column="0"
+                                       IsOpen="{Binding AddChatRoomViewModel.IsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <controls:AddChatRoomControl Panel.ZIndex="10"
+                                         Width="200"
+                                         Margin="20"
+                                         VerticalAlignment="Bottom"
+                                         HorizontalAlignment="Left"
+                                         DataContext="{Binding AddChatRoomViewModel, Mode=OneWay}"/>
+        </controls:CenteredPopupControl>
+
         <Border BorderBrush="Black"
                 BorderThickness="0,1,1,1"
-                Margin="4,4,4,11">
+                Margin="4,4,4,11"
+                Grid.Column="0">
             <!-- Available Chat Rooms -->
             <Grid>
                 <Grid.RowDefinitions>
@@ -97,15 +109,6 @@
                 </Border>
             </Grid>
         </Border>
-
-        <!-- Add Chat Room Control -->
-        <controls:AddChatRoomControl Grid.Column="1"
-                                     Panel.ZIndex="10"
-                                     Width="200"
-                                     Margin="20"
-                                     VerticalAlignment="Bottom"
-                                     HorizontalAlignment="Left"
-                                     DataContext="{Binding AddChatRoomViewModel, Mode=OneWay}"/>
 
         <!-- Current chat window -->
         <controls:ChatRoomControl Grid.Column="1" 

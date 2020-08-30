@@ -110,19 +110,16 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Popup Grid.Row="0"
-               x:Name="ThePopup"
-               IsOpen="{Binding AddUserViewModel.ControlIsOpen}"
-               StaysOpen="False"
-               AllowsTransparency="True"
-               Placement="Center">
+        <!-- Add User To Room Control -->
+        <controls:CenteredPopupControl Grid.Row="0"
+                                       IsOpen="{Binding AddUserViewModel.ControlIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:AddUserToRoomControl DataContext="{Binding AddUserViewModel}"
                                            IsHitTestVisible="True"
                                            Width="240"
                                            Height="300"
                                            Background="White"
                                            Panel.ZIndex="100"/>
-        </Popup>
+        </controls:CenteredPopupControl>
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>

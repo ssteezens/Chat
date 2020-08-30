@@ -123,6 +123,9 @@
     <Compile Include="Controls\AddUserToRoomControl.xaml.cs">
       <DependentUpon>AddUserToRoomControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CenteredPopupControl.xaml.cs">
+      <DependentUpon>CenteredPopupControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ChatRoomControl.xaml.cs">
       <DependentUpon>ChatRoomControl.xaml</DependentUpon>
     </Compile>
@@ -134,6 +137,7 @@
     <Compile Include="Converters\InverseBoolToVisibilityConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\StringLengthToEnabledConverter.cs" />
+    <Compile Include="Helpers\ControlInstances.cs" />
     <Compile Include="Models\ChatMessage.cs" />
     <Compile Include="Models\ChatRoom.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -174,6 +178,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\AddUserToRoomControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CenteredPopupControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
