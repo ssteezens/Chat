@@ -7,6 +7,16 @@
         Title="Chat" Height="600" Width="800">
 
     <Grid>
+
+        <!-- Window Overlay -->
+        <Border x:Name="WindowOverlay" 
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Background="#333"
+                Opacity=".8"
+                Panel.ZIndex="10"
+                Visibility="Hidden"/>
+
         <!-- Progress Indicator -->
         <TextBlock Text="Loading ..." 
                    HorizontalAlignment="Center"

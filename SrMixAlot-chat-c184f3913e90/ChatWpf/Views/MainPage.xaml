@@ -35,8 +35,9 @@
 
         <!-- Add Chat Room Control -->
         <controls:CenteredPopupControl Grid.Column="0"
+                                       Grid.ColumnSpan="2"
                                        IsOpen="{Binding AddChatRoomViewModel.IsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-            <controls:AddChatRoomControl Panel.ZIndex="10"
+            <controls:AddChatRoomControl Panel.ZIndex="100"
                                          Width="200"
                                          Margin="20"
                                          VerticalAlignment="Bottom"

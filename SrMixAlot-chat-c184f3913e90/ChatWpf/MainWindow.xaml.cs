@@ -1,5 +1,6 @@
 ﻿using ChatWpf.ViewModels;
 using System.Windows;
+using ChatWpf.Helpers;
 
 namespace ChatWpf
 {
@@ -13,7 +14,7 @@ namespace ChatWpf
             InitializeComponent();
 
 			// get view model locator
-			var locator = (Application.Current.Resources["Locator"] as ViewModelLocator);
+			var locator = Application.Current.Resources["Locator"] as ViewModelLocator;
 			
 			// set data context to MainVm
             DataContext = locator?.MainVm;
@@ -21,6 +22,9 @@ namespace ChatWpf
 			// set main vm's navigation frame
 			locator?.MainVm.SetNavigationFrame(NavigationFrame);
 			locator?.MainVm.NavigateToLogin();
-		}
+
+            ControlInstances.MainWindow = this;
+            ControlInstances.WindowOverlay = WindowOverlay;
+        }
     }
 }

@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ChatWpf.Helpers;
 
 namespace ChatWpf.Controls
 {
@@ -56,9 +57,23 @@ namespace ChatWpf.Controls
         {
             InitializeComponent();
 
-            var window = Application.Current.Windows[0];
+            var window = ControlInstances.MainWindow;
 
             CenteredPopup.PlacementTarget = window;
+
+            // show/hide window overlay
+            CenteredPopup.Opened += (sender, args) =>
+            {
+                var overlay = ControlInstances.WindowOverlay;
+
+                overlay.Visibility = Visibility.Visible;
+            };
+            CenteredPopup.Closed += (sender, args) =>
+            {
+                var overlay = ControlInstances.WindowOverlay;
+
+                overlay.Visibility = Visibility.Hidden;
+            };
 
             // hack to reset the popup's positioning.
             window.LocationChanged += (sender, args) =>
