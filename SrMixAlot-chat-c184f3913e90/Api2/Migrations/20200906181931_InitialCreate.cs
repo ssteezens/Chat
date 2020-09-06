@@ -76,7 +76,7 @@ namespace Api.Migrations
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     NickName = table.Column<string>(nullable: true),
-                    ImageFilePath = table.Column<string>(nullable: true),
+                    ProfileImageData = table.Column<string>(nullable: true),
                     ChatRoomId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

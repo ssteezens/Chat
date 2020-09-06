@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
-using Api.Services.Data.Interfaces;
+﻿using Data.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Dto;
+using System.Threading.Tasks;
 
 namespace Api.Controllers
 {

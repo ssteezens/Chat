@@ -1,9 +1,9 @@
-﻿using Api.Services.Data.Interfaces;
+﻿using Data.Services.Interfaces;
 using RabbitMQ.Client;
 
 namespace Api.Services.Connection
 {
-	/// <summary>
+    /// <summary>
     ///		Initialize message broker connections.  Ensure an exchange is created for each chat room.
     /// </summary>
     public class ConnectionInitializer

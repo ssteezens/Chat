@@ -1,7 +1,7 @@
-﻿using Api.Models.Entities;
-using Api.Services.Connection.Interfaces;
-using Api.Services.Data.Interfaces;
+﻿using Api.Services.Connection.Interfaces;
 using AutoMapper;
+using Data.Entities;
+using Data.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -1,12 +1,12 @@
-﻿using Api.Models.Entities;
-using Api.Services.Connection.Interfaces;
-using Api.Services.Data.Interfaces;
+﻿using Api.Services.Connection.Interfaces;
 using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+using Data.Entities;
+using Data.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Dto;
+using System.Collections.Generic;
 
 namespace Api.Controllers
 {

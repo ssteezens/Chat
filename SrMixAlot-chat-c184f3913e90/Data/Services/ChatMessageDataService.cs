@@ -1,11 +1,10 @@
-﻿using AutoMapper;
-using Data;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using Data.Entities;
 using Data.Services.Interfaces;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace Api.Services.Data
+namespace Data.Services
 {
     /// <summary>
     ///     Service chat message related data.

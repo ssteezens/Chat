@@ -1,11 +1,12 @@
 ﻿using System.Text;
-using Api.Configuration;
-using Api.Models.Entities;
 using Api.Services.Connection;
 using Api.Services.Connection.Interfaces;
-using Api.Services.Data;
-using Api.Services.Data.Interfaces;
 using AutoMapper;
+using Data;
+using Data.Configuration;
+using Data.Entities;
+using Data.Services;
+using Data.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -40,6 +41,7 @@ namespace Api
 				options.Password.RequiredLength = 6;
 				options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
+				
 			}).AddEntityFrameworkStores<ChatContext>();
 
 			// todo: set this from configuration
@@ -74,8 +76,7 @@ namespace Api
 			services.AddTransient<ConnectionInitializer>();
 
             var connection = @"Server=(localdb)\mssqllocaldb;Database=ChatDb;Trusted_Connection=True;ConnectRetryCount=0";
-            services.AddDbContext<ChatContext>
-                (options => options.UseSqlServer(connection));
+            services.AddDbContext<ChatContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("Api")));
 
 			// add scoped services
 			services.AddScoped<IChatRoomDataService, ChatRoomDataService>();

@@ -1,9 +1,9 @@
-﻿using Api.Models.Entities;
-using Api.Services.Connection;
+﻿using Api.Services.Connection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
+using Data;
 
 namespace Api
 {

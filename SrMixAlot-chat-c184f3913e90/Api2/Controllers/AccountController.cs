@@ -1,14 +1,14 @@
 ﻿using System;
-using Api.Configuration;
-using Api.Models;
-using Api.Models.Entities;
-using Api.Services.Data.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Shared.Models.Dto;
 using System.Threading.Tasks;
+using Data.Configuration;
+using Data.Entities;
+using Data.Models;
+using Data.Services.Interfaces;
 
 namespace Api.Controllers
 {
