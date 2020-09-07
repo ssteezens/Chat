@@ -52,7 +52,7 @@ namespace Api.Controllers
         /// <param name="chatRoom"> Chat room to add to the database. </param>
         /// <returns> An Ok or BadRequest. </returns>
 		[HttpPost("/ChatRoom/Add")]
-		public IActionResult Add([FromBody] ChatRoom chatRoom)
+		public IActionResult Add([FromBody] ChatRoomDto chatRoom)
 		{
             // todo: validation
 

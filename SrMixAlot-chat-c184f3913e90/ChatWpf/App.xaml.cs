@@ -33,8 +33,8 @@ namespace ChatWpf
                     .ForMember(dest => dest.ChatRoomModel, opt => opt.MapFrom(src => src));
 
 				cfg.CreateMap<ChatMessage, ChatMessageDto>().ReverseMap();
-				cfg.CreateMap<ChatRoom, ChatRoomDto>().ReverseMap();
-				cfg.CreateMap<UserDto, User>().ReverseMap();
+                cfg.CreateMap<UserDto, User>().ReverseMap();
+                cfg.CreateMap<ChatRoom, ChatRoomDto>().ReverseMap();
 			});
         }
     }

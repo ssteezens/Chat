@@ -81,8 +81,6 @@ namespace Data
                 builder.HasMany(room => room.ChatMessages)
                     .WithOne(message => message.ChatRoom);
 
-                builder.HasMany(room => room.Users);
-
                 builder.HasMany(room => room.UserRooms)
                     .WithOne(userRoom => userRoom.ChatRoom)
                     .HasForeignKey(userRoom => userRoom.ChatRoomId);

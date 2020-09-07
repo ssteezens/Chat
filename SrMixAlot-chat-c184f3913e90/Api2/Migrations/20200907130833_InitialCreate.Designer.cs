@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(ChatContext))]
-    [Migration("20200906181931_InitialCreate")]
+    [Migration("20200907130833_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,8 +62,6 @@ namespace Api.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<int?>("ChatRoomId");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -101,8 +99,6 @@ namespace Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChatRoomId");
-
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
@@ -112,6 +108,19 @@ namespace Api.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("Data.Entities.UserRoom", b =>
+                {
+                    b.Property<int>("ChatRoomId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("ChatRoomId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ChatUserRooms");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -236,11 +245,17 @@ namespace Api.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("Data.Entities.User", b =>
+            modelBuilder.Entity("Data.Entities.UserRoom", b =>
                 {
-                    b.HasOne("Data.Entities.ChatRoom")
-                        .WithMany("Users")
-                        .HasForeignKey("ChatRoomId");
+                    b.HasOne("Data.Entities.ChatRoom", "ChatRoom")
+                        .WithMany("UserRooms")
+                        .HasForeignKey("ChatRoomId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Data.Entities.User", "User")
+                        .WithMany("UserRooms")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

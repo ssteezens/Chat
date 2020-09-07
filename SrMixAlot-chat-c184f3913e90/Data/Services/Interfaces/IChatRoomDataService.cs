@@ -1,5 +1,6 @@
 ﻿using Data.Entities;
 using System.Collections.Generic;
+using Shared.Models.Dto;
 
 namespace Data.Services.Interfaces
 {
@@ -23,9 +24,9 @@ namespace Data.Services.Interfaces
         /// <summary>
         ///		Add a chat room to the database.
         /// </summary>
-        /// <param name="chatRoom"> Chat room to add. </param>
+        /// <param name="chatRoomDto"> Chat room to add. </param>
         /// <returns> Chat room added to the database. </returns>
-        ChatRoom Add(ChatRoom chatRoom);
+        ChatRoomDto Add(ChatRoomDto chatRoomDto);
 
         /// <summary>
         ///		Add a user to the chat room.

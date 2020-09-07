@@ -19,15 +19,8 @@ namespace Api.Controllers
 
 		[HttpGet("/api/test")]
 		public IActionResult Test()
-		{
-			var username = User.Identity.Name;
-
-			var thing = _chatContext.ChatRooms
-				.Include(room => room.ChatMessages)
-				.Include(room => room.Users)
-				.ToList();
-
-			return Ok(thing);
-		}
+        {
+            return Ok();
+        }
     }
 }

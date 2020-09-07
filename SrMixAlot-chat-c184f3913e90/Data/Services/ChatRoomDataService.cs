@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Data.Entities;
 using Data.Services.Interfaces;
+using Shared.Models.Dto;
 
 namespace Data.Services
 {
@@ -46,10 +47,12 @@ namespace Data.Services
 		public IEnumerable<ChatRoom> GetAll(string username)
 		{
 			var chatRooms = _chatContext.ChatRooms
-                .Include(room => room.Users)
+                .Include(room => room.UserRooms)
+                .ThenInclude(userRoom => userRoom.User)
 				.Include(room => room.ChatMessages)
                 .ThenInclude(message => message.User)
-				.Where(room => room.Users.Any(user => user.UserName == username));
+				.Where(room => room.UserRooms.Select(userRoom => userRoom.User).Any(user => user.UserName == username))
+                .ToList();
 
             return chatRooms;
 		}
@@ -57,29 +60,32 @@ namespace Data.Services
 		/// <summary>
 		///		Add a chat room to the database.
 		/// </summary>
-		/// <param name="chatRoom"> Chat room to add. </param>
-		public ChatRoom Add(ChatRoom chatRoom)
+		/// <param name="chatRoomDto"> Chat room to add. </param>
+		public ChatRoomDto Add(ChatRoomDto chatRoomDto)
         {
-            var users = chatRoom.Users.ToList();
-
-            chatRoom.Users = new List<User>();
+            var chatRoom = new ChatRoom() { DisplayName = chatRoomDto.DisplayName };
 
             _chatContext.ChatRooms.Add(chatRoom);
 			_chatContext.SaveChanges();
+            _chatContext.Entry(chatRoom).Collection(i => i.UserRooms).Load();
 
-			_chatContext.Entry(chatRoom).Collection(i => i.Users).Load();
+			// set dto model's id
+            chatRoomDto.Id = chatRoom.Id;
 
-            foreach (var user in users)
+            foreach (var user in chatRoomDto.Users)
             {
-                var userFromContext = _chatContext.Users.SingleOrDefault(i => i.UserName == user.UserName);
+                var userRoom = new UserRoom()
+                {
+                    UserId = user.Id,
+                    ChatRoomId = chatRoom.Id
+                };
 
-				if(userFromContext != null)
-                    chatRoom.Users.Add(userFromContext);
+				chatRoom.UserRooms.Add(userRoom);
             }
 
             _chatContext.SaveChanges();
 
-            return chatRoom;
+            return chatRoomDto;
 		}
 
 		/// <summary>
@@ -92,9 +98,18 @@ namespace Data.Services
             var user = _chatContext.Users.SingleOrDefault(i => i.UserName == username);
             var room = _chatContext.ChatRooms.Find(chatRoomId);
 
-			_chatContext.Entry(room).Collection(i => i.Users).Load();
+            if (user == null)
+                return;
 
-            room.Users.Add(user);
+			_chatContext.Entry(room).Collection(i => i.UserRooms).Load();
+
+			var userRoom = new UserRoom()
+            {
+                ChatRoomId = room.Id,
+				UserId = user.Id
+            };
+
+			room.UserRooms.Add(userRoom);
 
             _chatContext.SaveChanges();
         }

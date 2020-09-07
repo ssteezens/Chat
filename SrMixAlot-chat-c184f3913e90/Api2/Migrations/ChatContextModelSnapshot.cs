@@ -60,8 +60,6 @@ namespace Api.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<int?>("ChatRoomId");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -99,8 +97,6 @@ namespace Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChatRoomId");
-
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
@@ -116,13 +112,11 @@ namespace Api.Migrations
                 {
                     b.Property<int>("ChatRoomId");
 
-                    b.Property<Guid>("UserId");
-
-                    b.Property<string>("UserId1");
+                    b.Property<string>("UserId");
 
                     b.HasKey("ChatRoomId", "UserId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("ChatUserRooms");
                 });
@@ -249,13 +243,6 @@ namespace Api.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("Data.Entities.User", b =>
-                {
-                    b.HasOne("Data.Entities.ChatRoom")
-                        .WithMany("Users")
-                        .HasForeignKey("ChatRoomId");
-                });
-
             modelBuilder.Entity("Data.Entities.UserRoom", b =>
                 {
                     b.HasOne("Data.Entities.ChatRoom", "ChatRoom")
@@ -265,7 +252,8 @@ namespace Api.Migrations
 
                     b.HasOne("Data.Entities.User", "User")
                         .WithMany("UserRooms")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

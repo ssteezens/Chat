@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
 using Api.Services.Connection;
 using Api.Services.Connection.Interfaces;
 using AutoMapper;
@@ -75,7 +76,7 @@ namespace Api
 			services.AddTransient<ChatSeeder>();
 			services.AddTransient<ConnectionInitializer>();
 
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=ChatDb;Trusted_Connection=True;ConnectRetryCount=0";
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=ChatDb4;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<ChatContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("Api")));
 
 			// add scoped services
@@ -93,7 +94,7 @@ namespace Api
 					.ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.UserName));
 				config.CreateMap<ChatMessage, ChatMessageDto>();
 				config.CreateMap<ChatRoom, ChatRoomDto>()
-					.ForMember(dest => dest.Users, opt => opt.MapFrom(src => src.Users))
+					.ForMember(dest => dest.Users, opt => opt.MapFrom(src => src.UserRooms.Select(userRoom => userRoom.User)))
 					.ForMember(dest => dest.ChatMessages, opt => opt.MapFrom(src => src.ChatMessages));
 			});
 

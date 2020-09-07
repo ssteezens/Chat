@@ -14,7 +14,7 @@ namespace Data.Entities
         /// <summary>
         ///     The id for a user.
         /// </summary>
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
         
         /// <summary>
         ///     The id for a chat room.

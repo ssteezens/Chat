@@ -56,7 +56,6 @@ namespace Data
             {
                 ChatMessages = new List<ChatMessage>() { chatMessage },
                 DisplayName = "Seeded Chat Room",
-                Users = new List<User>() { myUser }
             };
 
             chatMessage.ChatRoom = chatRoom;
@@ -77,6 +76,19 @@ namespace Data
             if (!_context.ChatRooms.Any())
             {
                 _context.Add(chatRoom);
+            }
+
+            _context.SaveChanges();
+
+            var userRoom = new UserRoom()
+            {
+                UserId = myUser.Id,
+                ChatRoomId = chatRoom.Id
+            };
+
+            if (!_context.ChatUserRooms.Any())
+            {
+                _context.Add(userRoom);
             }
 
             _context.SaveChanges();
