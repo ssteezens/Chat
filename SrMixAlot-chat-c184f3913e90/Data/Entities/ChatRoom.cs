@@ -23,5 +23,10 @@ namespace Data.Entities
         ///     All user's in this chat.
         /// </summary>
         public ICollection<User> Users { get; set; }
+
+        /// <summary>
+        ///     The collection of user room relations.
+        /// </summary>
+        public ICollection<UserRoom> UserRooms { get; set; }
     }
 }

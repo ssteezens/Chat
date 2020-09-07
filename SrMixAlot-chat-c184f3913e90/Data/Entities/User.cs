@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 
 namespace Data.Entities
 {
@@ -16,5 +17,10 @@ namespace Data.Entities
         ///     The file path to user's profile photo
         /// </summary>
         public string ProfileImageData { get; set; }
+
+        /// <summary>
+        ///     The collection of chat room relations.
+        /// </summary>
+        public ICollection<UserRoom> UserRooms { get; set; }
     }
 }

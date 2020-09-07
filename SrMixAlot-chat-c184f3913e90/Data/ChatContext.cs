@@ -36,6 +36,7 @@ namespace Data
 
             ConfigureChatMessage(modelBuilder);
             ConfigureChatRoom(modelBuilder);
+            ConfigureChatUserRooms(modelBuilder);
         }
 
         /// <summary>
@@ -46,7 +47,9 @@ namespace Data
         {
             modelBuilder.Entity<User>(builder =>
             {
-
+                builder.HasMany(user => user.UserRooms)
+                    .WithOne(userRoom => userRoom.User)
+                    .HasForeignKey(userRoom => userRoom.UserId);
             });
         }
 
@@ -79,6 +82,22 @@ namespace Data
                     .WithOne(message => message.ChatRoom);
 
                 builder.HasMany(room => room.Users);
+
+                builder.HasMany(room => room.UserRooms)
+                    .WithOne(userRoom => userRoom.ChatRoom)
+                    .HasForeignKey(userRoom => userRoom.ChatRoomId);
+            });
+        }
+
+        /// <summary>
+        ///     Configures the chat user to chat room relational table.
+        /// </summary>
+        /// <param name="modelBuilder"> The model builder. </param>
+        protected virtual void ConfigureChatUserRooms(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserRoom>(builder =>
+            {
+                builder.HasKey(key => new { key.ChatRoomId, key.UserId});
             });
         }
 
@@ -96,5 +115,10 @@ namespace Data
         ///		Set of chat rooms.
         /// </summary>
         public DbSet<ChatRoom> ChatRooms { get; set; }
+
+        /// <summary>
+        ///     Relational entity between users and chat rooms.
+        /// </summary>
+        public DbSet<UserRoom> ChatUserRooms { get; set; }
     }
 }
