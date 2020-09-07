@@ -3,12 +3,12 @@ using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Shared.Models.Dto;
 using System.Threading.Tasks;
 using Data.Configuration;
 using Data.Entities;
 using Data.Models;
 using Data.Services.Interfaces;
+using Shared.Models.Models;
 
 namespace Api.Controllers
 {
@@ -54,7 +54,7 @@ namespace Api.Controllers
                 try
                 {
                     var user = _userService.GetByUsername(loginModel.Username);
-                    var userDto = _mapper.Map<UserDto>(user);
+                    var userDto = _mapper.Map<UserModel>(user);
 
                     userDto.BearerToken = _userService.CreateToken(user);
 

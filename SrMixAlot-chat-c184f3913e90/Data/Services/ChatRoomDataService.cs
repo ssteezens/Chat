@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Data.Entities;
 using Data.Services.Interfaces;
-using Shared.Models.Dto;
+using Shared.Models.Models;
 
 namespace Data.Services
 {
@@ -60,19 +60,19 @@ namespace Data.Services
 		/// <summary>
 		///		Add a chat room to the database.
 		/// </summary>
-		/// <param name="chatRoomDto"> Chat room to add. </param>
-		public ChatRoomDto Add(ChatRoomDto chatRoomDto)
+		/// <param name="chatRoomModel"> Chat room to add. </param>
+		public ChatRoomModel Add(ChatRoomModel chatRoomModel)
         {
-            var chatRoom = new ChatRoom() { DisplayName = chatRoomDto.DisplayName };
+            var chatRoom = new ChatRoom() { DisplayName = chatRoomModel.DisplayName };
 
             _chatContext.ChatRooms.Add(chatRoom);
 			_chatContext.SaveChanges();
             _chatContext.Entry(chatRoom).Collection(i => i.UserRooms).Load();
 
 			// set dto model's id
-            chatRoomDto.Id = chatRoom.Id;
+            chatRoomModel.Id = chatRoom.Id;
 
-            foreach (var user in chatRoomDto.Users)
+            foreach (var user in chatRoomModel.Users)
             {
                 var userRoom = new UserRoom()
                 {
@@ -85,7 +85,7 @@ namespace Data.Services
 
             _chatContext.SaveChanges();
 
-            return chatRoomDto;
+            return chatRoomModel;
 		}
 
 		/// <summary>

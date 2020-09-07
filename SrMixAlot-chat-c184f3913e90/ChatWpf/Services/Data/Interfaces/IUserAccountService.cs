@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ChatWpf.Models;
-using Shared.Models.Dto;
 using System.Threading.Tasks;
+using Shared.Models.Models;
 
 namespace ChatWpf.Services.Data.Interfaces
 {
@@ -16,7 +16,7 @@ namespace ChatWpf.Services.Data.Interfaces
 		/// <param name="username"> The user's username. </param>
 		/// <param name="password"> The user's password. </param>
 		/// <returns> Task result containing user. </returns>
-		Task<UserDto> LoginUser(string username, string password);
+		Task<UserModel> LoginUser(string username, string password);
 
         /// <summary>
         ///		Registers a user.
@@ -28,15 +28,15 @@ namespace ChatWpf.Services.Data.Interfaces
         /// <summary>
         ///     Updates a user.
         /// </summary>
-        /// <param name="userDto"> The user update model. </param>
+        /// <param name="userModel"> The user update model. </param>
         /// <returns> True or false if the operation was successful. </returns>
-        bool UpdateUser(UpdateUserDto userDto);
+        bool UpdateUser(UpdateUserModel userModel);
 
         /// <summary>
         ///     Finds users with matching usernames.
         /// </summary>
         /// <param name="username"> The username to search for. </param>
         /// <returns> Users matching the username search criteria. </returns>
-        Task<IEnumerable<UserDto>> GetUsersWithUsername(string username);
+        Task<IEnumerable<UserModel>> GetUsersWithUsername(string username);
     }
 }

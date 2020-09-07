@@ -2,9 +2,9 @@
 using ChatWpf.Models;
 using ChatWpf.ViewModels;
 using GalaSoft.MvvmLight.Threading;
-using Shared.Models.Dto;
 using System.Collections.ObjectModel;
 using System.Windows;
+using Shared.Models.Models;
 
 namespace ChatWpf
 {
@@ -32,9 +32,9 @@ namespace ChatWpf
 					.ForMember(dest => dest.Users, opt => opt.MapFrom(src => new ObservableCollection<User>(src.Users)))
                     .ForMember(dest => dest.ChatRoomModel, opt => opt.MapFrom(src => src));
 
-				cfg.CreateMap<ChatMessage, ChatMessageDto>().ReverseMap();
-                cfg.CreateMap<UserDto, User>().ReverseMap();
-                cfg.CreateMap<ChatRoom, ChatRoomDto>().ReverseMap();
+				cfg.CreateMap<ChatMessage, ChatMessageModel>().ReverseMap();
+                cfg.CreateMap<UserModel, User>().ReverseMap();
+                cfg.CreateMap<ChatRoom, ChatRoomModel>().ReverseMap();
 			});
         }
     }

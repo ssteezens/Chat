@@ -7,7 +7,7 @@ using GalaSoft.MvvmLight.Messaging;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.MessagePatterns;
-using Shared.Models.Dto;
+using Shared.Models.Models;
 
 namespace ChatWpf.Services.MessageBrokering
 {
@@ -69,14 +69,14 @@ namespace ChatWpf.Services.MessageBrokering
 
 				switch (receivedMessage)
 				{
-                    case ChatMessageDto chatMessageDto:
+                    case ChatMessageModel chatMessageDto:
 					{
 						var chatMessage = Mapper.Map<ChatMessage>(chatMessageDto);
 						// send chat message to view model
 						Messenger.Default.Send(new NotificationMessage<ChatMessage>(chatMessage, chatMessageDto.OperationType.ToString()));
 						break;
 					}
-                    case ChatRoomDto chatRoomDto:
+                    case ChatRoomModel chatRoomDto:
 					{
 						var chatRoom = Mapper.Map<ChatRoom>(chatRoomDto);
 						Messenger.Default.Send(new NotificationMessage<ChatRoom>(chatRoom, chatRoomDto.OperationType.ToString()));

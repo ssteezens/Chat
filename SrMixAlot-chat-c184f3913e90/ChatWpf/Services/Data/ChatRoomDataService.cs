@@ -4,7 +4,7 @@ using ServiceStack;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using Shared.Models.Dto;
+using Shared.Models.Models;
 
 namespace ChatWpf.Services.Data
 {
@@ -51,7 +51,7 @@ namespace ChatWpf.Services.Data
 		/// <returns> ChatRoom added to the database. </returns>
 		public ChatRoom AddChatRoom(ChatRoom chatRoom)
         {
-            var chatRoomDto = Mapper.Map<ChatRoomDto>(chatRoom);
+            var chatRoomDto = Mapper.Map<ChatRoomModel>(chatRoom);
 
             return _jsonServiceClient.Post<ChatRoom>("/ChatRoom/Add", chatRoomDto);
 		}
@@ -59,11 +59,11 @@ namespace ChatWpf.Services.Data
         /// <summary>
         ///     Add a user to a room.
         /// </summary>
-        /// <param name="userDto"> The <see cref="UserDto"/> to add. </param>
+        /// <param name="userModel"> The <see cref="UserModel"/> to add. </param>
         /// <param name="chatRoomId"> The id of the chat room. </param>
-        public void AddUser(UserDto userDto, int chatRoomId)
+        public void AddUser(UserModel userModel, int chatRoomId)
         {
-            _jsonServiceClient.Post<UserDto>($"/ChatRoom/Users/Add/{chatRoomId}", userDto);
+            _jsonServiceClient.Post<UserModel>($"/ChatRoom/Users/Add/{chatRoomId}", userModel);
         }
     }
 }

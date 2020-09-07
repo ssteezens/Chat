@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
-using Shared.Models.Dto;
 using Data.Entities;
 using Data.Models;
+using Shared.Models.Models;
 
 namespace Data.Services.Interfaces
 {
@@ -36,15 +36,15 @@ namespace Data.Services.Interfaces
         /// <summary>
         ///		Update a user.
         /// </summary>
-        /// <param name="userDto"> The <see cref="UserDto"/>. </param>
+        /// <param name="userModel"> The <see cref="UserModel"/>. </param>
         /// <returns> True or false to indicate success or failure. </returns>
-        bool UpdateUser(UserDto userDto);
+        bool UpdateUser(UserModel userModel);
 
         /// <summary>
         ///		Get users matching username search criteria.
         /// </summary>
         /// <param name="username"> The username part to search for. </param>
         /// <returns> Users matching username search criteria. </returns>
-		Task<IEnumerable<UserDto>> GetUsersMatchingUsername(string username);
+		Task<IEnumerable<UserModel>> GetUsersMatchingUsername(string username);
     }
 }

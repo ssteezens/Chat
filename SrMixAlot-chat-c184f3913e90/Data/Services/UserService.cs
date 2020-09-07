@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using Shared.Models.Dto;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -14,6 +13,7 @@ using Data.Services.Interfaces;
 using Data.Entities;
 using Data.Configuration;
 using Data.Models;
+using Shared.Models.Models;
 
 namespace Data.Services
 {
@@ -94,17 +94,17 @@ namespace Data.Services
         /// <summary>
         ///		Update a user.
         /// </summary>
-        /// <param name="userDto"> The <see cref="UserDto"/>. </param>
+        /// <param name="userModel"> The <see cref="UserModel"/>. </param>
         /// <returns> True or false to indicate success or failure. </returns>
-        public bool UpdateUser(UserDto userDto)
+        public bool UpdateUser(UserModel userModel)
         {
-            var user = _context.Users.SingleOrDefault(i => i.UserName == userDto.Username);
+            var user = _context.Users.SingleOrDefault(i => i.UserName == userModel.Username);
 
             if (user == null)
                 return false;
 
-            user.ProfileImageData = userDto.ProfileImageData;
-            user.NickName = userDto.Nickname;
+            user.ProfileImageData = userModel.ProfileImageData;
+            user.NickName = userModel.Nickname;
 
             var returnValue = _context.SaveChanges() > 0;
 
@@ -116,11 +116,11 @@ namespace Data.Services
         /// </summary>
         /// <param name="username"> The username part to search for. </param>
         /// <returns> Users matching username search criteria. </returns>
-        public async Task<IEnumerable<UserDto>> GetUsersMatchingUsername(string username)
+        public async Task<IEnumerable<UserModel>> GetUsersMatchingUsername(string username)
         {
             var users = await _context.Users.Where(i => i.UserName.StartsWith(username)).ToListAsync();
 
-            return _mapper.Map<List<UserDto>>(users);
+            return _mapper.Map<List<UserModel>>(users);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Shared.Models.Dto
+﻿namespace Shared.Models.Models
 {
     /// <summary>
     ///     Defines types of message operations.

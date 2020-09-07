@@ -1,9 +1,9 @@
-﻿namespace Shared.Models.Dto
+﻿namespace Shared.Models.Models
 {
     /// <summary>
-    ///		DTO object for a chat message. 
+    ///		Model for a chat message. 
     /// </summary>
-    public class ChatMessageDto
+    public class ChatMessageModel
     {
 		/// <summary>
         ///		Gets or sets the message's id.

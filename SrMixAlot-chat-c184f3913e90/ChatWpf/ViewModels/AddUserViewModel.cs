@@ -2,11 +2,11 @@
 using ChatWpf.Models;
 using ChatWpf.Services.Data.Interfaces;
 using GalaSoft.MvvmLight.CommandWpf;
-using Shared.Models.Dto;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
+using Shared.Models.Models;
 
 namespace ChatWpf.ViewModels
 {
@@ -57,10 +57,10 @@ namespace ChatWpf.ViewModels
         /// <summary>
         ///     Invite user to room.
         /// </summary>
-        /// <param name="user"> The <see cref="UserDto"/> to invite. </param>
+        /// <param name="user"> The <see cref="UserModel"/> to invite. </param>
         private void AddUser(User user)
         {
-            var userDto = Mapper.Map<UserDto>(user);
+            var userDto = Mapper.Map<UserModel>(user);
 
             _chatRoomDataService.AddUser(userDto, ChatRoomModel.Id);
 

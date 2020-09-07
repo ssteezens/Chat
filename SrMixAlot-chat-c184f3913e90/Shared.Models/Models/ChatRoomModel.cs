@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace Shared.Models.Dto
+namespace Shared.Models.Models
 {
     /// <summary>
-    ///		DTO object for a chat room.
+    ///		Model for a chat room.
     /// </summary>
-    public class ChatRoomDto
+    public class ChatRoomModel
     {
 		/// <summary>
         ///		Gets or sets the room's id.
@@ -20,12 +20,12 @@ namespace Shared.Models.Dto
 		/// <summary>
         ///		Gets or sets the room's messages.
         /// </summary>
-		public IEnumerable<ChatMessageDto> ChatMessages { get; set; }
+		public IEnumerable<ChatMessageModel> ChatMessages { get; set; }
 
 		/// <summary>
         ///		Gets or sets the room's users.
         /// </summary>
-		public IEnumerable<UserDto> Users { get; set; }
+		public IEnumerable<UserModel> Users { get; set; }
 
 		/// <summary>
         ///		Gets or sets type of operation for the dto.

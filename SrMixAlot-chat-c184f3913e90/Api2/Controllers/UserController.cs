@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Models.Dto;
 using System.Threading.Tasks;
+using Shared.Models.Models;
 
 namespace Api.Controllers
 {
@@ -18,13 +18,13 @@ namespace Api.Controllers
         }
 
         [HttpPost("/User/Update")]
-        public IActionResult Update([FromBody] UpdateUserDto updateUserDto)
+        public IActionResult Update([FromBody] UpdateUserModel updateUserModel)
         {
-            var userDto = new UserDto()
+            var userDto = new UserModel()
             {
                 Username = User.Identity.Name,
-                Nickname = updateUserDto.NickName,
-                ProfileImageData = updateUserDto.ProfileImageData
+                Nickname = updateUserModel.NickName,
+                ProfileImageData = updateUserModel.ProfileImageData
             };
             return Ok(_userService.UpdateUser(userDto));
         }

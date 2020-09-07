@@ -5,8 +5,8 @@ using Data.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Models.Dto;
 using System.Collections.Generic;
+using Shared.Models.Models;
 
 namespace Api.Controllers
 {
@@ -41,7 +41,7 @@ namespace Api.Controllers
         public IActionResult GetAll()
 		{
 			var rooms = _chatRoomDataService.GetAll(User.Identity.Name);
-			var roomDtos = _mapper.Map<IEnumerable<ChatRoomDto>>(rooms);
+			var roomDtos = _mapper.Map<IEnumerable<ChatRoomModel>>(rooms);
 			
             return Ok(roomDtos);
         }
@@ -52,7 +52,7 @@ namespace Api.Controllers
         /// <param name="chatRoom"> Chat room to add to the database. </param>
         /// <returns> An Ok or BadRequest. </returns>
 		[HttpPost("/ChatRoom/Add")]
-		public IActionResult Add([FromBody] ChatRoomDto chatRoom)
+		public IActionResult Add([FromBody] ChatRoomModel chatRoom)
 		{
             // todo: validation
 
@@ -68,10 +68,10 @@ namespace Api.Controllers
 		/// <summary>
 		///		Add user to chat room.
 		/// </summary>
-		/// <param name="user"> The <see cref="UserDto"/> to add. </param>
+		/// <param name="user"> The <see cref="UserModel"/> to add. </param>
 		/// <param name="chatRoomId"> The id of the chat room. </param>
 		[HttpPost("/ChatRoom/Users/Add/{chatRoomId}")]
-        public IActionResult AddUser([FromBody] UserDto user, int chatRoomId)
+        public IActionResult AddUser([FromBody] UserModel user, int chatRoomId)
         {
 			_chatRoomDataService.AddUser(user.Username, chatRoomId);
 

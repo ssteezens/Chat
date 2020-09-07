@@ -2,11 +2,11 @@
 using ChatWpf.Services.Data.Interfaces;
 using GalaSoft.MvvmLight.CommandWpf;
 using Microsoft.Win32;
-using Shared.Models.Dto;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using Shared.Models.Models;
 
 namespace ChatWpf.ViewModels
 {
@@ -145,7 +145,7 @@ namespace ChatWpf.ViewModels
         private void SaveProfile()
         {
             // send api call
-            var userDto = new UpdateUserDto()
+            var userDto = new UpdateUserModel()
             {
                 NickName = NickName,
                 ProfileImageData = ProfileImageData

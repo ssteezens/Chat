@@ -5,7 +5,7 @@ using Data.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Models.Dto;
+using Shared.Models.Models;
 
 namespace Api.Controllers
 {
@@ -35,7 +35,7 @@ namespace Api.Controllers
         public IActionResult Add([FromBody] ChatMessage message)
 		{
 			var addedMessage = _chatMessageDataService.Add(message);
-			var messageDto = _mapper.Map<ChatMessageDto>(addedMessage);
+			var messageDto = _mapper.Map<ChatMessageModel>(addedMessage);
 
 			messageDto.OperationType = MessageOperationTypes.Add;
 
@@ -53,7 +53,7 @@ namespace Api.Controllers
         public IActionResult Delete(int id)
         {
             var deletedMessage = _chatMessageDataService.Delete(id);
-			var messageDto = _mapper.Map<ChatMessageDto>(deletedMessage);
+			var messageDto = _mapper.Map<ChatMessageModel>(deletedMessage);
 
 			messageDto.OperationType = MessageOperationTypes.Remove;
 

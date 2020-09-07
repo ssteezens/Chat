@@ -17,7 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Shared.Models.Dto;
+using Shared.Models.Models;
 
 namespace Api
 {
@@ -90,10 +90,10 @@ namespace Api
 
             Mapper.Initialize(config =>
 			{
-				config.CreateMap<User, UserDto>()
+				config.CreateMap<User, UserModel>()
 					.ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.UserName));
-				config.CreateMap<ChatMessage, ChatMessageDto>();
-				config.CreateMap<ChatRoom, ChatRoomDto>()
+				config.CreateMap<ChatMessage, ChatMessageModel>();
+				config.CreateMap<ChatRoom, ChatRoomModel>()
 					.ForMember(dest => dest.Users, opt => opt.MapFrom(src => src.UserRooms.Select(userRoom => userRoom.User)))
 					.ForMember(dest => dest.ChatMessages, opt => opt.MapFrom(src => src.ChatMessages));
 			});

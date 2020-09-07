@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using ChatWpf.Models;
-using Shared.Models.Dto;
+using Shared.Models.Models;
 
 namespace ChatWpf.Services.Data.Interfaces
 {
@@ -30,8 +30,8 @@ namespace ChatWpf.Services.Data.Interfaces
         /// <summary>
         ///     Add a user to a room.
         /// </summary>
-        /// <param name="userDto"> The <see cref="UserDto"/> to add. </param>
+        /// <param name="userModel"> The <see cref="UserModel"/> to add. </param>
         /// <param name="chatRoomId"> The id of the chat room. </param>
-        void AddUser(UserDto userDto, int chatRoomId);
+        void AddUser(UserModel userModel, int chatRoomId);
     }
 }

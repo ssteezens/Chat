@@ -1,9 +1,9 @@
-﻿namespace Shared.Models.Dto
+﻿namespace Shared.Models.Models
 {
     /// <summary>
-    ///		DTO object for a user.
+    ///		Model for a user.
     /// </summary>
-    public class UserDto
+    public class UserModel
     {
         /// <summary>
         ///     The user's id.

@@ -3,7 +3,7 @@ using ChatWpf.Models;
 using ChatWpf.Services.Data.Interfaces;
 using System.Threading.Tasks;
 using ServiceStack;
-using Shared.Models.Dto;
+using Shared.Models.Models;
 
 namespace ChatWpf.Services.Data
 {
@@ -25,14 +25,14 @@ namespace ChatWpf.Services.Data
 		/// <param name="username"> The user's username. </param>
 		/// <param name="password"> The user's password. </param>
 		/// <returns> The authenticated user. </returns>
-		public async Task<UserDto> LoginUser(string username, string password)
+		public async Task<UserModel> LoginUser(string username, string password)
 		{
 			var loginModel = new LoginModel()
 			{
 				Username = username,
 				Password = password
 			};
-			var result = await _jsonClient.PostAsync<UserDto>("/api/account/login", loginModel);
+			var result = await _jsonClient.PostAsync<UserModel>("/api/account/login", loginModel);
 
 			// set bearer token for future requests
 			_jsonClient.BearerToken = result.BearerToken;
@@ -53,11 +53,11 @@ namespace ChatWpf.Services.Data
         /// <summary>
         ///     Updates a user.
         /// </summary>
-        /// <param name="userDto"> The user update model. </param>
+        /// <param name="userModel"> The user update model. </param>
         /// <returns> True or false if the operation was successful. </returns>
-        public bool UpdateUser(UpdateUserDto userDto)
+        public bool UpdateUser(UpdateUserModel userModel)
         {
-            return _jsonClient.Post<bool>("/User/Update", userDto);
+            return _jsonClient.Post<bool>("/User/Update", userModel);
         }
 
         /// <summary>
@@ -65,9 +65,9 @@ namespace ChatWpf.Services.Data
         /// </summary>
         /// <param name="username"> The username to search for. </param>
         /// <returns> Users matching the username search criteria. </returns>
-		public async Task<IEnumerable<UserDto>> GetUsersWithUsername(string username)
+		public async Task<IEnumerable<UserModel>> GetUsersWithUsername(string username)
         {
-            return await _jsonClient.GetAsync<IEnumerable<UserDto>>($"/User/Search?username={username}");
+            return await _jsonClient.GetAsync<IEnumerable<UserModel>>($"/User/Search?username={username}");
         }
     }
 }
