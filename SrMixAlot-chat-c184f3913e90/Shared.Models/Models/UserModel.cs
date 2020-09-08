@@ -25,9 +25,14 @@
         /// </summary>
 		public string ProfileImageData { get; set; }
 
-		/// <summary>
+        /// <summary>
+        ///		The user's email.
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
         ///		Gets or sets the user's JwtBearerToken
         /// </summary>
-		public string BearerToken { get; set; }
+        public string BearerToken { get; set; }
     }
 }

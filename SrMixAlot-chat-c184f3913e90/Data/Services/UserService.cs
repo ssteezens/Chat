@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using Data.Services.Interfaces;
 using Data.Entities;
 using Data.Configuration;
-using Data.Models;
 using Shared.Models.Models;
 
 namespace Data.Services
@@ -54,7 +53,8 @@ namespace Data.Services
         /// <returns> The created user. </returns>
         public async Task<IdentityResult> CreateUserAsync(RegisterModel registerModel)
         {
-            var result = await _userManager.CreateAsync(registerModel.User, registerModel.Password);
+            var userEntity = _mapper.Map<User>(registerModel.User);
+            var result = await _userManager.CreateAsync(userEntity, registerModel.Password);
 
             return result;
         }

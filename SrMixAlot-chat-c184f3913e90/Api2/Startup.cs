@@ -89,7 +89,8 @@ namespace Api
 			services.AddSingleton<IMessageService, MessageService>();
 
             Mapper.Initialize(config =>
-			{
+            {
+                config.CreateMap<UserModel, User>();
 				config.CreateMap<User, UserModel>()
 					.ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.UserName));
 				config.CreateMap<ChatMessage, ChatMessageModel>();

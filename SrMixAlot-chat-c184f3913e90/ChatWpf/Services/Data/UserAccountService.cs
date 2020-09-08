@@ -4,6 +4,8 @@ using ChatWpf.Services.Data.Interfaces;
 using System.Threading.Tasks;
 using ServiceStack;
 using Shared.Models.Models;
+using LoginModel = ChatWpf.Models.LoginModel;
+using RegisterModel = ChatWpf.Models.RegisterModel;
 
 namespace ChatWpf.Services.Data
 {

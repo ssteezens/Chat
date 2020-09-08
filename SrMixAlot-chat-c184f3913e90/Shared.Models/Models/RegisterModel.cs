@@ -1,6 +1,4 @@
-﻿using Data.Entities;
-
-namespace Data.Models
+﻿namespace Shared.Models.Models
 {
 	/// <summary>
     ///		Model for registering a user.
@@ -10,7 +8,7 @@ namespace Data.Models
 		/// <summary>
         ///		User to register.
         /// </summary>
-        public User User { get; set; }
+        public UserModel User { get; set; }
 
 		/// <summary>
         ///		Password for user.

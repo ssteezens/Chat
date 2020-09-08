@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using Data.Configuration;
 using Data.Entities;
-using Data.Models;
 using Data.Services.Interfaces;
 using Shared.Models.Models;
 

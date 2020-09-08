@@ -2,6 +2,7 @@
 using ChatWpf.Models;
 using System.Threading.Tasks;
 using Shared.Models.Models;
+using RegisterModel = ChatWpf.Models.RegisterModel;
 
 namespace ChatWpf.Services.Data.Interfaces
 {

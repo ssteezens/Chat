@@ -1,4 +1,4 @@
-﻿namespace Data.Models
+﻿namespace Shared.Models.Models
 {
     /// <summary>
     ///     Model used for logging in.

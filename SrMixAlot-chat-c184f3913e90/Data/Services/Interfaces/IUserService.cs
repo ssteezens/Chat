@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using Data.Entities;
-using Data.Models;
 using Shared.Models.Models;
 
 namespace Data.Services.Interfaces
