@@ -223,7 +223,7 @@ namespace ChatWpf.ViewModels
 			foreach (var room in chatRooms)
 			{
 				// bind queue to chat room's exchange
-				_queueService.BindToExchange(ClientQueueName, $"Chat.Room.{room.Id}", string.Empty);
+				_queueService.BindToExchange(ClientQueueName, $"Chat.Room.RoomId", room.Id.ToString());
 				// create ChatRoomViewModel
 				var viewmodel = new ChatRoomViewModel(room.Id, SimpleIoc.Default.GetInstance<IChatMessageDataService>());
 				// map chat room into ChatRoomViewModel

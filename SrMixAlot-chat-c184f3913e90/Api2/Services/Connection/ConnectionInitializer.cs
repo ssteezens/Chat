@@ -1,5 +1,4 @@
-﻿using Data.Services.Interfaces;
-using RabbitMQ.Client;
+﻿using RabbitMQ.Client;
 
 namespace Api.Services.Connection
 {
@@ -8,12 +7,10 @@ namespace Api.Services.Connection
     /// </summary>
     public class ConnectionInitializer
     {
-		private readonly IChatRoomDataService _chatRoomDataService;
         private readonly IConnectionFactory _connectionFactory;
 
-        public ConnectionInitializer(IChatRoomDataService chatRoomDataService, IConnectionFactory connectionFactory)
+        public ConnectionInitializer(IConnectionFactory connectionFactory)
 		{
-			_chatRoomDataService = chatRoomDataService;
             _connectionFactory = connectionFactory;
         }
 
@@ -23,20 +20,10 @@ namespace Api.Services.Connection
         /// </summary>
 		public void Initialize()
 		{
-			var rooms = _chatRoomDataService.GetAll();
-
 			using (var channel = _connectionFactory.CreateConnection().CreateModel())
 			{
                 // ensure RabbitMq exchange is created
                 channel.ExchangeDeclare("Chat.Room.RoomId", "fanout", true, false, null);
-
-
-                // todo: remove this when client is properly configured with routing key
-                foreach (var room in rooms)
-				{
-					// ensure an exchange is created for each room
-					channel.ExchangeDeclare($"Chat.Room.{room.Id}", "fanout", true,  false, null);
-				}
 			}
         }
     }

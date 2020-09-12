@@ -39,7 +39,7 @@ namespace Api.Controllers
 
 			messageDto.OperationType = MessageOperationTypes.Add;
 
-            _messageService.SendMessageToExchange($"Chat.Room.{message.ChatRoomId}", messageDto);
+            _messageService.SendMessageToExchange("Chat.Room.RoomId", messageDto, messageDto.ChatRoomId.ToString());
 
 			return Ok(messageDto);
 		}
@@ -57,7 +57,7 @@ namespace Api.Controllers
 
 			messageDto.OperationType = MessageOperationTypes.Remove;
 
-			_messageService.SendMessageToExchange($"Chat.Room.{messageDto.ChatRoomId}", messageDto);
+			_messageService.SendMessageToExchange("Chat.Room.RoomId", messageDto, messageDto.ChatRoomId.ToString());
 
             return Ok();
         }

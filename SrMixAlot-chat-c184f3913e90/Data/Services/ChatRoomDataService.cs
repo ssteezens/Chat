@@ -109,7 +109,7 @@ namespace Data.Services
 				UserId = user.Id
             };
 
-			room.UserRooms.Add(userRoom);
+            _chatContext.ChatUserRooms.Add(userRoom);
 
             _chatContext.SaveChanges();
         }

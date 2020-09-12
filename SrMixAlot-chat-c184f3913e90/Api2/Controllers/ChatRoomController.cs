@@ -59,9 +59,6 @@ namespace Api.Controllers
             // create chat room
 			var room = _chatRoomDataService.Add(chatRoom);
 
-            // create rabbitmq queue for room
-            _exchangeService.CreateExchange($"Chat.Room.{room.Id}");
-			
 			return Ok(room);
 		}
 

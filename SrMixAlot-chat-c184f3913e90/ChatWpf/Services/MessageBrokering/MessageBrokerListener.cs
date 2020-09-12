@@ -15,7 +15,6 @@ namespace ChatWpf.Services.MessageBrokering
     /// </summary>
     public class MessageBrokerListener : IDisposable
     {
-
 		private IConnectionFactory _connectionFactory;
 		private readonly IConnection _connection;
 		private readonly IModel _model;
@@ -95,7 +94,8 @@ namespace ChatWpf.Services.MessageBrokering
         #endregion
 
         public void Dispose()
-		{
+        {
+            Enabled = false;
 			_model?.Dispose();
 			_connection?.Dispose();
 
