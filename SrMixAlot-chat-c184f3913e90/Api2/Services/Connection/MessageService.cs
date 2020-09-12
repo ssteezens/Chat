@@ -11,33 +11,22 @@ namespace Api.Services.Connection
     /// </summary>
     public class MessageService : IMessageService
 	{
-		private const string HostName = "localhost";
-		private const string UserName = "guest";
-		private const string Password = "guest";
-		
-		private readonly ConnectionFactory _connectionFactory;
+		private readonly IConnectionFactory _connectionFactory;
         private readonly IModel _channel;
 
-        public MessageService()
-		{
-			// todo: inherit connection from shared object
-			// todo: get connection settings from configuration
-			_connectionFactory = new ConnectionFactory
-			{
-				HostName = HostName,
-				UserName = UserName,
-				Password = Password
-			};
-
+        public MessageService(IConnectionFactory connectionFactory)
+        {
+            _connectionFactory = connectionFactory;
 			_channel = _connectionFactory.CreateConnection().CreateModel();
         }
 
-		/// <summary>
-		///		Send a message to an exchange.
-		/// </summary>
-		/// <param name="exchangeName"> Name of exchange to send to. </param>
-		/// <param name="message"> Message to send. </param>
-        public void SendMessageToExchange(string exchangeName, string message)
+        ///  <summary>
+        /// 		Send a message to an exchange.
+        ///  </summary>
+        ///  <param name="exchangeName"> Name of exchange to send to. </param>
+        ///  <param name="message"> Message to send. </param>
+        ///  <param name="routingKey"> The routing key for the message. </param>
+        public void SendMessageToExchange(string exchangeName, string message, string routingKey = "")
 		{
 			var properties = _channel.CreateBasicProperties();
 			var messageBuffer = Encoding.Default.GetBytes(message);
@@ -50,7 +39,8 @@ namespace Api.Services.Connection
 		///  </summary>
 		///  <param name="exchangeName"> Name of exchange to send to. </param>
 		///  <param name="message"> Message to send. </param>
-		public void SendMessageToExchange(string exchangeName, object message)
+		///  <param name="routingKey"> The routing key for the message. </param>
+		public void SendMessageToExchange(string exchangeName, object message, string routingKey = "")
 		{
 			var properties = _channel.CreateBasicProperties();
 			var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };

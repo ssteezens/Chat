@@ -8,22 +8,13 @@ namespace Api.Services.Connection
     /// </summary>
     public class ConnectionInitializer
     {
-		private const string HostName = "localhost";
-		private const string UserName = "guest";
-		private const string Password = "guest";
-
 		private readonly IChatRoomDataService _chatRoomDataService;
-        private readonly ConnectionFactory _connectionFactory;
+        private readonly IConnectionFactory _connectionFactory;
 
-        public ConnectionInitializer(IChatRoomDataService chatRoomDataService)
+        public ConnectionInitializer(IChatRoomDataService chatRoomDataService, IConnectionFactory connectionFactory)
 		{
 			_chatRoomDataService = chatRoomDataService;
-			_connectionFactory = new ConnectionFactory
-			{
-				HostName = HostName,
-				UserName = UserName,
-				Password = Password
-			};
+            _connectionFactory = connectionFactory;
         }
 
 		/// <summary>

@@ -55,7 +55,7 @@ namespace Api
         {
             var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("hosting.json", optional: true)
+                .AddJsonFile("appSettings.json", optional: false)
                 .Build();
 
             var host = new WebHostBuilder()

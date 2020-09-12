@@ -8,23 +8,13 @@ namespace Api.Services.Connection
     /// </summary>
     public class ExchangeService : IExchangeService
     {
-		private const string HostName = "localhost";
-		private const string UserName = "guest";
-		private const string Password = "guest";
-
-		private readonly ConnectionFactory _connectionFactory;
+        private readonly IConnectionFactory _connectionFactory;
 		private readonly IModel _channel;
 
-		public ExchangeService()
-		{
-			_connectionFactory = new ConnectionFactory
-			{
-				HostName = HostName,
-				UserName = UserName,
-				Password = Password
-			};
-
-			_channel = _connectionFactory.CreateConnection().CreateModel();
+		public ExchangeService(IConnectionFactory connectionFactory)
+        {
+            _connectionFactory = connectionFactory;
+            _channel = _connectionFactory.CreateConnection().CreateModel();
         }
 
 		/// <summary>

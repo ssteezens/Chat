@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Text;
-using Api.Services.Connection;
+﻿using Api.Services.Connection;
 using Api.Services.Connection.Interfaces;
 using AutoMapper;
 using Data;
@@ -17,7 +15,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using RabbitMQ.Client;
 using Shared.Models.Models;
+using System.Linq;
+using System.Text;
 
 namespace Api
 {
@@ -83,10 +84,20 @@ namespace Api
 			services.AddScoped<IChatRoomDataService, ChatRoomDataService>();
 			services.AddScoped<IChatMessageDataService, ChatMessageDataService>();
 			services.AddScoped<IUserService, UserService>();
-			
-			// add singleton services
-			services.AddSingleton<IExchangeService, ExchangeService>();
+
+            var connectionOptions = Configuration.GetSection(ConnectionOptions.Connection)
+                .Get<ConnectionOptions>();
+
+            // add singleton services
+            services.AddSingleton<IExchangeService, ExchangeService>();
 			services.AddSingleton<IMessageService, MessageService>();
+            services.AddSingleton<IConnectionFactory>(new ConnectionFactory
+                {
+                    HostName = connectionOptions.HostName, 
+                    UserName = connectionOptions.UserName, 
+                    Password = connectionOptions.Password
+                }
+            );
 
             Mapper.Initialize(config =>
             {
