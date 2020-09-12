@@ -4,15 +4,16 @@ using ChatWpf.Services.Connection.Interfaces;
 using ChatWpf.Services.Data.Interfaces;
 using ChatWpf.Services.MessageBrokering;
 using ChatWpf.Services.UI.Interfaces;
+using CommonServiceLocator;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
+using RabbitMQ.Client;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Windows.Controls;
-using CommonServiceLocator;
 
 namespace ChatWpf.ViewModels
 {
@@ -201,7 +202,11 @@ namespace ChatWpf.ViewModels
 			_queueService.CreateQueue(ClientQueueName);
 
             // message broker listener
-            MessageBrokerListener = new MessageBrokerListener() { Enabled = true, QueueName = ClientQueueName };
+            MessageBrokerListener = new MessageBrokerListener(SimpleIoc.Default.GetInstance<IConnectionFactory>()) 
+            { 
+                Enabled = true, 
+                QueueName = ClientQueueName
+            };
 
 			// start the message broker listener on its own thread
 			new Thread(() => MessageBrokerListener.Start()).Start();

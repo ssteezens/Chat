@@ -1,40 +1,29 @@
-﻿using System;
-using System.Configuration;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using ChatWpf.Models;
 using GalaSoft.MvvmLight.Messaging;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.MessagePatterns;
 using Shared.Models.Models;
+using System;
+using System.Text;
 
 namespace ChatWpf.Services.MessageBrokering
 {
-	/// <summary>
+    /// <summary>
     ///		Listener for messages sent by message broker.
     /// </summary>
     public class MessageBrokerListener : IDisposable
     {
 
-		private ConnectionFactory _connectionFactory;
+		private IConnectionFactory _connectionFactory;
 		private readonly IConnection _connection;
 		private readonly IModel _model;
 		private Subscription _subscription;
 		
-        public MessageBrokerListener()
+        public MessageBrokerListener(IConnectionFactory connectionFactory)
         {
-            var hostname = ConfigurationManager.AppSettings["json_listener_host_name"];
-            var username = ConfigurationManager.AppSettings["json_listener_username"];
-            var password = ConfigurationManager.AppSettings["json_listener_password"];
-
-            _connectionFactory = new ConnectionFactory
-            {
-                HostName = hostname,
-                UserName = username,
-                Password = password
-            };
-
+            _connectionFactory = connectionFactory;
             _connection = _connectionFactory.CreateConnection();
             _model = _connection.CreateModel();
             _model.BasicQos(0, 1, false);

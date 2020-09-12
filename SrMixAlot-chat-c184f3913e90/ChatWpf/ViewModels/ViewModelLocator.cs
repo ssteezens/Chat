@@ -20,6 +20,7 @@ using ChatWpf.Services.UI;
 using ChatWpf.Services.UI.Interfaces;
 using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
+using RabbitMQ.Client;
 using ServiceStack;
 using System.Configuration;
 using System.Net;
@@ -46,6 +47,14 @@ namespace ChatWpf.ViewModels
 			// TODO: wire this up using middleware
 			ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
 
+            var connectionFactory = new ConnectionFactory()
+            {
+                HostName = ConfigurationManager.AppSettings["json_listener_host_name"],
+                UserName = ConfigurationManager.AppSettings["json_listener_username"],
+                Password = ConfigurationManager.AppSettings["json_listener_password"]
+            };
+
+            SimpleIoc.Default.Register<IConnectionFactory>(() => connectionFactory);
             SimpleIoc.Default.Register<IJsonServiceClient>(() => jsonClient);
 			SimpleIoc.Default.Register<IUserAccountService, UserAccountService>();
 			SimpleIoc.Default.Register<IChatMessageDataService, ChatMessageDataService>();

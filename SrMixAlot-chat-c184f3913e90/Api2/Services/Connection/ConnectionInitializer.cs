@@ -27,7 +27,12 @@ namespace Api.Services.Connection
 
 			using (var channel = _connectionFactory.CreateConnection().CreateModel())
 			{
-				foreach (var room in rooms)
+                // ensure RabbitMq exchange is created
+                channel.ExchangeDeclare("Chat.Room.RoomId", "fanout", true, false, null);
+
+
+                // todo: remove this when client is properly configured with routing key
+                foreach (var room in rooms)
 				{
 					// ensure an exchange is created for each room
 					channel.ExchangeDeclare($"Chat.Room.{room.Id}", "fanout", true,  false, null);

@@ -8,22 +8,12 @@ namespace ChatWpf.Services.Connection
     /// </summary>
     public class QueueService : IQueueService
 	{
-		private const string HostName = "localhost";
-		private const string UserName = "guest";
-		private const string Password = "guest";
-
-		private readonly ConnectionFactory _connectionFactory;
+		private readonly IConnectionFactory _connectionFactory;
 		private readonly IModel _channel;
 
-		public QueueService()
-		{
-			_connectionFactory = new ConnectionFactory
-			{
-				HostName = HostName,
-				UserName = UserName,
-				Password = Password
-			};
-
+		public QueueService(IConnectionFactory connectionFactory)
+        {
+            _connectionFactory = connectionFactory;
 			_channel = _connectionFactory.CreateConnection().CreateModel();
 		}
 
@@ -33,7 +23,6 @@ namespace ChatWpf.Services.Connection
 		/// <param name="queueName"> Name of queue. </param>
 		public void CreateQueue(string queueName)
 		{
-			// todo: error handling
 			_channel.QueueDeclare(queueName, true, false, true, null);
 		}
 
