@@ -62,10 +62,10 @@ namespace ChatWpf.ViewModels
         {
             var userDto = Mapper.Map<UserModel>(user);
 
-            _chatRoomDataService.AddUser(userDto, ChatRoomModel.Id);
+            _chatRoomDataService.AddUser(userDto, ChatRoomId);
 
             // send message that a user has been added
-            MessengerInstance.Send(new NotificationMessage<User>(user, "Add"));
+            MessengerInstance.Send(new NotificationMessage<User>(user, "Add"), ChatRoomId);
         }
 
         /// <summary>
@@ -89,6 +89,6 @@ namespace ChatWpf.ViewModels
         /// <summary>
         ///     The room to add users to.
         /// </summary>
-        public ChatRoom ChatRoomModel { get; set; }
+        public int ChatRoomId { get; set; }
     }
 }

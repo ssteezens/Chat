@@ -13,14 +13,14 @@ namespace ChatWpf.Services.MessageBrokering
     /// <summary>
     ///		Listener for messages sent by message broker.
     /// </summary>
-    public class MessageBrokerListener : IDisposable
+    public class JsonQueueListener : IDisposable
     {
 		private IConnectionFactory _connectionFactory;
 		private readonly IConnection _connection;
 		private readonly IModel _model;
 		private Subscription _subscription;
 		
-        public MessageBrokerListener(IConnectionFactory connectionFactory)
+        public JsonQueueListener(IConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
             _connection = _connectionFactory.CreateConnection();
@@ -61,13 +61,13 @@ namespace ChatWpf.Services.MessageBrokering
 					{
 						var chatMessage = Mapper.Map<ChatMessage>(chatMessageDto);
 						// send chat message to view model
-						Messenger.Default.Send(new NotificationMessage<ChatMessage>(chatMessage, chatMessageDto.OperationType.ToString()));
+						Messenger.Default.Send(new NotificationMessage<ChatMessage>(chatMessage, chatMessageDto.OperationType.ToString()), chatMessage.ChatRoomId);
 						break;
 					}
                     case ChatRoomModel chatRoomDto:
 					{
 						var chatRoom = Mapper.Map<ChatRoom>(chatRoomDto);
-						Messenger.Default.Send(new NotificationMessage<ChatRoom>(chatRoom, chatRoomDto.OperationType.ToString()));
+                        Messenger.Default.Send(new NotificationMessage<ChatRoom>(chatRoom, chatRoomDto.OperationType.ToString()));
 						break;
 					}
                     default:

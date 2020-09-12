@@ -7,6 +7,8 @@ using GalaSoft.MvvmLight.Threading;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using ChatWpf.Services.MessageBrokering;
+using RabbitMQ.Client;
 
 namespace ChatWpf.ViewModels
 {
@@ -34,13 +36,15 @@ namespace ChatWpf.ViewModels
 			ToggleAddUserControlCommand = new RelayCommand(ToggleAddUserControl);
 
 			// view models
-            AddUserViewModel = SimpleIoc.Default.GetInstance<AddUserViewModel>();
-            AddUserViewModel.ChatRoomModel = ChatRoomModel;
+            AddUserViewModel = new AddUserViewModel(SimpleIoc.Default.GetInstance<IUserAccountService>(), SimpleIoc.Default.GetInstance<IChatRoomDataService>())
+            {
+				ChatRoomId = id
+            };
 
             // view model message listeners
-			MessengerInstance.Register<NotificationMessage<ChatMessage>>(this, action => HandleChatMessageNotification(action.Content, action.Notification));
-			MessengerInstance.Register<NotificationMessage<User>>(this, action => HandleUserNotification(action.Content, action.Notification));
-		}
+			MessengerInstance.Register<NotificationMessage<ChatMessage>>(this, id, action => HandleChatMessageNotification(action.Content, action.Notification));
+			MessengerInstance.Register<NotificationMessage<User>>(this, id, action => HandleUserNotification(action.Content, action.Notification));
+        }
 
         #region Messenger Handlers
 
@@ -251,12 +255,7 @@ namespace ChatWpf.ViewModels
         public ChatRoom ChatRoomModel
         {
             get => _chatRoomModel;
-            set
-            {
-                Set(ref _chatRoomModel, value, nameof(ChatRoomModel));
-
-                AddUserViewModel.ChatRoomModel = ChatRoomModel;
-            }
+            set => Set(ref _chatRoomModel, value, nameof(ChatRoomModel));
         }
 
         #endregion

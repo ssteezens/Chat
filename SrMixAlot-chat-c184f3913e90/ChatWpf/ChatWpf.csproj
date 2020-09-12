@@ -151,7 +151,7 @@
     <Compile Include="Services\Data\Interfaces\IUserAccountService.cs" />
     <Compile Include="Services\Data\Interfaces\IChatMessageDataService.cs" />
     <Compile Include="Services\Data\Interfaces\IChatRoomDataService.cs" />
-    <Compile Include="Services\MessageBrokering\MessageBrokerListener.cs" />
+    <Compile Include="Services\MessageBrokering\JsonQueueListener.cs" />
     <Compile Include="Services\UI\BindingProxy.cs" />
     <Compile Include="Services\UI\Interfaces\INavigationService.cs" />
     <Compile Include="Services\UI\NavigationService.cs" />

@@ -73,7 +73,7 @@ namespace ChatWpf.ViewModels
 		/// <summary>
         ///		Gets or sets the message broker listener.
         /// </summary>
-		private MessageBrokerListener MessageBrokerListener { get; set; }
+		private JsonQueueListener JsonQueueListener { get; set; }
 
         /// <summary>
         ///     Show or hide the user profile control.
@@ -141,7 +141,7 @@ namespace ChatWpf.ViewModels
                     // send chat room to api
                     room = _chatRoomDataService.AddChatRoom(room);
 					// bind queue to chat room's exchange
-					_queueService.BindToExchange(ClientQueueName, $"Chat.Room.{room.Id}", string.Empty);
+					_queueService.BindToExchange(ClientQueueName, "Chat.Room.RoomId", room.Id.ToString());
                     // map to view model
                     var viewmodel = new ChatRoomViewModel(room.Id, SimpleIoc.Default.GetInstance<IChatMessageDataService>());
                     Mapper.Map(room, viewmodel);
@@ -202,14 +202,14 @@ namespace ChatWpf.ViewModels
 			_queueService.CreateQueue(ClientQueueName);
 
             // message broker listener
-            MessageBrokerListener = new MessageBrokerListener(SimpleIoc.Default.GetInstance<IConnectionFactory>()) 
+            JsonQueueListener = new JsonQueueListener(SimpleIoc.Default.GetInstance<IConnectionFactory>()) 
             { 
                 Enabled = true, 
                 QueueName = ClientQueueName
             };
 
 			// start the message broker listener on its own thread
-			new Thread(() => MessageBrokerListener.Start()).Start();
+			new Thread(() => JsonQueueListener.Start()).Start();
 		}
 		
         /// <summary>
@@ -223,7 +223,7 @@ namespace ChatWpf.ViewModels
 			foreach (var room in chatRooms)
 			{
 				// bind queue to chat room's exchange
-				_queueService.BindToExchange(ClientQueueName, $"Chat.Room.RoomId", room.Id.ToString());
+				_queueService.BindToExchange(ClientQueueName, "Chat.Room.RoomId", room.Id.ToString());
 				// create ChatRoomViewModel
 				var viewmodel = new ChatRoomViewModel(room.Id, SimpleIoc.Default.GetInstance<IChatMessageDataService>());
 				// map chat room into ChatRoomViewModel
