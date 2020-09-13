@@ -6,13 +6,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:ChatWpf.Controls"
              xmlns:models="clr-namespace:ChatWpf.Models"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
             <!-- Chat Message List Item -->
             <DataTemplate x:Key="ChatMessageListItemTemplate">
-                <Grid HorizontalAlignment="Stretch" x:Name="ChatMessageGrid">
+                <Grid HorizontalAlignment="Stretch" 
+                      x:Name="ChatMessageGrid">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -55,7 +57,7 @@
                                 HorizontalAlignment="Stretch"
                                 Visibility="{Binding IsSelected, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                         <!-- Edit Button -->
-                        <Button Margin="4,0"
+                        <Button Margin="4"
                                 BorderThickness="0"
                                 Padding="0"
                                 Background="Transparent">
@@ -66,6 +68,7 @@
                         <!-- Info Button -->
                         <Button BorderThickness="0"
                                 Padding="0"
+                                Margin="4"
                                 Background="Transparent">
                             <TextBlock Text="Info"
                                        FontSize="10" />
@@ -76,6 +79,7 @@
                                 Padding="0"
                                 Background="Transparent"
                                 HorizontalAlignment="Right"
+                                Margin="4"
                                 Command="{Binding DataContext.DeleteMessageCommand, Source={x:Reference Name=ChatRoomUserControl}}"
                                 CommandParameter="{Binding}">
                             <TextBlock Text="Delete"
@@ -136,57 +140,37 @@
                       SelectedItem="{Binding SelectedChatMessage}"
                       ItemTemplate="{StaticResource ChatMessageListItemTemplate}"
                       ItemsSource="{Binding ChatMessages, Mode=OneWay}">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        <Setter Property="Margin" Value="2"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
             </ListView>
-
-            <!-- User List -->
-            <ListView Grid.Column="1"
-                      Margin="0,0,2,0"
-                      VerticalAlignment="Stretch"
-                      HorizontalAlignment="Stretch"
-                      Width="{Binding ElementName=SendButton, Path=ActualWidth}"
-                      ItemTemplate="{StaticResource UserListItemTemplate}"
-                      ItemsSource="{Binding Users}" />
-
-            <!-- Add User Button -->
-            <Button Grid.Column="1"
-                    VerticalAlignment="Bottom"
-                    Margin="0,0,2,0"
-                    BorderThickness="1,1,1,1"
-                    Command="{Binding ToggleAddUserControlCommand}">
-                Add User
-            </Button>
         </Grid>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1"
+              TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <!-- Create chat message -->
-            <TextBox Margin="0,8"
+            <TextBox Margin="8,8,4,8"
                      TextWrapping="Wrap"
-                     BorderBrush="Black"
-                     BorderThickness="1"
                      x:Name="UserTextInput"
+                     Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                      Text="{Binding UserText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <!-- Send button -->
-            <Button Grid.Column="1" 
+            <Button Grid.Column="1"
                     x:Name="SendButton"
-                    Margin="4,8,2,8"
-                    Padding="20"
+                    Margin="4"
+                    Padding="0"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     IsDefault="True"
+                    Width="50"
+                    Height="{Binding ElementName=UserTextInput, Path=ActualHeight}"
                     Command="{Binding SendMessageCommand}"
-                    IsEnabled="{Binding UserText, Mode=OneWay,Converter={StaticResource StringLengthToEnabledConverter}}">
-                Send
+                    ToolTip="Send">
+                <iconPacks:PackIconMaterial Kind="Send" 
+                                            Width="14" 
+                                            Height="14" />
             </Button>
         </Grid>
     </Grid>

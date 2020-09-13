@@ -4,6 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:models="clr-namespace:ChatWpf.Models"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{Binding UserProfileVm, Source={StaticResource Locator}}">
@@ -27,8 +28,11 @@
                     <!-- Close Button -->
                     <Button HorizontalAlignment="Right"
                             VerticalAlignment="Top"
-                            Command="{Binding GoBackCommand}"
-                            Style="{StaticResource CircleCancelButtonStyle}"/>
+                            Command="{Binding GoBackCommand}">
+                        <iconPacks:PackIconMaterial Kind="Close" 
+                                                    Width="24"
+                                                    Height="24"/>
+                    </Button>
                 </Grid>
                 
 
@@ -60,7 +64,8 @@
                 </Grid>
 
                 <!-- Profile Image Preview -->
-                <Image Source="{Binding ProfileImageBytes}" />
+                <Image Source="{Binding ProfileImageBytes}"
+                       Stretch="UniformToFill"/>
             </StackPanel>
 
             <!-- Save Button -->
