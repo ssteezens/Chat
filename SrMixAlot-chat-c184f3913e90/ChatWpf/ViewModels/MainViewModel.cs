@@ -181,6 +181,9 @@ namespace ChatWpf.ViewModels
             AddChatRoomViewModel.IsOpen = !AddChatRoomViewModel.IsOpen;
         }
 
+        /// <summary>
+        ///     Show the user profile control.
+        /// </summary>
         private void ShowUserProfileControl()
         {
             var userProfileViewModel = ServiceLocator.Current.GetInstance<UserProfileViewModel>();

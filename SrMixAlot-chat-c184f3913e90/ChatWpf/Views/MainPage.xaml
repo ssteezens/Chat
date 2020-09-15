@@ -162,7 +162,8 @@
         <materialDesign:Card Margin="4"
                              Grid.Column="1"
                              Panel.ZIndex="1000"
-                             Visibility="{Binding UserProfileControlIsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                             DataContext="{Binding UserProfileVm, Source={StaticResource Locator}}"
+                             Visibility="{Binding WindowIsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
             <controls:UserProfileControl />
         </materialDesign:Card>
     </Grid>
