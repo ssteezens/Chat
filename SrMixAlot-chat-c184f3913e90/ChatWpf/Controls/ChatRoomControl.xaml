@@ -121,7 +121,6 @@
                                            IsHitTestVisible="True"
                                            Width="240"
                                            Height="300"
-                                           Background="White"
                                            Panel.ZIndex="100"/>
         </controls:CenteredPopupControl>
 

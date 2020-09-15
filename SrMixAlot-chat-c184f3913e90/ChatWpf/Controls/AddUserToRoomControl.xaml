@@ -6,48 +6,38 @@
              xmlns:local="clr-namespace:ChatWpf.Controls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:command="http://www.galasoft.ch/mvvmlight"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Visibility="{Binding ControlIsOpen, Converter={StaticResource BoolToVisibilityConverter}}">
-    <Border BorderThickness="1"
-            Background="White"
-            BorderBrush="Black">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
 
-            <Border Background="#333333"
-                    Grid.ColumnSpan="2">
-                <TextBlock Text="Add User"
-                           Foreground="White"/>
-            </Border>
+    <materialDesign:Card Padding="4"
+                         materialDesign:ShadowAssist.ShadowDepth="Depth3">
+        <Border TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
+            <StackPanel>
+                <!-- Header -->
+                <TextBlock Text="Add User" 
+                           Style="{DynamicResource MaterialDesignSubtitle2TextBlock}"/>
 
-            <StackPanel Grid.Row="1"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="2">
-                <Label Content="Username:"/>
+                <Separator Style="{DynamicResource MaterialDesignLightSeparator}" />
+
+                <TextBlock Text="Username:"
+                           Style="{DynamicResource MaterialDesignBody2TextBlock}"/>
 
                 <!-- Username search text box -->
-                <TextBox x:Name="UsernameTextBox" 
-                         Width="200" 
-                         Margin="4">
+                <TextBox x:Name="UsernameTextBox"
+                         Margin="10">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="TextChanged">
                             <command:EventToCommand Command="{Binding SearchForUsersCommand}" 
-                                                    CommandParameter="{Binding Text, ElementName=UsernameTextBox}" />
+                                                CommandParameter="{Binding Text, ElementName=UsernameTextBox}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </TextBox>
 
                 <!-- User Results -->
                 <ListView ItemsSource="{Binding UserResults}"
-                          Margin="4"
+                          Margin="4,10,4,4"
                           BorderThickness="0"
                           x:Name="UserResultListView">
                     <ListView.ItemTemplate>
@@ -62,19 +52,20 @@
                                            HorizontalAlignment="Stretch"
                                            FontSize="14"
                                            VerticalAlignment="Center" />
-                                
+
                                 <Button Grid.Column="1"
                                         HorizontalAlignment="Right"
-                                        Padding="0"
+                                        Padding="4"
+                                        Content="Add"
+                                        Margin="4"
                                         Command="{Binding DataContext.AddUserCommand, ElementName=UserResultListView}"
                                         CommandParameter="{Binding}">
-                                    Add
                                 </Button>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </StackPanel>
-        </Grid>
-    </Border>
+        </Border>
+    </materialDesign:Card>
 </UserControl>

@@ -258,6 +258,11 @@ namespace ChatWpf.ViewModels
             set => Set(ref _chatRoomModel, value, nameof(ChatRoomModel));
         }
 
+		/// <summary>
+		///		Text to display the number of users.
+		/// </summary>
+        public string UserCountText => $"{Users.Count} Users";
+
         #endregion
     }
 }

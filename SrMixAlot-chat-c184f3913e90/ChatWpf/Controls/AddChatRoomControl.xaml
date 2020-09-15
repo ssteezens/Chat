@@ -4,38 +4,39 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Visibility="{Binding IsOpen, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
 
-    <Border BorderBrush="Black"
-            BorderThickness="1">
-        <StackPanel Background="White">
+    <materialDesign:Card Padding="4">
+        <Border TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
+            <StackPanel>
 
-            <Border Background="#333333">
-                <TextBlock Text="Add Room"
-                           Foreground="White"/>
-            </Border>
+                <TextBlock Text="Add Room" Style="{DynamicResource MaterialDesignSubtitle2TextBlock}"/>
 
-            <!-- Room Name Label -->
-            <TextBlock Margin="4" 
-                       Text="Room Name: "/>
+                <Separator Style="{DynamicResource MaterialDesignLightSeparator}" />
 
-            <!-- Room Name -->
-            <TextBox Margin="4"  
-                     Text="{Binding ChatRoomModel.DisplayName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <!-- Room Name Label -->
+                <TextBlock Margin="4" 
+                           Text="Room Name: "/>
 
-            <!-- Submit button -->
-            <Button Margin="4" 
-                    Content="Submit"
-                    IsDefault="True"
-                    HorizontalAlignment="Right">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding SubmitCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-        </StackPanel>
-    </Border>
+                <!-- Room Name -->
+                <TextBox Margin="4"  
+                         Text="{Binding ChatRoomModel.DisplayName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <!-- Submit button -->
+                <Button Margin="4" 
+                        Content="Submit"
+                        IsDefault="True"
+                        HorizontalAlignment="Right">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding SubmitCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
+        </Border>
+    </materialDesign:Card>
 </UserControl>
