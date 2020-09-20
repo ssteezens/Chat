@@ -36,7 +36,7 @@ namespace ChatWpf.ViewModels
 			
 			// commands
             SendMessageCommand = new RelayCommand(SendMessage, () => !string.IsNullOrEmpty(UserText));
-			DeleteMessageCommand = new RelayCommand<ChatMessage>(DeleteMessage);
+			DeleteMessageCommand = new RelayCommand<ChatMessage>(DeleteMessage, (messageToDelete) => messageToDelete?.User?.Id == UserInstance.Current?.Id);
 			ToggleAddUserControlCommand = new RelayCommand(ToggleAddUserControl);
             DeleteChatRoomCommand = new RelayCommand(DeleteChatRoom);
 

@@ -1,5 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 
@@ -16,7 +16,7 @@ namespace ChatWpf.Models
 
         public ChatMessage()
         {
-            SetEditableCommand = new RelayCommand(SetEditable);
+            SetEditableCommand = new RelayCommand(SetEditable, () => UserInstance.Current.Id == User.Id);
             SubmitEditCommand = new RelayCommand(SubmitEdit);
         }
 
