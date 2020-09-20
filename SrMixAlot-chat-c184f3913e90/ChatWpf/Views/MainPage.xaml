@@ -112,11 +112,11 @@
 
                 <!-- Chat room toolbar -->
                 <Border Grid.Row="2"
-                        BorderBrush="Black"
                         Margin="4,4,4,4">
                     <StackPanel>
                         <!-- Add Button -->
                         <Button Margin="0"
+                                Height="25"
                                 HorizontalAlignment="Right">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
