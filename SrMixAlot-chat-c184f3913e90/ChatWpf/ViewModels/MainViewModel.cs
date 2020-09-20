@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Windows.Controls;
+using GalaSoft.MvvmLight.Threading;
 
 namespace ChatWpf.ViewModels
 {
@@ -34,6 +35,8 @@ namespace ChatWpf.ViewModels
 
             ToggleAddChatRoomControlVisibilityCommand = new RelayCommand(ToggleAddChatRoomVisibility, true);
             ShowUserProfileCommand = new RelayCommand(ShowUserProfileControl);
+
+            AddChatRoomViewModel = new AddChatRoomViewModel(chatRoomDataService);
             
             MessengerInstance.Register<NotificationMessage<string>>(this, action => HandleStringMessage(action.Notification));
 			MessengerInstance.Register<NotificationMessage<ChatRoom>>(this, action => HandleChatRoomMessage(action.Content, action.Notification));
@@ -63,7 +66,7 @@ namespace ChatWpf.ViewModels
         /// <summary>
         ///     View model for adding a chat room.
         /// </summary>
-        public AddChatRoomViewModel AddChatRoomViewModel { get; set; } = new AddChatRoomViewModel();
+        public AddChatRoomViewModel AddChatRoomViewModel { get; set; } 
 
 		/// <summary>
         ///		Gets or sets the name of the queue for this client.
@@ -138,15 +141,15 @@ namespace ChatWpf.ViewModels
             {
                 case "Add":
                 {
-                    // send chat room to api
-                    room = _chatRoomDataService.AddChatRoom(room);
 					// bind queue to chat room's exchange
 					_queueService.BindToExchange(ClientQueueName, "Chat.Room.RoomId", room.Id.ToString());
                     // map to view model
-                    var viewmodel = new ChatRoomViewModel(room.Id, SimpleIoc.Default.GetInstance<IChatMessageDataService>());
+                    var viewmodel = new ChatRoomViewModel(room.Id, 
+                        SimpleIoc.Default.GetInstance<IChatMessageDataService>(),
+                        SimpleIoc.Default.GetInstance<IChatRoomDataService>());
                     Mapper.Map(room, viewmodel);
                     // add to available chat rooms
-                    AvailableChatRooms.Add(viewmodel);
+                    DispatcherHelper.CheckBeginInvokeOnUI(() => { AvailableChatRooms.Add(viewmodel); });
 
                     break;
                 }
@@ -155,7 +158,8 @@ namespace ChatWpf.ViewModels
 					var roomToRemove = AvailableChatRooms.SingleOrDefault(i => i.Id == room.Id);
 
 					if (roomToRemove != null)
-						AvailableChatRooms.Remove(roomToRemove);
+                        DispatcherHelper.CheckBeginInvokeOnUI(() => { AvailableChatRooms.Remove(roomToRemove); });
+                    
 
 					break;
 				}
@@ -228,7 +232,9 @@ namespace ChatWpf.ViewModels
 				// bind queue to chat room's exchange
 				_queueService.BindToExchange(ClientQueueName, "Chat.Room.RoomId", room.Id.ToString());
 				// create ChatRoomViewModel
-				var viewmodel = new ChatRoomViewModel(room.Id, SimpleIoc.Default.GetInstance<IChatMessageDataService>());
+				var viewmodel = new ChatRoomViewModel(room.Id, 
+                    SimpleIoc.Default.GetInstance<IChatMessageDataService>(),
+                    SimpleIoc.Default.GetInstance<IChatRoomDataService>());
 				// map chat room into ChatRoomViewModel
 				Mapper.Map(room, viewmodel);
 				// add to available chat rooms

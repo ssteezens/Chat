@@ -51,20 +51,4 @@ namespace ChatWpf.Models
         /// </summary>
         public string Email { get; set; }
     }
-
-	/// <summary>
-    ///		Class for getting/setting the current user instance.
-    /// </summary>
-	public static class UserInstance
-	{
-        private static User _currentUser;
-
-		public static User Current
-		{
-			get => _currentUser;
-            set => _currentUser = value;
-		}
-
-        public static string DisplayName => string.IsNullOrEmpty(Current.NickName) ? Current.NickName : Current.Username;
-    }
 }

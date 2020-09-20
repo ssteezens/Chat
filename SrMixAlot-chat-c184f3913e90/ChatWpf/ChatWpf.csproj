@@ -221,6 +221,7 @@
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\FalseToVisibleConverter.cs" />
     <Compile Include="Converters\InverseBoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\IsBusyToProgressConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\StringLengthToEnabledConverter.cs" />
     <Compile Include="Helpers\ControlInstances.cs" />
@@ -229,6 +230,7 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserInstance.cs" />
     <Compile Include="Services\Connection\Interfaces\IQueueService.cs" />
     <Compile Include="Services\Connection\QueueService.cs" />
     <Compile Include="Services\Data\UserAccountService.cs" />

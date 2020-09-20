@@ -108,7 +108,9 @@ namespace Api
 				config.CreateMap<ChatRoom, ChatRoomModel>()
 					.ForMember(dest => dest.Users, opt => opt.MapFrom(src => src.UserRooms.Select(userRoom => userRoom.User)))
 					.ForMember(dest => dest.ChatMessages, opt => opt.MapFrom(src => src.ChatMessages));
-			});
+                config.CreateMap<UserRoom, UserRoomModel>()
+                    .ReverseMap();
+            });
 
 			services.AddScoped(_ => Mapper.Configuration.CreateMapper());
 		}

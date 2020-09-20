@@ -28,10 +28,23 @@ namespace ChatWpf.Services.Data.Interfaces
 		ChatRoom AddChatRoom(ChatRoom chatRoom);
 
         /// <summary>
+        ///     Delete the chat room.
+        /// </summary>
+        /// <param name="id"> Id of the <see cref="ChatRoom"/> to delete. </param>
+        void DeleteRoom(int id);
+
+        /// <summary>
         ///     Add a user to a room.
         /// </summary>
         /// <param name="userModel"> The <see cref="UserModel"/> to add. </param>
         /// <param name="chatRoomId"> The id of the chat room. </param>
         void AddUser(UserModel userModel, int chatRoomId);
+
+        /// <summary>
+        ///     Remove a user from a chat room.
+        /// </summary>
+        /// <param name="userModel"> The <see cref="UserModel"/> to remove from a chat room. </param>
+        /// <param name="chatRoomId"> The id of the chat room to remove them from. </param>
+        void RemoveUser(UserModel userModel, int chatRoomId);
     }
 }

@@ -29,10 +29,25 @@ namespace Data.Services.Interfaces
         ChatRoomModel Add(ChatRoomModel chatRoomModel);
 
         /// <summary>
+        ///     Deletes a chat room in the database.
+        /// </summary>
+        /// <param name="id"> Id of the chat room to delete. </param>
+        /// <returns> The deleted chat room. </returns>
+        ChatRoom Delete(int id); 
+
+        /// <summary>
         ///		Add a user to the chat room.
         /// </summary>
         /// <param name="username"> The username to add. </param>
         /// <param name="chatRoomId"> The id of the chat room. </param>
-        void AddUser(string username, int chatRoomId);
+        UserRoom AddUser(string username, int chatRoomId);
+
+        /// <summary>
+        ///     Removes a user to chat room association in the database.
+        /// </summary>
+        /// <param name="username"> Username of the user to chat room relation. </param>
+        /// <param name="chatRoomId"> The id of the chat room. </param>
+        /// <returns> The removed user to chat room relation. </returns>
+        UserRoom RemoveUser(string username, int chatRoomId);
     }
 }

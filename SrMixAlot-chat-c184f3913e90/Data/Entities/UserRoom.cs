@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Data.Entities
+﻿namespace Data.Entities
 {
     /// <summary>
     ///     Relational table between users and chat rooms.
@@ -20,6 +14,11 @@ namespace Data.Entities
         ///     The id for a chat room.
         /// </summary>
         public int ChatRoomId { get; set; }
+
+        /// <summary>
+        ///     Determines if user is an admin of the room.
+        /// </summary>
+        public bool IsAdmin { get; set; }
 
         /// <summary>
         ///     The user relational entity.

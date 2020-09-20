@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -88,18 +89,33 @@ namespace Data.Services
             return chatRoomModel;
 		}
 
-		/// <summary>
+        /// <summary>
+        ///     Deletes a chat room in the database.
+        /// </summary>
+        /// <param name="id"> Id of the chat room to delete. </param>
+        /// <returns> The deleted chat room. </returns>
+        public ChatRoom Delete(int id)
+        {
+            var deletedRoom = _chatContext.ChatRooms.Remove(_chatContext.ChatRooms.SingleOrDefault(i => i.Id == id))
+                .Entity;
+
+            _chatContext.SaveChanges();
+
+            return deletedRoom;
+        }
+
+        /// <summary>
 		///		Add a user to the chat room.
 		/// </summary>
 		/// <param name="username"> The username to add. </param>
 		/// <param name="chatRoomId"> The id of the chat room. </param>
-        public void AddUser(string username, int chatRoomId)
+        public UserRoom AddUser(string username, int chatRoomId)
         {
             var user = _chatContext.Users.SingleOrDefault(i => i.UserName == username);
             var room = _chatContext.ChatRooms.Find(chatRoomId);
 
             if (user == null)
-                return;
+                throw new InvalidOperationException("User could not be found.");
 
 			_chatContext.Entry(room).Collection(i => i.UserRooms).Load();
 
@@ -113,6 +129,33 @@ namespace Data.Services
                 room.UserRooms.Add(userRoom);
 
             _chatContext.SaveChanges();
+
+            return userRoom;
+        }
+
+        /// <summary>
+        ///     Removes a user to chat room association in the database.
+        /// </summary>
+        /// <param name="username"> Username of the user to chat room relation. </param>
+        /// <param name="chatRoomId"> The id of the chat room. </param>
+        /// <returns> The removed user to chat room relation. </returns>
+        public UserRoom RemoveUser(string username, int chatRoomId)
+        {
+            var user = _chatContext.Users.SingleOrDefault(i => i.UserName == username);
+            
+            if (user == null)
+                throw new InvalidOperationException("User does not exist");
+
+            var entity = _chatContext.ChatUserRooms.FirstOrDefault(i => i.ChatRoomId == chatRoomId && i.UserId == user.Id);
+
+            if(entity == null)
+                throw new InvalidOperationException("User does not exist in room");
+                
+            var removedUserRoom = _chatContext.ChatUserRooms.Remove(entity);
+
+            _chatContext.SaveChanges();
+
+            return removedUserRoom.Entity;
         }
     }
 }

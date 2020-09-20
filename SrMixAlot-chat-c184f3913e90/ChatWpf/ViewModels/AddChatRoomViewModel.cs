@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System.Collections.Generic;
+using ChatWpf.Services.Data.Interfaces;
 
 namespace ChatWpf.ViewModels
 {
@@ -10,8 +11,11 @@ namespace ChatWpf.ViewModels
     /// </summary>
     public class AddChatRoomViewModel : ViewModelBase
     {
-        public AddChatRoomViewModel()
+        private readonly IChatRoomDataService _chatRoomDataService;
+
+        public AddChatRoomViewModel(IChatRoomDataService chatRoomDataService)
         {
+            _chatRoomDataService = chatRoomDataService;
             // initialize chat room
             ChatRoomModel = new ChatRoom()
             {
@@ -59,8 +63,11 @@ namespace ChatWpf.ViewModels
 
             ChatRoomModel.Users = new List<User> { UserInstance.Current };
 
+            // send chat room to api
+            var returnedChatRoom = _chatRoomDataService.AddChatRoom(ChatRoomModel);
+
             // send event to be handled on main view model
-            MessengerInstance.Send(new NotificationMessage<ChatRoom>(ChatRoomModel, "Add"));
+            MessengerInstance.Send(new NotificationMessage<ChatRoom>(returnedChatRoom, "Add"));
 
             IsOpen = false;
         }

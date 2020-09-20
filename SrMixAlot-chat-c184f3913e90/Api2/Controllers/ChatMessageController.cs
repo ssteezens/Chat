@@ -45,6 +45,24 @@ namespace Api.Controllers
 		}
 
         /// <summary>
+        ///     Update a chat message.
+        /// </summary>
+        /// <param name="message"> The <see cref="ChatMessage"/> to update. </param>
+        /// <returns> The update result. </returns>
+        [HttpPost("/ChatMessage/Update")]
+        public IActionResult Update([FromBody] ChatMessage message)
+        {
+            var thing = _chatMessageDataService.Edit(message);
+            var messageDto = _mapper.Map<ChatMessageModel>(thing);
+
+            messageDto.OperationType = MessageOperationTypes.Edit;
+
+            _messageService.SendMessageToExchange("Chat.Room.RoomId", messageDto, messageDto.ChatRoomId.ToString());
+
+            return Ok(messageDto);
+        }
+
+        /// <summary>
         ///     Deletes a chat message. 
         /// </summary>
         /// <param name="id"> Id of the message to delete. </param>

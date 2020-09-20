@@ -25,6 +25,7 @@
             <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
             <converters:Base64ImageConverter x:Key="Base64ImageConverter" />
             <converters:FalseToVisibleConverter x:Key="FalseToVisibleConverter"/>
+            <converters:IsBusyToProgressConverter x:Key="IsBusyToProgressConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

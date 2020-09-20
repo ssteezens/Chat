@@ -18,64 +18,11 @@
             <DataTemplate x:Key="ChatRoomListItem" DataType="{x:Type viewModels:ChatRoomViewModel}">
                 <StackPanel VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch">
-
                     <!-- Display Name -->
                     <TextBlock Text="{Binding DisplayName}"
                                Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                                HorizontalAlignment="Left"
                                Margin="2,10,10,4"/>
-
-                    <!-- User Expander -->
-                    <Expander Header="{Binding UserCountText}"
-                              materialDesign:ExpanderAssist.DownHeaderPadding="2"
-                              materialDesign:ExpanderAssist.UpHeaderPadding="2"
-                              materialDesign:ExpanderAssist.RightHeaderPadding="2"
-                              materialDesign:ExpanderAssist.LeftHeaderPadding="2">
-                        <Expander.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding}"
-                                           FontSize="10"
-                                           FontWeight="Bold"/>
-                            </DataTemplate>
-                        </Expander.HeaderTemplate>
-                        <Grid TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                              Margin="30,0,0,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <!-- Room Users -->
-                            <ItemsControl ItemsSource="{Binding Users}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate DataType="{x:Type models:User}">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Ellipse Margin="0,0,0,0"
-                                                     Stroke="Black"
-                                                     StrokeThickness="2"
-                                                     Width="28" 
-                                                     Height="28">
-                                                <Ellipse.Fill>
-                                                    <ImageBrush ImageSource="{Binding ProfileImageBytes}" />
-                                                </Ellipse.Fill>
-                                            </Ellipse>
-
-                                            <TextBlock Text="{Binding NickName}"
-                                                       VerticalAlignment="Center"
-                                                       Margin="4,0,4,4"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-
-                            <Button Grid.Row="1"
-                                    Height="25"
-                                    Margin="4"
-                                    HorizontalAlignment="Left"
-                                    Command="{Binding ToggleAddUserControlCommand}">
-                                <TextBlock FontSize="11" Text="Add User"/>
-                            </Button>
-                        </Grid>
-                    </Expander>
                 </StackPanel>
             </DataTemplate>
         </ResourceDictionary>
@@ -94,6 +41,8 @@
             <controls:AddChatRoomControl Panel.ZIndex="100"
                                          Width="200"
                                          Margin="20"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"
                                          DataContext="{Binding AddChatRoomViewModel, Mode=OneWay}"/>
         </controls:CenteredPopupControl>
 
@@ -139,22 +88,42 @@
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           SelectedItem="{Binding SelectedChatRoom, Mode=TwoWay}" 
                           ItemsSource="{Binding AvailableChatRooms, Mode=OneWay}"
-                          ItemTemplate="{StaticResource ChatRoomListItem}"/>
+                          ItemTemplate="{StaticResource ChatRoomListItem}">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                            <Setter Property="ContextMenu">
+                                <Setter.Value>
+                                    <ContextMenu>
+                                        <MenuItem Header="Delete" 
+                                                  Command="{Binding DeleteChatRoomCommand}" 
+                                                  CommandParameter="{Binding}">
+                                            <MenuItem.HeaderTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding}" FontSize="12"/>
+                                                </DataTemplate>
+                                            </MenuItem.HeaderTemplate>
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
 
                 <!-- Chat room toolbar -->
                 <Border Grid.Row="2"
                         BorderBrush="Black"
-                        Margin="4,0,4,4">
+                        Margin="4,4,4,4">
                     <StackPanel>
                         <!-- Add Button -->
-                        <Button Content="Add"
-                                Margin="0"
+                        <Button Margin="0"
                                 HorizontalAlignment="Right">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <i:InvokeCommandAction Command="{Binding ToggleAddChatRoomControlVisibilityCommand}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
+                            <TextBlock Text="Add" FontSize="11"/>
                         </Button>
                     </StackPanel>
                 </Border>

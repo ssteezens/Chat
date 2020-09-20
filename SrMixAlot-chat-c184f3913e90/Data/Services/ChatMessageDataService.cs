@@ -39,7 +39,23 @@ namespace Data.Services
             
 			return addedMessage; 
         }
-        
+
+        /// <summary>
+        ///     Edits a chat message in the database.
+        /// </summary>
+        /// <param name="message"> The chat message to edit. </param>
+        /// <returns> The edited chat message. </returns>
+        public ChatMessage Edit(ChatMessage message)
+        {
+            var entityInContext = _chatContext.ChatMessages.Find(message.Id);
+
+            entityInContext.Message = message.Message;
+
+            _chatContext.SaveChanges();
+
+            return entityInContext;
+        }
+
         /// <summary>
         ///     Deletes a chat message.
         /// </summary>

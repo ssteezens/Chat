@@ -7,8 +7,8 @@ using GalaSoft.MvvmLight.Threading;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using ChatWpf.Services.MessageBrokering;
-using RabbitMQ.Client;
+using AutoMapper;
+using Shared.Models.Models;
 
 namespace ChatWpf.ViewModels
 {
@@ -18,22 +18,27 @@ namespace ChatWpf.ViewModels
     public class ChatRoomViewModel : ViewModelBase
     {
         private readonly IChatMessageDataService _chatMessageDataService;
-		
-		/// <summary>
-        ///		Constructs a chat room view model.
-        /// </summary>
-        /// <param name="id"> Id of the chat room. </param>
-        /// <param name="chatMessageDataService"> Service for managing chat message data. </param>
-		public ChatRoomViewModel(int id, IChatMessageDataService chatMessageDataService)
+        private readonly IChatRoomDataService _chatRoomDataService;
+
+        ///  <summary>
+        /// 		Constructs a chat room view model.
+        ///  </summary>
+        ///  <param name="id"> Id of the chat room. </param>
+        ///  <param name="chatMessageDataService"> Service for managing chat message data. </param>
+        ///  <param name="chatRoomDataService"> Service for managing chat room data. </param>
+        public ChatRoomViewModel(int id, IChatMessageDataService chatMessageDataService, IChatRoomDataService chatRoomDataService)
 		{
 			_chatMessageDataService = chatMessageDataService;
+            _chatRoomDataService = chatRoomDataService;
 
-			Id = id;
+            Id = id;
 			
 			// commands
             SendMessageCommand = new RelayCommand(SendMessage, () => !string.IsNullOrEmpty(UserText));
 			DeleteMessageCommand = new RelayCommand<ChatMessage>(DeleteMessage);
 			ToggleAddUserControlCommand = new RelayCommand(ToggleAddUserControl);
+            DeleteChatRoomCommand = new RelayCommand(DeleteChatRoom);
+            RemoveUserCommand = new RelayCommand<User>(RemoveUser);
 
 			// view models
             AddUserViewModel = new AddUserViewModel(SimpleIoc.Default.GetInstance<IUserAccountService>(), SimpleIoc.Default.GetInstance<IChatRoomDataService>())
@@ -128,7 +133,17 @@ namespace ChatWpf.ViewModels
 		///		Command to toggle the add user control open or closed.
 		/// </summary>
 		public RelayCommand ToggleAddUserControlCommand { get; }
-		
+
+        /// <summary>
+        ///     Command to delete a chat room.
+        /// </summary>
+		public RelayCommand DeleteChatRoomCommand { get; }
+
+        /// <summary>
+        ///     Command to remove a user from the room.
+        /// </summary>
+        public RelayCommand<User> RemoveUserCommand { get; }
+
 		/// <summary>
 		///		Sends the user's message to the server.
 		/// </summary>
@@ -178,6 +193,28 @@ namespace ChatWpf.ViewModels
         {
             AddUserViewModel.ControlIsOpen = !AddUserViewModel.ControlIsOpen;
         }
+        
+        /// <summary>
+        ///     Delete this chat room.
+        /// </summary>
+        private void DeleteChatRoom()
+        {
+            MessengerInstance.Send(new NotificationMessage<ChatRoomViewModel>(this, "Remove"));
+            _chatRoomDataService.DeleteRoom(Id);
+        }
+
+        /// <summary>
+        ///     Remove the specified user from the room.
+        /// </summary>
+        /// <param name="user"> The <see cref="User"/> to remove. </param>
+        private void RemoveUser(User user)
+        {
+            var userDto = Mapper.Map<UserModel>(user);
+
+            _chatRoomDataService.RemoveUser(userDto, Id);
+
+            Users.Remove(user);
+        }
 
         #endregion
 
@@ -188,6 +225,7 @@ namespace ChatWpf.ViewModels
         private ChatMessage _selectedChatMessage;
         private AddUserViewModel _addUserViewModel;
         private ChatRoom _chatRoomModel;
+        private bool _userListIsOpen = true;
 
         /// <summary>
         ///		Chat room's display name.
@@ -240,9 +278,18 @@ namespace ChatWpf.ViewModels
 		/// </summary>
 		public int Id { get; set; }
 
-		/// <summary>
-		///		View model for adding a user to the room.
-		/// </summary>
+        /// <summary>
+        ///     Determines if the user list is open.
+        /// </summary>
+        public bool UserListIsOpen
+        {
+            get => _userListIsOpen;
+            set => Set(ref _userListIsOpen, value, nameof(UserListIsOpen));
+        }
+
+        /// <summary>
+        ///		View model for adding a user to the room.
+        /// </summary>
         public AddUserViewModel AddUserViewModel
         {
             get => _addUserViewModel;

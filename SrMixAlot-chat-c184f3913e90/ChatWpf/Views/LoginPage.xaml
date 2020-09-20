@@ -12,12 +12,13 @@
 
     <Grid>
         <!-- Progress Indicator -->
-        <TextBlock Text="Loading ..."
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Panel.ZIndex="10"
-                   FontSize="16"
-                   Visibility="{Binding IsBusy, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+        <ProgressBar
+            Style="{StaticResource MaterialDesignCircularProgressBar}"
+            Value="{Binding IsBusy, Mode=OneWay, Converter={StaticResource IsBusyToProgressConverter}}"
+            Panel.ZIndex="10"
+            Width="50"
+            Height="50"
+            IsIndeterminate="True" />
 
 
         <materialDesign:Card VerticalAlignment="Center">

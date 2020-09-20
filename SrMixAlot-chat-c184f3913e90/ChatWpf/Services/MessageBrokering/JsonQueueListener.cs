@@ -70,6 +70,12 @@ namespace ChatWpf.Services.MessageBrokering
                         Messenger.Default.Send(new NotificationMessage<ChatRoom>(chatRoom, chatRoomDto.OperationType.ToString()));
 						break;
 					}
+                    case UserRoomModel userDto:
+                    {
+                        var user = Mapper.Map<User>(userDto);
+                        Messenger.Default.Send(new NotificationMessage<User>(user, userDto.OperationType.ToString()));
+                        break;
+                    }
                     default:
 						throw new NotSupportedException("Unsupported message type sent to handler.");
 				}

@@ -16,6 +16,13 @@ namespace Data.Services.Interfaces
 		ChatMessage Add(ChatMessage message);
 
         /// <summary>
+        ///     Edits a chat message in the database.
+        /// </summary>
+        /// <param name="message"> The chat message to edit. </param>
+        /// <returns> The edited chat message. </returns>
+        ChatMessage Edit(ChatMessage message);
+
+        /// <summary>
         ///     Deletes the chat message with the specified id.
         /// </summary>
         /// <param name="id"> Id of the message to delete. </param>
