@@ -2,6 +2,7 @@
 using ChatWpf.Models;
 using ChatWpf.Services.Data.Interfaces;
 using ServiceStack;
+using Shared.Models.Models;
 
 namespace ChatWpf.Services.Data
 {
@@ -25,6 +26,16 @@ namespace ChatWpf.Services.Data
 		{
 			return _jsonServiceClient.Post<ChatMessage>("/ChatMessage/Add", message);
 		}
+
+        /// <summary>
+        ///     Edit a chat message.
+        /// </summary>
+        /// <param name="message"> The <see cref="ChatMessage"/> to edit. </param>
+        /// <returns> The edited chat message. </returns>
+        public ChatMessageModel Edit(ChatMessage message)
+        {
+            return _jsonServiceClient.Post<ChatMessageModel>("/ChatMessage/Update", message);
+        }
 
         /// <summary>
         ///     Deletes a chat message.

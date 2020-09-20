@@ -1,18 +1,26 @@
-﻿using System.Collections.Generic;
-using ChatWpf.Models;
+﻿using ChatWpf.Models;
+using Shared.Models.Models;
+using System.Collections.Generic;
 
 namespace ChatWpf.Services.Data.Interfaces
 {
-	/// <summary>
+    /// <summary>
     ///		Interface for chat message data service.
     /// </summary>
     public interface IChatMessageDataService 
     {
 		/// <summary>
-		///		Add a chat entry to a chat room.
+		///		Add a chat message to a chat room.
 		/// </summary>
-		/// <returns> True if successful. </returns>
+		/// <returns> Added message. </returns>
 		ChatMessage Add(ChatMessage message);
+
+        /// <summary>
+        ///     Edit a chat message.
+        /// </summary>
+        /// <param name="message"> The <see cref="ChatMessage"/> to edit. </param>
+        /// <returns> The edited chat message. </returns>
+        ChatMessageModel Edit(ChatMessage message);
 
         /// <summary>
         ///     Deletes a chat message.

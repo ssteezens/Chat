@@ -88,13 +88,16 @@ namespace ChatWpf.ViewModels
 
                     break;
 				}
+                case "SubmitEdit":
+                    _chatMessageDataService.Edit(chatMessage);
+                    break;
 				case "Edit":
 				{
 					var messageToEdit = ChatMessages.SingleOrDefault(i => i.Id == chatMessage.Id);
 
-					if (messageToEdit != null)
-						DispatcherHelper.CheckBeginInvokeOnUI(() => messageToEdit.Message = chatMessage.Message);
-					
+                    if (messageToEdit != null)
+                        DispatcherHelper.CheckBeginInvokeOnUI(() => messageToEdit.Message = chatMessage.Message);
+
                     break;
 				}
 			}

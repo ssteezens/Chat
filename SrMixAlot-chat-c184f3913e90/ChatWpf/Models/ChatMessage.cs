@@ -1,4 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 
 namespace ChatWpf.Models
@@ -10,8 +12,15 @@ namespace ChatWpf.Models
 	{
 		private string _message = string.Empty;
         private bool _isSelected;
+        private bool _isEditable;
 
-		/// <summary>
+        public ChatMessage()
+        {
+            SetEditableCommand = new RelayCommand(SetEditable);
+            SubmitEditCommand = new RelayCommand(SubmitEdit);
+        }
+
+        /// <summary>
 		///     The chat entry's id.
 		/// </summary>
 		public int Id { get; set; }
@@ -61,13 +70,49 @@ namespace ChatWpf.Models
             set => Set(ref _isSelected, value, nameof(IsSelected));
         }
 
-		/// <summary>
-		///     The text of the chat entry
-		/// </summary>
-		public string Message
+        /// <summary>
+        ///     Indicates whether the message is editable.
+        /// </summary>
+        public bool IsEditable
+        {
+            get => _isEditable;
+            set => Set(ref _isEditable, value, nameof(IsEditable));
+        }
+
+        /// <summary>
+        ///     The text of the chat entry
+        /// </summary>
+        public string Message
 		{
 			get => _message;
 			set => Set(ref _message, value, nameof(Message));
 		}
+
+        /// <summary>
+        ///     Command to set the chat message to editable.
+        /// </summary>
+        public RelayCommand SetEditableCommand { get; }
+
+        /// <summary>
+        ///     Command to submit the chat message edit.
+        /// </summary>
+        public RelayCommand SubmitEditCommand { get; }
+
+        /// <summary>
+        ///     Set the chat message to editable.
+        /// </summary>
+        private void SetEditable()
+        {
+            IsEditable = true;
+        }
+
+        /// <summary>
+        ///     Submit the chat message edit.
+        /// </summary>
+        private void SubmitEdit()
+        {
+            IsEditable = false;
+            Messenger.Default.Send(new NotificationMessage<ChatMessage>(this, "SubmitEdit"), ChatRoomId);
+        }
 	}
 }
