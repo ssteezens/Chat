@@ -57,23 +57,23 @@ namespace ChatWpf.Services.MessageBrokering
 
 				switch (receivedMessage)
 				{
-                    case ChatMessageModel chatMessageDto:
+                    case ClientMessage<ChatMessageModel> chatMessageDto:
 					{
-						var chatMessage = Mapper.Map<ChatMessage>(chatMessageDto);
+						var chatMessage = Mapper.Map<ChatMessage>(chatMessageDto.Model);
 						// send chat message to view model
 						Messenger.Default.Send(new NotificationMessage<ChatMessage>(chatMessage, chatMessageDto.OperationType.ToString()), chatMessage.ChatRoomId);
 						break;
 					}
-                    case ChatRoomModel chatRoomDto:
+                    case ClientMessage<ChatRoomModel> chatRoomDto:
 					{
-						var chatRoom = Mapper.Map<ChatRoom>(chatRoomDto);
+						var chatRoom = Mapper.Map<ChatRoom>(chatRoomDto.Model);
                         Messenger.Default.Send(new NotificationMessage<ChatRoom>(chatRoom, chatRoomDto.OperationType.ToString()));
 						break;
 					}
-                    case UserRoomModel userDto:
+                    case ClientMessage<UserRoomModel> userDto:
                     {
-                        var user = Mapper.Map<User>(userDto);
-                        Messenger.Default.Send(new NotificationMessage<User>(user, userDto.OperationType.ToString()));
+                        var userRoom = Mapper.Map<User>(userDto.Model.User);
+                        Messenger.Default.Send(new NotificationMessage<User>(userRoom, userDto.OperationType.ToString()));
                         break;
                     }
                     default:

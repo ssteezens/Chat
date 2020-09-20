@@ -60,8 +60,6 @@ namespace Api.Controllers
 		[HttpPost("/ChatRoom/Add")]
 		public IActionResult Add([FromBody] ChatRoomModel chatRoom)
 		{
-            // todo: validation
-
             // create chat room
 			var room = _chatRoomDataService.Add(chatRoom);
             
@@ -77,11 +75,13 @@ namespace Api.Controllers
         public IActionResult Delete(int id)
         {
             var removedRoom = _chatRoomDataService.Delete(id);
-            var roomDto = _mapper.Map<ChatRoomModel>(removedRoom);
+            var model = _mapper.Map<ChatRoomModel>(removedRoom);
+            var clientMessage = new ClientMessage<ChatRoomModel>(model)
+            {
+                OperationType = MessageOperationTypes.Remove
+            };
 
-            roomDto.OperationType = MessageOperationTypes.Remove;
-
-            _messageService.SendMessageToExchange("Chat.Room.RoomId", roomDto, roomDto.Id.ToString());
+            _messageService.SendMessageToExchange("Chat.Room.RoomId", clientMessage, model.Id.ToString());
 
             return Ok();
         }
@@ -95,11 +95,13 @@ namespace Api.Controllers
         public IActionResult AddUser([FromBody] UserModel user, int chatRoomId)
         {
 			var addedUserRoom = _chatRoomDataService.AddUser(user.Username, chatRoomId);
-            var addedUserRoomDto = _mapper.Map<UserRoomModel>(addedUserRoom);
+            var model = _mapper.Map<UserRoomModel>(addedUserRoom);
+            var clientMessage = new ClientMessage<UserRoomModel>(model)
+            {
+                OperationType = MessageOperationTypes.Add
+            };
 
-            addedUserRoomDto.OperationType = MessageOperationTypes.Add;
-
-            _messageService.SendMessageToExchange("Chat.Room.RoomId", addedUserRoomDto, chatRoomId.ToString());
+            _messageService.SendMessageToExchange("Chat.Room.RoomId", clientMessage, chatRoomId.ToString());
 
             return Ok();
         }
@@ -114,11 +116,13 @@ namespace Api.Controllers
         public IActionResult RemoveUser([FromBody] UserModel user, int chatRoomId)
         {
 			var removedUserRoom = _chatRoomDataService.RemoveUser(user.Username, chatRoomId);
-            var removedUserRoomDto = _mapper.Map<UserRoomModel>(removedUserRoom);
+            var model = _mapper.Map<UserRoomModel>(removedUserRoom);
+            var clientMessage = new ClientMessage<UserRoomModel>(model)
+            {
+                OperationType = MessageOperationTypes.Remove
+            };
 
-            removedUserRoomDto.OperationType = MessageOperationTypes.Remove;
-
-            _messageService.SendMessageToExchange("Chat.Room.RoomId", removedUserRoomDto, chatRoomId.ToString());
+            _messageService.SendMessageToExchange("Chat.Room.RoomId", clientMessage, chatRoomId.ToString());
 
             return Ok();
         }

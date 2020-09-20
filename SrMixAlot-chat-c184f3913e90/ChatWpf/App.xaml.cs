@@ -35,7 +35,9 @@ namespace ChatWpf
 				cfg.CreateMap<ChatMessage, ChatMessageModel>().ReverseMap();
                 cfg.CreateMap<UserModel, User>().ReverseMap();
                 cfg.CreateMap<ChatRoom, ChatRoomModel>().ReverseMap();
-			});
+                cfg.CreateMap<UserModel, User>().ReverseMap();
+                cfg.CreateMap<UserRoomModel, User>();
+            });
         }
     }
 }

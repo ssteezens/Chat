@@ -14,10 +14,5 @@
         ///     The chat room of the relation.
         /// </summary>
         public ChatRoomModel ChatRoom { get; set; }
-
-        /// <summary>
-        ///     The type of operation that is performed.
-        /// </summary>
-        public MessageOperationTypes OperationType { get; set; }
     }
 }
