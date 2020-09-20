@@ -67,7 +67,7 @@
                                  HorizontalAlignment="Stretch"
                                  TextWrapping="Wrap"
                                  Visibility="{Binding IsEditable, Converter={StaticResource BoolToVisibilityConverter}}"
-                                 Text="{Binding Message}"/>
+                                 Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <!-- Edit Submit Button -->
                         <Button Grid.Column="1" 
