@@ -9,31 +9,31 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:viewModels="clr-namespace:ChatWpf.ViewModels"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
             <!-- Chat Message List Item -->
             <DataTemplate x:Key="ChatMessageListItemTemplate">
-                <Grid HorizontalAlignment="Stretch" 
+                <Grid HorizontalAlignment="Stretch"
                       x:Name="ChatMessageGrid">
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Ellipse Grid.Column="0" 
+                    <Ellipse Grid.Column="0"
                              Margin="4,0,0,0"
                              Stroke="Black"
                              StrokeThickness="2"
-                             Width="32" 
+                             Width="32"
                              Height="32">
                         <Ellipse.Fill>
                             <ImageBrush ImageSource="{Binding ProfileImageBytes}" />
@@ -43,17 +43,17 @@
                     <Rectangle Grid.Column="1"
                                Margin="4,0,8,0"
                                Fill="Black"
-                               Width="1"/>
+                               Width="1" />
 
-                    <TextBlock Grid.Column="2" 
+                    <TextBlock Grid.Column="2"
                                Margin="4"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Stretch"
                                TextWrapping="Wrap"
-                               Text="{Binding Message, Mode=OneWay}"/>
+                               Text="{Binding Message, Mode=OneWay}" />
 
                     <!-- Message Action Buttons -->
-                    <StackPanel Grid.Row="1" 
+                    <StackPanel Grid.Row="1"
                                 Grid.Column="2"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Stretch"
@@ -63,7 +63,7 @@
                                 BorderThickness="0"
                                 Padding="0"
                                 Background="Transparent">
-                            <TextBlock Text="Edit" 
+                            <TextBlock Text="Edit"
                                        FontSize="10" />
                         </Button>
 
@@ -98,7 +98,7 @@
                     <Ellipse Margin="0,0,0,0"
                              Stroke="Black"
                              StrokeThickness="2"
-                             Width="28" 
+                             Width="28"
                              Height="28">
                         <Ellipse.Fill>
                             <ImageBrush ImageSource="{Binding ProfileImageBytes}" />
@@ -111,171 +111,188 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <GroupBox Style="{DynamicResource MaterialDesignCardGroupBox}"
-              Header="{Binding DisplayName}"
-              x:Name="MainGroupBox">
-        <GroupBox.HeaderTemplate>
-            <DataTemplate DataType="{x:Type viewModels:ChatRoomViewModel}">
-                <Grid Width="{Binding ActualWidth, ElementName=MainGroupBox}"
-                      Height="24">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock
-                        Margin="8,0,0,0"
-                        VerticalAlignment="Center"
-                        Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
-                        Text="{Binding}" />
 
-                    <!-- Header Buttons -->
-                    <StackPanel Grid.Column="1" 
-                                Orientation="Horizontal"
-                                VerticalAlignment="Stretch"
-                                Margin="0,0,25,0">
-                        <!-- Toggle User List -->
-                        <ToggleButton ToolTip="Users"
-                                      VerticalAlignment="Center"
-                                      IsChecked="{Binding DataContext.UserListIsOpen, Mode=TwoWay, ElementName=MainGroupBox}"
-                                      Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}">
-                            <materialDesign:PackIcon Kind="AccountCircle" />
-                        </ToggleButton>
-                    </StackPanel>
-                </Grid>
-            </DataTemplate>
-        </GroupBox.HeaderTemplate>
-
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <!-- Add User To Room Control -->
-            <controls:CenteredPopupControl Grid.Row="0"
-                                           Grid.Column="0"
-                                       IsOpen="{Binding AddUserViewModel.ControlIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                <controls:AddUserToRoomControl DataContext="{Binding AddUserViewModel}"
+    <materialDesign:DialogHost IsOpen="{Binding AddUserViewModel.ControlIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                               CloseOnClickAway="True">
+        <materialDesign:DialogHost.Resources>
+            <Style TargetType="materialDesign:Card" BasedOn="{StaticResource {x:Type materialDesign:Card}}">
+                <Style.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.MergedDictionaries>
+                            <materialDesign:BundledTheme BaseTheme="Dark" 
+                                                         PrimaryColor="DeepPurple"
+                                                         SecondaryColor="Lime" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                            <ResourceDictionary Source="/Resources/Colors.xaml" />
+                        </ResourceDictionary.MergedDictionaries>
+                    </ResourceDictionary>
+                </Style.Resources>
+                <Setter Property="Background" Value="{DynamicResource MaterialDesignCardBackground}" />
+            </Style>
+        </materialDesign:DialogHost.Resources>
+        <materialDesign:DialogHost.DialogContent>
+            <controls:AddUserToRoomControl DataContext="{Binding AddUserViewModel}"
                                            IsHitTestVisible="True"
                                            Width="240"
                                            Height="300"
-                                           Panel.ZIndex="100"/>
-            </controls:CenteredPopupControl>
+                                           Panel.ZIndex="100" />
+        </materialDesign:DialogHost.DialogContent>
 
-            <!-- List of chat messages -->
-            <ListView Grid.Row="0" 
-                      Grid.Column="0"
-                      Margin="0,0,4,0"
-                      BorderBrush="Black"
-                      BorderThickness="1"
-                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-                      SelectedItem="{Binding SelectedChatMessage}"
-                      ItemTemplate="{StaticResource ChatMessageListItemTemplate}"
-                      ItemsSource="{Binding ChatMessages, Mode=OneWay}">
-            </ListView>
+        <GroupBox Style="{DynamicResource MaterialDesignCardGroupBox}"
+                  Header="{Binding DisplayName}"
+                  x:Name="MainGroupBox">
+            <GroupBox.HeaderTemplate>
+                <DataTemplate DataType="{x:Type viewModels:ChatRoomViewModel}">
+                    <Grid Width="{Binding ActualWidth, ElementName=MainGroupBox}"
+                          Height="24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                            Text="{Binding}" />
 
-            <Grid Grid.Row="1" 
-                  Grid.Column="0"
-                  Grid.ColumnSpan="2"
-                  TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <!-- Create chat message -->
-                <TextBox Margin="8,8,4,8"
-                     TextWrapping="Wrap"
-                     x:Name="UserTextInput"
-                     Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                     Text="{Binding UserText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <!-- Header Buttons -->
+                        <StackPanel Grid.Column="1"
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Stretch"
+                                    Margin="0,0,25,0">
+                            <!-- Toggle User List -->
+                            <ToggleButton ToolTip="Users"
+                                          VerticalAlignment="Center"
+                                          IsChecked="{Binding DataContext.UserListIsOpen, Mode=TwoWay, ElementName=MainGroupBox}"
+                                          Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}">
+                                <materialDesign:PackIcon Kind="AccountCircle" />
+                            </ToggleButton>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </GroupBox.HeaderTemplate>
 
-                <!-- Send button -->
-                <Button Grid.Column="1"
-                    x:Name="SendButton"
-                    Margin="4"
-                    Padding="0"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    IsDefault="True"
-                    Width="50"
-                    Height="{Binding ElementName=UserTextInput, Path=ActualHeight}"
-                    Command="{Binding SendMessageCommand}"
-                    ToolTip="Send">
-                    <iconPacks:PackIconMaterial Kind="Send" 
-                                            Width="14" 
-                                            Height="14" />
-                </Button>
-            </Grid>
-
-            <!-- User List -->
-            <Grid Grid.Row="0"
-                  Grid.Column="1"
-                  Visibility="{Binding UserListIsOpen, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
 
-                <!-- User List View -->
-                <ListView ItemsSource="{Binding Users}"
-                          x:Name="UserListView">
-                    <!-- Item Container Style -->
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                            <Setter Property="ContextMenu">
-                                <Setter.Value>
-                                    <ContextMenu>
-                                        <MenuItem Header="Remove User"
-                                                  CommandParameter="{Binding}"
-                                                  Command="{Binding DataContext.RemoveUserCommand, RelativeSource={RelativeSource AncestorType=ListView}}">
-                                            <MenuItem.HeaderTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding}" 
-                                                               FontSize="12"/>
-                                                </DataTemplate>
-                                            </MenuItem.HeaderTemplate>
-                                        </MenuItem>
-                                    </ContextMenu>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <!-- Item Template -->
-                    <ListView.ItemTemplate>
-                        <DataTemplate DataType="{x:Type models:User}">
-                            <StackPanel Orientation="Horizontal">
-                                <Ellipse Margin="0,0,0,0"
-                                         Stroke="Black"
-                                         StrokeThickness="2"
-                                         Width="28" 
-                                         Height="28">
-                                    <Ellipse.Fill>
-                                        <ImageBrush ImageSource="{Binding ProfileImageBytes}" />
-                                    </Ellipse.Fill>
-                                </Ellipse>
+                <!-- List of chat messages -->
+                <ListView Grid.Row="0"
+                          Grid.Column="0"
+                          Margin="0,0,4,0"
+                          BorderBrush="Black"
+                          BorderThickness="1"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                          SelectedItem="{Binding SelectedChatMessage}"
+                          ItemTemplate="{StaticResource ChatMessageListItemTemplate}"
+                          ItemsSource="{Binding ChatMessages, Mode=OneWay}" />
 
-                                <TextBlock Text="{Binding NickName}"
-                                           VerticalAlignment="Center"
-                                           Margin="4,0,4,4"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <Grid Grid.Row="1"
+                      Grid.Column="0"
+                      Grid.ColumnSpan="2"
+                      TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <!-- Create chat message -->
+                    <TextBox Margin="8,8,4,8"
+                             TextWrapping="Wrap"
+                             x:Name="UserTextInput"
+                             Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                             Text="{Binding UserText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                <!-- Add User Button -->
-                <Button Grid.Row="1"
-                        Height="25"
-                        Margin="4"
-                        HorizontalAlignment="Left"
-                        Command="{Binding ToggleAddUserControlCommand}">
-                    <TextBlock FontSize="11" Text="Add User"/>
-                </Button>
+                    <!-- Send button -->
+                    <Button Grid.Column="1"
+                            x:Name="SendButton"
+                            Margin="4"
+                            Padding="0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            IsDefault="True"
+                            Width="50"
+                            Height="{Binding ElementName=UserTextInput, Path=ActualHeight}"
+                            Command="{Binding SendMessageCommand}"
+                            ToolTip="Send">
+                        <iconPacks:PackIconMaterial Kind="Send"
+                                                    Width="14"
+                                                    Height="14" />
+                    </Button>
+                </Grid>
+
+                <!-- User List -->
+                <Grid Grid.Row="0"
+                      Grid.Column="1"
+                      Visibility="{Binding UserListIsOpen, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- User List View -->
+                    <ListView ItemsSource="{Binding UserListItems}"
+                              x:Name="UserListView">
+                        <!-- Item Container Style -->
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}"
+                                   BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                                <Setter Property="ContextMenu">
+                                    <Setter.Value>
+                                        <ContextMenu>
+                                            <MenuItem Header="Remove User"
+                                                      Command="{Binding DeleteCommand}">
+                                                <MenuItem.HeaderTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding}"
+                                                                   FontSize="12" />
+                                                    </DataTemplate>
+                                                </MenuItem.HeaderTemplate>
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <!-- Item Template -->
+                        <ListView.ItemTemplate>
+                            <DataTemplate DataType="{x:Type models:User}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse Margin="0,0,0,0"
+                                             Stroke="Black"
+                                             StrokeThickness="2"
+                                             Width="28"
+                                             Height="28">
+                                        <Ellipse.Fill>
+                                            <ImageBrush ImageSource="{Binding Model.ProfileImageBytes}" />
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+
+                                    <TextBlock Text="{Binding Model.NickName}"
+                                               VerticalAlignment="Center"
+                                               Margin="4,0,4,4" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                    <!-- Add User Button -->
+                    <Button Grid.Row="1"
+                            Height="25"
+                            Margin="4"
+                            HorizontalAlignment="Left"
+                            Command="{Binding ToggleAddUserControlCommand}">
+                        <TextBlock FontSize="11" Text="Add User" />
+                    </Button>
+                </Grid>
             </Grid>
-        </Grid>
-    </GroupBox>
-    
+        </GroupBox>
+    </materialDesign:DialogHost>
+
+
 </UserControl>

@@ -26,15 +26,16 @@
                          Text="{Binding ChatRoomModel.DisplayName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <!-- Submit button -->
-                <Button Margin="4" 
-                        Content="Submit"
+                <Button Margin="4"
                         IsDefault="True"
+                        Height="25"
                         HorizontalAlignment="Right">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding SubmitCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
+                    <TextBlock Text="Submit" FontSize="11"/>
                 </Button>
             </StackPanel>
         </Border>

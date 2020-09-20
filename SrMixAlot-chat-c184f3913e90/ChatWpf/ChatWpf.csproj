@@ -225,6 +225,7 @@
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\StringLengthToEnabledConverter.cs" />
     <Compile Include="Helpers\ControlInstances.cs" />
+    <Compile Include="Models\ActionListItem.cs" />
     <Compile Include="Models\ChatMessage.cs" />
     <Compile Include="Models\ChatRoom.cs" />
     <Compile Include="Models\LoginModel.cs" />

@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using AutoMapper;
@@ -38,7 +39,6 @@ namespace ChatWpf.ViewModels
 			DeleteMessageCommand = new RelayCommand<ChatMessage>(DeleteMessage);
 			ToggleAddUserControlCommand = new RelayCommand(ToggleAddUserControl);
             DeleteChatRoomCommand = new RelayCommand(DeleteChatRoom);
-            RemoveUserCommand = new RelayCommand<User>(RemoveUser);
 
 			// view models
             AddUserViewModel = new AddUserViewModel(SimpleIoc.Default.GetInstance<IUserAccountService>(), SimpleIoc.Default.GetInstance<IChatRoomDataService>())
@@ -112,6 +112,9 @@ namespace ChatWpf.ViewModels
 				case "Add":
 					DispatcherHelper.CheckBeginInvokeOnUI(() => { Users.Add(user); });
                     break;
+                case "Delete":
+                    DispatcherHelper.CheckBeginInvokeOnUI(() => { RemoveUser(user); });
+                    break;
             }
         }
 
@@ -140,11 +143,6 @@ namespace ChatWpf.ViewModels
 		public RelayCommand DeleteChatRoomCommand { get; }
 
         /// <summary>
-        ///     Command to remove a user from the room.
-        /// </summary>
-        public RelayCommand<User> RemoveUserCommand { get; }
-
-		/// <summary>
 		///		Sends the user's message to the server.
 		/// </summary>
 		private void SendMessage()
@@ -226,6 +224,8 @@ namespace ChatWpf.ViewModels
         private AddUserViewModel _addUserViewModel;
         private ChatRoom _chatRoomModel;
         private bool _userListIsOpen = true;
+        private ObservableCollection<User> _users = new ObservableCollection<User>();
+        private ObservableCollection<ActionListItem<User>> _userListItems;
 
         /// <summary>
         ///		Chat room's display name.
@@ -250,10 +250,53 @@ namespace ChatWpf.ViewModels
 		/// </summary>
 		public ObservableCollection<ChatMessage> ChatMessages { get; set; }
 
-		/// <summary>
-		///     All user's in this chat.
-		/// </summary>
-		public ObservableCollection<User> Users { get; set; }
+        /// <summary>
+        ///     All user's in this chat.
+        /// </summary>
+        public ObservableCollection<User> Users
+        {
+            get => _users;
+            set
+            {
+                _users.CollectionChanged -= UserCollectionChangedHandler;
+
+                Set(ref _users, value, nameof(Users));
+
+                Users.CollectionChanged += UserCollectionChangedHandler;
+                
+                SetActionItems();
+            }
+        }
+
+        /// <summary>
+        ///     Handles the collection changed event on the Users collection.
+        /// </summary>
+        private void UserCollectionChangedHandler(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            SetActionItems();
+        }
+
+        /// <summary>
+        ///     Sets the collection of action list items for the user list.
+        /// </summary>
+        private void SetActionItems()
+        {
+            UserListItems = new ObservableCollection<ActionListItem<User>>();
+
+            foreach (var user in Users)
+            {
+                UserListItems.Add(new ActionListItem<User>(user, MessengerInstance, Id));
+            }
+        }
+
+        /// <summary>
+        ///     List of action items for the user list view.
+        /// </summary>
+        public ObservableCollection<ActionListItem<User>> UserListItems
+        {
+            get => _userListItems;
+            set => Set(ref _userListItems, value, nameof(UserListItems));
+        }
 
         /// <summary>
         ///     The selected chat message.
