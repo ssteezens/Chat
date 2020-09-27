@@ -46,7 +46,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <StackPanel>
+                <StackPanel x:Name="UserProfileStackPanel">
                     <Grid Margin="10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -76,15 +76,17 @@
 
                     <!-- Profile Image Preview -->
                     <Image Margin="10" 
-                       Source="{Binding ProfileImageBytes}"
-                       Stretch="UniformToFill"/>
+                           Width="{Binding Path=ActualWidth, ElementName=UserProfileStackPanel}"
+                           Height="{Binding Path=ActualWidth, ElementName=UserProfileStackPanel}"
+                           Source="{Binding ProfileImageBytes}"
+                           Stretch="UniformToFill"/>
                 </StackPanel>
 
                 <!-- Save Button -->
                 <Button Grid.Row="1" 
-                    Margin="10"
-                    HorizontalAlignment="Right" 
-                    Command="{Binding SaveProfileCommand}">
+                        Margin="10"
+                        HorizontalAlignment="Right" 
+                        Command="{Binding SaveProfileCommand}">
                     Save
                 </Button>
             </Grid>

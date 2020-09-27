@@ -14,4 +14,6 @@ A simple chat application using WPF, Material Design, RabbitMq, and a .net core 
 - Update user profile
 - Create or delete a chat room
 - Add or remove users from a chat room
-
+- Send messages
+- Edit messages
+- Delete messages

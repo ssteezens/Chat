@@ -116,14 +116,13 @@
                     <StackPanel>
                         <!-- Add Button -->
                         <Button Margin="0"
-                                Height="25"
+                                Content="Add"
                                 HorizontalAlignment="Right">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <i:InvokeCommandAction Command="{Binding ToggleAddChatRoomControlVisibilityCommand}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                            <TextBlock Text="Add" FontSize="11"/>
                         </Button>
                     </StackPanel>
                 </Border>
