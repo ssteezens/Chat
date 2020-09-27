@@ -20,7 +20,7 @@
             <!-- Back Button -->
             <Button HorizontalAlignment="Right"
                     VerticalAlignment="Top"
-                    Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
+                    Style="{DynamicResource MaterialDesignIconButton}"
                     Command="{Binding GoBackCommand}"
                     ToolTip="Close">
                 <iconPacks:PackIconMaterial Kind="Close"

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using ChatWpf.Models;
 using ChatWpf.Services.Data.Interfaces;
 using GalaSoft.MvvmLight;
@@ -23,7 +24,7 @@ namespace ChatWpf.ViewModels
 			GoBackCommand = new RelayCommand(GoBack);
 			PasswordChangedCommand = new RelayCommand<object>(PasswordChanged);
 			VerifyPasswordChangedCommand = new RelayCommand<object>(VerifyPasswordChanged);
-			RegisterCommand = new RelayCommand(Register, CanRegister);
+			RegisterCommand = new RelayCommand(async () => await Register(), CanRegister);
 
 			// todo: implement INotifyDataErrorInfo
 		}
@@ -166,7 +167,7 @@ namespace ChatWpf.ViewModels
 		/// <summary>
         ///		Registers the user.
         /// </summary>
-		private void Register()
+		private async Task Register()
 		{
             var user = new User()
             {
@@ -187,6 +188,13 @@ namespace ChatWpf.ViewModels
 
 				if (!RegistrationSuccessful)
 					ServerError = "Unable to register user.";
+                else
+                {
+					// show the registration successful message for two seconds
+                    await Task.Delay(2000);
+					// go back to login page
+					GoBack();
+                }
 			}
 			catch (Exception)
 			{

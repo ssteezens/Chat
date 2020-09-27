@@ -8,74 +8,86 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{Binding UserProfileVm, Source={StaticResource Locator}}">
-    <Border Visibility="{Binding WindowIsVisible, Converter={StaticResource BoolToVisibilityConverter}}"
-            Padding="4"
-            TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <StackPanel>
-                <Grid>
-                    <!-- Title -->
-                    <TextBlock Text="{x:Static models:UserInstance.DisplayName}"
-                               FontSize="22"
-                               VerticalAlignment="Top"/>
+    <Border TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+            Visibility="{Binding WindowIsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+        <GroupBox Header="{x:Static models:UserInstance.DisplayName}"
+                  Style="{DynamicResource MaterialDesignCardGroupBox}"
+                  x:Name="UserProfileGroupBox">
+            <GroupBox.HeaderTemplate>
+                <DataTemplate>
+                    <Grid Width="{Binding ActualWidth, ElementName=MainGroupBox}"
+                          Height="24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                            Text="{Binding}" />
 
-                    <!-- Back Button -->
-                    <Button HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
-                            Command="{Binding GoBackCommand}"
-                            ToolTip="Close">
-                        <iconPacks:PackIconMaterial Kind="Close"
-                                                    Width="14"
-                                                    Height="14"/>
-                    </Button>
-                </Grid>
-                
+                        <!-- Back Button -->
+                        <Button Grid.Column="1" 
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Style="{DynamicResource MaterialDesignIconForegroundButton}"
+                                Command="{Binding DataContext.GoBackCommand, ElementName=UserProfileGroupBox}"
+                                ToolTip="Close">
+                            <iconPacks:PackIconMaterial Kind="Close"
+                                                        Width="14"
+                                                        Height="14"/>
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </GroupBox.HeaderTemplate>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel>
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                <Grid Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label>Nick name:</Label>
-                    <TextBox Grid.Column="1" 
+                        <Label>Nick name:</Label>
+                        <TextBox Grid.Column="1" 
                              Margin="4,0" 
                              Text="{Binding NickName}" />
-                </Grid>
+                    </Grid>
 
-                <!-- Profile Picture Browse Row -->
-                <Grid Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
+                    <!-- Profile Picture Browse Row -->
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
-                    <Label>Profile Picture</Label>
+                        <Label>Profile Picture</Label>
 
-                    <Button Grid.Column="1"
+                        <Button Grid.Column="1"
                             Command="{Binding SetProfileImageCommand}">
-                        Browse
-                    </Button>
-                </Grid>
+                            Browse
+                        </Button>
+                    </Grid>
 
-                <!-- Profile Image Preview -->
-                <Image Margin="10" 
+                    <!-- Profile Image Preview -->
+                    <Image Margin="10" 
                        Source="{Binding ProfileImageBytes}"
                        Stretch="UniformToFill"/>
-            </StackPanel>
+                </StackPanel>
 
-            <!-- Save Button -->
-            <Button Grid.Row="1" 
+                <!-- Save Button -->
+                <Button Grid.Row="1" 
                     Margin="10"
                     HorizontalAlignment="Right" 
                     Command="{Binding SaveProfileCommand}">
-                Save
-            </Button>
-        </Grid>
+                    Save
+                </Button>
+            </Grid>
+        </GroupBox>
     </Border>
 </UserControl>
