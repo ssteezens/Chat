@@ -72,8 +72,8 @@ namespace ChatWpf.Services.MessageBrokering
 					}
                     case ClientMessage<UserRoomModel> userDto:
                     {
-                        var userRoom = Mapper.Map<User>(userDto.Model.User);
-                        Messenger.Default.Send(new NotificationMessage<User>(userRoom, userDto.OperationType.ToString()));
+                        var user = Mapper.Map<User>(userDto.Model.User);
+                        Messenger.Default.Send(new NotificationMessage<User>(user, userDto.OperationType.ToString()), userDto.Model.ChatRoom.Id);
                         break;
                     }
                     default:

@@ -61,6 +61,7 @@
                 <Button BorderThickness="0"
                     HorizontalAlignment="Left"
                     Margin="0"
+                    Style="{StaticResource MaterialDesignFlatButton}"
                     Background="Transparent"
                     Command="{Binding GoToRegisterCommand}">
                     <TextBlock Foreground="Blue"

@@ -1,6 +1,9 @@
 # Chat
 A simple chat application using WPF, Material Design, RabbitMq, and a .net core API
 
+## Demo
+![Chat - demo](demo/chat demo.gif)
+
 ## Quickstart
 1. Install RabbitMq https://www.rabbitmq.com/download.html
 2. Create Server's local database by applying EF Core migrations

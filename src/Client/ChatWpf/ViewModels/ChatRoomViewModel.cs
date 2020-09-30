@@ -113,10 +113,23 @@ namespace ChatWpf.ViewModels
             switch (notification)
             {
 				case "Add":
-					DispatcherHelper.CheckBeginInvokeOnUI(() => { Users.Add(user); });
+					DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                    {
+                        if(Users.All(i => i.Id != user.Id))
+                            Users.Add(user);
+                    });
                     break;
-                case "Delete":
+                case "SubmitDelete":
                     DispatcherHelper.CheckBeginInvokeOnUI(() => { RemoveUser(user); });
+                    break;
+                case "Remove":
+                    DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                    {
+                        var userToRemove = Users.SingleOrDefault(i => i.Id == user.Id);
+
+                        if (userToRemove != null)
+                            Users.Remove(userToRemove);
+                    });
                     break;
             }
         }

@@ -155,7 +155,11 @@ namespace Data.Services
 
             _chatContext.SaveChanges();
 
-            return removedUserRoom.Entity;
+            var room = _chatContext.ChatRooms.SingleOrDefault(i => i.Id == chatRoomId);
+            var deletedEntity = removedUserRoom.Entity;
+            deletedEntity.ChatRoom = room;
+
+            return deletedEntity;
         }
     }
 }

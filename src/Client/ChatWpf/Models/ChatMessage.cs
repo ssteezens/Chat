@@ -16,7 +16,7 @@ namespace ChatWpf.Models
 
         public ChatMessage()
         {
-            SetEditableCommand = new RelayCommand(SetEditable, () => UserInstance.Current.Id == User.Id);
+            SetEditableCommand = new RelayCommand(SetEditable, () => UserInstance.Current.Id == User?.Id);
             SubmitEditCommand = new RelayCommand(SubmitEdit);
         }
 

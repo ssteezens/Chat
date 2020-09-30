@@ -58,7 +58,7 @@ namespace ChatWpf.Models
         /// </summary>
         public void Edit()
         {
-            SendMessage(new NotificationMessage<T>(Model, "Edit"));
+            SendMessage(new NotificationMessage<T>(Model, "SubmitEdit"));
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace ChatWpf.Models
         /// </summary>
         public void Delete()
         {
-            SendMessage(new NotificationMessage<T>(Model, "Delete"));
+            SendMessage(new NotificationMessage<T>(Model, "SubmitDelete"));
         }
 
         /// <summary>
