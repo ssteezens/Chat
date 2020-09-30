@@ -2,7 +2,7 @@
 A simple chat application using WPF, Material Design, RabbitMq, and a .net core API
 
 ## Demo
-![Chat - demo](demo/chat demo.gif)
+![](demo/chat demo.gif)
 
 ## Quickstart
 1. Install RabbitMq https://www.rabbitmq.com/download.html
